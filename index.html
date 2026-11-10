@@ -18,6 +18,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+        
+        /* A4 종이 원본 레이아웃 */
         .a4-page {
             width: 210mm;
             min-height: 297mm;
@@ -26,16 +28,54 @@
             background: white;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             box-sizing: border-box;
+            transform-origin: top center;
         }
+
+        /* 화면 해상도에 맞춘 자동 반응형 축소 (스크롤바 방지) */
+        .preview-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        @media screen and (max-width: 1280px) {
+            .a4-page {
+                transform: scale(0.85);
+                margin-bottom: -45mm; /* 축소로 인한 하단 여백 보정 */
+            }
+        }
+        @media screen and (max-width: 1024px) {
+            .a4-page {
+                transform: scale(0.95);
+                margin-bottom: -15mm;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .a4-page {
+                transform: scale(0.65);
+                margin-bottom: -100mm;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .a4-page {
+                transform: scale(0.48);
+                margin-bottom: -155mm;
+            }
+        }
+
+        /* 인쇄 및 PDF 출력 시 원본 100% 크기 유지 */
         @media print {
             body { background: white; margin: 0; padding: 0; }
             .no-print { display: none !important; }
+            .preview-wrapper { overflow: visible !important; }
             .a4-page {
-                width: 100%;
-                min-height: auto;
-                box-shadow: none;
-                padding: 0;
-                margin: 0;
+                width: 100% !important;
+                min-height: auto !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                transform: none !important;
             }
         }
     </style>
@@ -127,33 +167,37 @@
         </section>
 
         <!-- 우측 미리보기 (A4 레이아웃) -->
-        <section class="lg:col-span-7 flex flex-col items-center overflow-x-auto">
-            <div id="a4Paper" class="a4-page flex flex-col justify-between">
-                <div>
-                    <!-- 문서 제목 -->
-                    <h1 id="docTitle" class="text-2xl font-bold text-center tracking-widest border-b-2 border-slate-900 pb-3 mb-6"></h1>
-                    
-                    <!-- 관공서 표 레이아웃 -->
-                    <div id="docTableContainer" class="mb-6"></div>
+        <section class="lg:col-span-7 flex flex-col items-center">
+            
+            <!-- A4 용지 자동 맞춤 감싸기 래퍼 -->
+            <div class="preview-wrapper">
+                <div id="a4Paper" class="a4-page flex flex-col justify-between">
+                    <div>
+                        <!-- 문서 제목 -->
+                        <h1 id="docTitle" class="text-2xl font-bold text-center tracking-widest border-b-2 border-slate-900 pb-3 mb-6"></h1>
+                        
+                        <!-- 관공서 표 레이아웃 -->
+                        <div id="docTableContainer" class="mb-6"></div>
 
-                    <!-- 본문 상세 사유/내용 -->
-                    <div id="docContentContainer" class="py-10 px-4 min-h-[120px] text-center font-bold text-lg leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider"></div>
-                </div>
+                        <!-- 본문 상세 사유/내용 -->
+                        <div id="docContentContainer" class="py-10 px-4 min-h-[120px] text-center font-bold text-lg leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider"></div>
+                    </div>
 
-                <!-- 하단 동의문 / 날짜 / 서명 및 도장 영역 -->
-                <div class="text-center space-y-6 pt-4 border-t border-slate-200">
-                    <p id="docFooterText" class="text-xs text-slate-600 leading-normal"></p>
-                    <div id="docDate" class="text-sm font-medium tracking-wide"></div>
-                    
-                    <div class="flex flex-col items-center justify-center space-y-2 pt-2">
-                        <div class="text-sm font-bold tracking-wider" id="displayCompany">주식회사 한국상사</div>
-                        <div class="flex items-center justify-center space-x-2">
-                            <span class="text-sm font-semibold">대표자:</span>
-                            <span id="displayCEO" class="text-sm font-bold min-w-[50px]">홍 길 동</span>
-                            <div class="relative w-12 h-12 border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400 rounded-full">
-                                <span class="no-print">(인)</span>
-                                <img id="stampImage" alt="도장 날인" class="absolute inset-0 w-full h-full object-contain hidden" />
-                                <img id="sigImage" alt="직접 서명" class="absolute inset-0 w-full h-full object-contain hidden" />
+                    <!-- 하단 동의문 / 날짜 / 서명 및 도장 영역 -->
+                    <div class="text-center space-y-6 pt-4 border-t border-slate-200">
+                        <p id="docFooterText" class="text-xs text-slate-600 leading-normal"></p>
+                        <div id="docDate" class="text-sm font-medium tracking-wide"></div>
+                        
+                        <div class="flex flex-col items-center justify-center space-y-2 pt-2">
+                            <div class="text-sm font-bold tracking-wider" id="displayCompany">주식회사 한국상사</div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-sm font-semibold">대표자:</span>
+                                <span id="displayCEO" class="text-sm font-bold min-w-[50px]">홍 길 동</span>
+                                <div class="relative w-12 h-12 border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400 rounded-full">
+                                    <span class="no-print">(인)</span>
+                                    <img id="stampImage" alt="도장 날인" class="absolute inset-0 w-full h-full object-contain hidden" />
+                                    <img id="sigImage" alt="직접 서명" class="absolute inset-0 w-full h-full object-contain hidden" />
+                                </div>
                             </div>
                         </div>
                     </div>
