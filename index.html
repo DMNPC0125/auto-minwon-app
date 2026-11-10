@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>각종양식.kr - 대한민국 대표 민원·행정·증명 서식 생성기</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 15mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            box-sizing: border-box;
+        }
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            .a4-page {
+                width: 100%;
+                min-height: auto;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- 상단 가로 압축형 헤더 -->
+    <header class="no-print bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="file-text" class="w-6 h-6 text-blue-400"></i>
+                <span class="font-bold text-lg tracking-tight">각종양식<span class="text-blue-400">.kr</span></span>
+            </div>
+
+            <!-- 카테고리 & 서식 선택 바 -->
+            <div class="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
+                <div id="categoryContainer" class="flex gap-1 bg-slate-800 p-1 rounded-lg flex-wrap"></div>
+                <select id="formSelect" class="bg-slate-700 text-white px-3 py-1.5 rounded-lg border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-[220px]"></select>
+            </div>
+
+            <!-- 인쇄 & PDF 버튼 -->
+            <div class="flex items-center gap-2">
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>인쇄하기</span>
+                </button>
+                <button onclick="downloadPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>PDF 저장</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 레이아웃 (좌측 작성폼 / 우측 A4 미리보기) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- 좌측 작성 폼 (no-print) -->
+        <section class="no-print lg:col-span-5 bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 max-h-[85vh] overflow-y-auto">
+            <h2 class="text-base font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
+                <span>📝 민원인 인적사항 및 내용 입력</span>
+                <span id="currentFormBadge" class="text-xs font-normal text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200"></span>
+            </h2>
+
+            <!-- 인적사항 및 서식 필드 -->
+            <div id="dynamicInputFields" class="space-y-3"></div>
+
+            <!-- 발급 기관 / 대표 정보 입력 필드 -->
+            <div class="border-t pt-4 space-y-3">
+                <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">발급 기관 / 대표자 정보</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs text-slate-600 mb-1">회사/기관명</label>
+                        <input type="text" id="issuerCompany" value="주식회사 한국상사" oninput="renderPreview()" class="w-full border border-slate-300 rounded px-2.5 py-1 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-600 mb-1">대표자 성명</label>
+                        <input type="text" id="issuerCEO" value="홍 길 동" oninput="renderPreview()" class="w-full border border-slate-300 rounded px-2.5 py-1 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 서명 및 도장 입력 칸 -->
+            <div class="border-t pt-4 space-y-3">
+                <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">서명 및 도장 첨부</h3>
+                <div>
+                    <label class="block text-xs text-slate-600 mb-1">직접 서명 (마우스/터치)</label>
+                    <div class="border border-slate-300 rounded-lg overflow-hidden bg-slate-50 relative">
+                        <canvas id="sigCanvas" width="300" height="100" class="w-full h-24 touch-none cursor-crosshair"></canvas>
+                        <button onclick="clearCanvas()" class="absolute top-1 right-1 bg-slate-200 text-slate-600 text-[10px] px-2 py-0.5 rounded hover:bg-slate-300">초기화</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-600 mb-1">도장 이미지 첨부 (PNG/JPG)</label>
+                    <input type="file" id="stampUpload" accept="image/*" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 w-full" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 우측 미리보기 (A4 레이아웃) -->
+        <section class="lg:col-span-7 flex justify-center overflow-x-auto">
+            <div id="a4Paper" class="a4-page flex flex-col justify-between">
+                <div>
+                    <!-- 문서 제목 -->
+                    <h1 id="docTitle" class="text-2xl font-bold text-center tracking-widest border-b-2 border-slate-900 pb-3 mb-6"></h1>
+                    
+                    <!-- 관공서 표 레이아웃 -->
+                    <div id="docTableContainer" class="mb-6"></div>
+
+                    <!-- 본문 상세 사유/내용 (증명 문구는 테두리 없이 깔끔한 여백과 텍스트로 표시) -->
+                    <div id="docContentContainer" class="py-10 px-4 min-h-[120px] text-center font-bold text-lg leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider"></div>
+                </div>
+
+                <!-- 하단 동의문 / 날짜 / 서명 및 도장 영역 -->
+                <div class="text-center space-y-6 pt-4 border-t border-slate-200">
+                    <p id="docFooterText" class="text-xs text-slate-600 leading-normal"></p>
+                    <div id="docDate" class="text-sm font-medium tracking-wide"></div>
+                    
+                    <div class="flex flex-col items-center justify-center space-y-2 pt-2">
+                        <div class="text-sm font-bold tracking-wider" id="displayCompany">주식회사 한국상사</div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <span class="text-sm font-semibold">대표자:</span>
+                            <span id="displayCEO" class="text-sm font-bold min-w-[50px]">홍 길 동</span>
+                            <div class="relative w-12 h-12 border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400 rounded-full">
+                                <span class="no-print">(인)</span>
+                                <img id="stampImage" alt="도장 날인" class="absolute inset-0 w-full h-full object-contain hidden" />
+                                <img id="sigImage" alt="직접 서명" class="absolute inset-0 w-full h-full object-contain hidden" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 새로 추가된 증명서·인증 카테고리와 기존의 모든 서식 데이터 유지
+        const FORMS = {
+            '증명서·인증': [
+                {
+                    id: 'p1',
+                    name: '위촉증명서',
+                    fields: {
+                        '성명': '홍길동',
+                        '생년월일': '1980-01-01',
+                        '연락처': '010-1234-5678',
+                        '주소': '경기도 평택시 현화길 12',
+                        '입사일자': '2026-01-01',
+                        '담당': '교육 및 강의',
+                        '직책': '강사',
+                        '용도': '관공서 제출용'
+                    },
+                    content: '상기와 같이 위촉하였음을 증명합니다.',
+                    footer: '본 증명서는 위촉 사실 확인을 위해 발급되었습니다.'
+                },
+                {
+                    id: 'p2',
+                    name: '재직증명서',
+                    fields: {
+                        '성명': '홍길동',
+                        '생년월일': '1980-01-01',
+                        '주민등록번호': '800101-1******',
+                        '직책': '교사',
+                        '주소': '경기도 평택시 현화길 12',
+                        '재직기간': '2024.03.01 ~ 재직중',
+                        '용도': '금융기관 제출용'
+                    },
+                    content: '상기와 같이 재직하고 있음을 증명합니다.',
+                    footer: '본 증명서는 원본과 다름없음을 확인합니다.'
+                },
+                {
+                    id: 'p3',
+                    name: '해촉증명서',
+                    fields: {
+                        '성명': '홍길동',
+                        '생년월일': '1980-01-01',
+                        '주민등록번호': '800101-1******',
+                        '소속': '교육부',
+                        '재직기간': '2024.03.01 ~ 2026.10.31',
+                        '회사주소': '서울특별시 종로구 세종대로 1',
+                        '용도': '건강보험공단 제출용'
+                    },
+                    content: '위의 사실을 증명합니다.',
+                    footer: '본 해촉증명서는 해촉 및 퇴직 사실을 확인하기 위해 발급되었습니다.'
+                }
+            ],
+            '주민·행정': [
+                { id: 'm1', name: '주민등록표 교부 신청서', fields: { '신청인 성명': '홍길동', '신청인 주민등록번호': '800101-1******', '신청인 연락처': '010-1234-5678', '주소': '경기도 평택시 현화길 12', '발급 사유': '금융기관 제출용' }, content: '상기 본인은 위와 같은 사유로 주민등록표 초본(등본) 교부를 신청합니다.', footer: '본 신청서는 주민등록법 시행규칙 규정에 따라 작성되었습니다.' },
+                { id: 'm2', name: '인감증명서 발급 위임장', fields: { '위임인 성명': '김철수', '위임인 주민등록번호': '750505-1******', '위임인 연락처': '010-9876-5432', '위임인 주소': '경기도 평택시 현화중길 8', '피위임자 성명': '이영희', '피위임자 주민등록번호': '820202-2******', '피위임자 연락처': '010-2222-3333', '관계': '배우자' }, content: '위임인은 피위임자에게 인감증명서 발급 신청 및 수령에 관한 일체의 권한을 위임합니다.', footer: '위임자의 신분증 사본을 반드시 첨부하여 제출하십시오.' },
+                { id: 'm3', name: '위임장 (일반 민원용)', fields: { '위임인 성명': '홍길동', '위임인 주민등록번호': '800101-1******', '위임인 연락처': '010-1234-5678', '위임인 주소': '경기도 평택시 현화길 12', '대리인 성명': '이영희', '대리인 주민등록번호': '820202-2******', '대리인 연락처': '010-2222-3333', '위임 내용': '민원 서류 대리 수령' }, content: '본 위임장에 기재된 위임 사항에 대하여 대리인에게 전권을 위임합니다.', footer: '허위 위임장 작성 시 관련 법률에 따라 처벌받을 수 있습니다.' },
+                { id: 'm4', name: '전입신고서', fields: { '전입자 성명': '홍길동', '전입자 주민등록번호': '800101-1******', '전입자 연락처': '010-1234-5678', '전입지 주소': '경기도 평택시 현화길 100', '전출지 주소': '서울특별시 서초구 반포대로 1' }, content: '세대주 및 세대원의 전입 사실을 신고합니다.', footer: '전입신고는 거주지를 이동한 날부터 14일 이내에 해야 합니다.' }
+            ],
+            '부동산·민사': [
+                { id: 'b1', name: '부동산 임대차 계약서', fields: { '임차인 성명': '성삼문', '임차인 주민등록번호': '850303-1******', '임차인 연락처': '010-3333-4444', '임대인 성명': '이방원', '임대인 주민등록번호': '700101-1******', '임대인 연락처': '010-5555-7777', '소재지': '경기도 평택시 현화중길 5', '보증금': '금 50,000,000원', '월세': '금 500,000원' }, content: '임대인과 임차인은 위 부동산에 대하여 임대차 계약을 체결하고 성실히 이행할 것을 약정합니다.', footer: '본 계약을 증명하기 위해 계약서 2부를 작성하여 각각 1부씩 보관합니다.' },
+                { id: 'b2', name: '주택 임대차 신고서', fields: { '신고인 성명': '성삼문', '신고인 주민등록번호': '850303-1******', '신고인 연락처': '010-3333-4444', '주소': '경기도 평택시 현화중길 5', '임대차 기간': '2026.12.01 ~ 2028.11.30', '계약 금액': '보증금 5천만원 / 월세 50만원' }, content: '부동산 거래신고 등에 관한 법률에 따라 주택 임대차 계약 체결 사실을 신고합니다.', footer: '계약 체결일로부터 30일 이내에 전월세 신고를 완료해야 합니다.' },
+                { id: 'b3', name: '차용증', fields: { '채무자 성명': '박첨지', '채무자 주민등록번호': '700101-1******', '채무자 연락처': '010-5555-6666', '채무자 주소': '경기도 평택시 안중읍 123', '채권자 성명': '김정도', '채권자 주민등록번호': '650505-1******', '채권자 연락처': '010-7777-8888', '차용금액': '금 10,000,000원', '변제기일': '2027년 12월 31일', '이자율': '연 5%' }, content: '채무자는 채권자로부터 위 금액을 정히 차용하였으며, 지정된 변제기일까지 이자와 원금을 성실히 변제할 것을 약속합니다.', footer: '위 원금 및 이자를 기한 내 상환하지 않을 경우 법적 책임이 발생합니다.' },
+                { id: 'b4', name: '가족관계등록부 교부 신청서', fields: { '신청인 성명': '홍길동', '신청인 주민등록번호': '800101-1******', '신청인 연락처': '010-1234-5678', '주소': '경기도 평택시 현화길 12', '대상자 성명': '홍길동', '대상자 주민등록번호': '800101-1******', '발급 종류': '가족관계증명서 (상세)' }, content: '가족관계 등록에 관한 법률 규정에 따라 교부를 신청합니다.', footer: '본인 확인을 위한 신분증을 제시해야 합니다.' },
+                { id: 'b5', name: '체포·구속 통지 수령 위임장', fields: { '위임인 성명': '홍길동', '위임인 주민등록번호': '800101-1******', '위임인 연락처': '010-1234-5678', '위임받는 사람 성명': '김변호', '위임받는 사람 주민등록번호': '780808-1******', '위임받는 사람 연락처': '010-9999-0000', '관계': '변호인' }, content: '체포·구속 통지서 수령 권한을 위임합니다.', footer: '형사소송법 관련 규정에 의거합니다.' },
+                { id: 'b6', name: '토지/건물 등기사항증명서 교부신청서', fields: { '신청인 성명': '홍길동', '신청인 주민등록번호': '800101-1******', '신청인 연락처': '010-1234-5678', '부동산 소재지': '경기도 평택시 현화리 123' }, content: '해당 부동산의 등기사항전부증명서 교부를 신청합니다.', footer: '등기부 등본 열람 및 교부 신청용입니다.' },
+                { id: 'b7', name: '내용증명서', fields: { '발신인 성명': '홍길동', '발신인 주민등록번호': '800101-1******', '발신인 연락처': '010-1234-5678', '발신인 주소': '경기도 평택시 현화길 12', '수신인 성명': '김철수', '수신인 주민등록번호': '750505-1******', '수신인 연락처': '010-9876-5432', '수신인 주소': '서울특별시 서초구 반포대로 50', '제목': '계약 해지 및 원상복구 이행 촉구의 건' }, content: '귀하의 계약 위반 사항에 대하여 정식으로 최고하며, 지정 기한 내 원상복구를 이행할 것을 촉구합니다.', footer: '본 우편은 우체국을 통해 내용증명으로 발송됩니다.' }
+            ],
+            '자동차': [
+                { id: 'c1', name: '자동차 양도증명서', fields: { '양도인 성명': '홍길동', '양도인 주민등록번호': '800101-1******', '양도인 연락처': '010-1234-5678', '양수인 성명': '김철수', '양수인 주민등록번호': '750505-1******', '양수인 연락처': '010-9876-5432', '차량번호': '123가 4567', '매매금액': '금 15,000,000원' }, content: '양도인은 위 자동차를 양수인에게 매매 양도함을 증명합니다.', footer: '당사자 간 거래용 표준 양식입니다.' },
+                { id: 'c2', name: '자동차 이전등록 신청서', fields: { '신청인 성명': '김철수', '신청인 주민등록번호': '750505-1******', '신청인 연락처': '010-9876-5432', '주소': '경기도 평택시 현화중길 8', '차대번호': 'KMHXX41BPAC000000', '이전 사유': '매매' }, content: '자동차관리법에 따라 자동차 이전등록을 신청합니다.', footer: '양도증명서 및 신분증 사본을 첨부해야 합니다.' }
+            ],
+            '세무·기업': [
+                { id: 't1', name: '법인 인감증명서 발급 위임장', fields: { '대표자 성명': '홍길동', '대표자 주민등록번호': '800101-1******', '대표자 연락처': '010-1234-5678', '법인명': '(주)한국상사', '대리인 성명': '이영희', '대리인 주민등록번호': '820202-2******', '대리인 연락처': '010-2222-3333' }, content: '법인 인감증명서 발급 신청 및 수령을 대리인에게 위임합니다.', footer: '법인인감도장이 날인되어야 무효가 되지 않습니다.' },
+                { id: 't2', name: '사업자등록 신청서', fields: { '대표자 성명': '홍길동', '대표자 주민등록번호': '800101-1******', '대표자 연락처': '010-1234-5678', '상호명': '한국상사', '사업장 소재지': '경기도 평택시 현화길 1', '업태/종목': '도소매 / 전자상거래' }, content: '부가가치세법에 따라 사업자등록을 신청합니다.', footer: '임대차계약서 사본을 첨부해 주세요.' },
+                { id: 't3', name: '휴·폐업 신고서', fields: { '대표자 성명': '홍길동', '대표자 주민등록번호': '800101-1******', '대표자 연락처': '010-1234-5678', '상호명': '한국상사', '사업자등록번호': '123-45-67890', '구분': '폐업', '사유': '개인사정' }, content: '관련 세법에 따라 휴업/폐업 사실을 신고합니다.', footer: '사업자등록증 원본을 반납해야 합니다.' },
+                { id: 't4', name: '소득금액증명 발급 신청서', fields: { '신청인 성명': '홍길동', '신청인 주민등록번호': '800101-1******', '신청인 연락처': '010-1234-5678', '주소': '경기도 평택시 현화길 12', '용도': '관공서 제출용' }, content: '소득금액증명서 발급을 신청합니다.', footer: '국세청 홈택스 연동 서식입니다.' },
+                { id: 't5', name: '고용·산재보험 자격신고서', fields: { '대표자 성명': '홍길동', '대표자 주민등록번호': '800101-1******', '대표자 연락처': '010-1234-5678', '사업장명': '(주)한국상사', '근로자 성명': '이영희', '근로자 주민등록번호': '900202-2******', '근로자 연락처': '010-2222-3333', '취득일자': '2026-11-01' }, content: '근로자 고용 및 산재보험 자격 취득을 신고합니다.', footer: '입사일 기준 14일 이내에 신고해 주세요.' },
+                { id: 't6', name: '국민연금 수급권자 신청서', fields: { '신청인 성명': '홍길동', '신청인 주민등록번호': '800101-1******', '신청인 연락처': '010-1234-5678', '주소': '경기도 평택시 현화길 12', '급여 종류': '노령연금' }, content: '국민연금법에 따른 수급권을 신청합니다.', footer: '통장 사본을 함께 제출해야 합니다.' },
+                { id: 't7', name: '건강보험 자격득실 확인서 발급 신청서', fields: { '신청인 성명': '홍길동', '신청인 주민등록번호': '800101-1******', '신청인 연락처': '010-1234-5678', '주소': '경기도 평택시 현화길 12' }, content: '건강보험 자격득실 확인서 발급을 신청합니다.', footer: '본인 신청 시 신분증 확인이 필요합니다.' }
+            ]
+        };
+
+        let currentCat = '증명서·인증';
+        let currentForm = FORMS['증명서·인증'][0];
+        let formData = {};
+
+        // DOM 요소 안전 참조
+        const categoryContainer = document.getElementById('categoryContainer');
+        const formSelect = document.getElementById('formSelect');
+        const dynamicInputFields = document.getElementById('dynamicInputFields');
+        const currentFormBadge = document.getElementById('currentFormBadge');
+        const docTitle = document.getElementById('docTitle');
+        const docTableContainer = document.getElementById('docTableContainer');
+        const docContentContainer = document.getElementById('docContentContainer');
+        const docFooterText = document.getElementById('docFooterText');
+        const docDate = document.getElementById('docDate');
+
+        function initApp() {
+            renderCategories();
+            selectCategory(currentCat);
+            initCanvas();
+            initStampUpload();
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        function renderCategories() {
+            categoryContainer.innerHTML = '';
+            Object.keys(FORMS).forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `px-2 py-1 rounded text-xs font-medium transition ${cat === currentCat ? 'bg-blue-600 text-white' : 'text-slate-300 hover:text-white'}`;
+                btn.innerText = cat;
+                btn.onclick = () => selectCategory(cat);
+                categoryContainer.appendChild(btn);
+            });
+        }
+
+        function selectCategory(cat) {
+            currentCat = cat;
+            renderCategories();
+            formSelect.innerHTML = '';
+            FORMS[cat].forEach(f => {
+                const opt = document.createElement('option');
+                opt.value = f.id;
+                opt.innerText = f.name;
+                formSelect.appendChild(opt);
+            });
+            selectForm(FORMS[cat][0].id);
+        }
+
+        formSelect.onchange = (e) => selectForm(e.target.value);
+
+        function selectForm(formId) {
+            currentForm = FORMS[currentCat].find(f => f.id === formId) || FORMS[currentCat][0];
+            formData = { ...currentForm.fields };
+            currentFormBadge.innerText = currentForm.name;
+            renderInputs();
+            renderPreview();
+        }
+
+        function renderInputs() {
+            dynamicInputFields.innerHTML = '';
+            Object.keys(formData).forEach(key => {
+                const div = document.createElement('div');
+                div.className = 'flex flex-col gap-1';
+                div.innerHTML = `
+                    <label class="text-xs font-semibold text-slate-700">${key}</label>
+                    <input type="text" value="${formData[key]}" oninput="updateField('${key}', this.value)" class="border border-slate-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                `;
+                dynamicInputFields.appendChild(div);
+            });
+        }
+
+        function updateField(key, val) {
+            formData[key] = val;
+            renderPreview();
+        }
+
+        function renderPreview() {
+            docTitle.innerText = currentForm.name;
+            docContentContainer.innerText = currentForm.content;
+            docFooterText.innerText = currentForm.footer;
+
+            const today = new Date();
+            docDate.innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+
+            let tableHTML = '<table class="w-full border-collapse border border-slate-900 text-sm"><tbody>';
+            const keys = Object.keys(formData);
+            
+            keys.forEach(k => {
+                tableHTML += `
+                    <tr class="border-b border-slate-900">
+                        <td class="bg-slate-100 font-bold p-2.5 text-center border-r border-slate-900 w-36 whitespace-nowrap">${k}</td>
+                        <td class="p-2.5 border-r border-slate-900">${formData[k]}</td>
+                    </tr>
+                `;
+            });
+            tableHTML += '</tbody></table>';
+            docTableContainer.innerHTML = tableHTML;
+
+            const companyInput = document.getElementById('issuerCompany');
+            const ceoInput = document.getElementById('issuerCEO');
+            if (companyInput) document.getElementById('displayCompany').innerText = companyInput.value || '';
+            if (ceoInput) document.getElementById('displayCEO').innerText = ceoInput.value || '';
+        }
+
+        // 서명 캔버스
+        let canvas, ctx, isDrawing = false;
+        function initCanvas() {
+            canvas = document.getElementById('sigCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+
+            const getPos = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            };
+
+            const start = (e) => { isDrawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); };
+            const move = (e) => { if (!isDrawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
+            const stop = () => { if (isDrawing) { isDrawing = false; syncSignature(); } };
+
+            canvas.addEventListener('mousedown', start);
+            canvas.addEventListener('mousemove', move);
+            canvas.addEventListener('mouseup', stop);
+            canvas.addEventListener('touchstart', start);
+            canvas.addEventListener('touchmove', move);
+            canvas.addEventListener('touchend', stop);
+        }
+
+        function clearCanvas() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('sigImage').classList.add('hidden');
+        }
+
+        function syncSignature() {
+            const sigImg = document.getElementById('sigImage');
+            sigImg.src = canvas.toDataURL();
+            sigImg.classList.remove('hidden');
+        }
+
+        // 도장 이미지 업로드
+        function initStampUpload() {
+            const stampInput = document.getElementById('stampUpload');
+            if (!stampInput) return;
+            stampInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const stampImg = document.getElementById('stampImage');
+                        stampImg.src = evt.target.result;
+                        stampImg.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // PDF 생성/다운로드
+        function downloadPDF() {
+            const element = document.getElementById('a4Paper');
+            if (!window.html2pdf) {
+                alert('PDF 생성 라이브러리를 로딩 중입니다. 잠시 후 다시 시도해 주세요.');
+                return;
+            }
+            const opt = {
+                margin: 0,
+                filename: `${currentForm.name}_완성본.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // 안전한 초기 실행
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    </script>
+</body>
+</html>
