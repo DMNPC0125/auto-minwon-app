@@ -109,7 +109,6 @@
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <!-- 메인 콘텐츠 영역 -->
     <!-- [A] 양식 서식용 메인 레이아웃 -->
     <main id="documentViewLayout" class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
@@ -120,10 +119,8 @@
                 <span id="currentFormBadge" class="text-xs font-normal text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200"></span>
             </h2>
 
-            <!-- 인적사항 및 서식 필드 -->
             <div id="dynamicInputFields" class="space-y-3"></div>
 
-            <!-- 발급 기관 / 대표 정보 입력 필드 -->
             <div class="border-t pt-4 space-y-3">
                 <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">발급 기관 / 대표자 정보</h3>
                 <div class="grid grid-cols-2 gap-2">
@@ -138,7 +135,6 @@
                 </div>
             </div>
 
-            <!-- 서명 및 도장 입력 칸 -->
             <div class="border-t pt-4 space-y-3">
                 <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">서명 및 도장 첨부</h3>
                 <div>
@@ -160,17 +156,11 @@
             <div class="preview-wrapper">
                 <div id="a4Paper" class="a4-page flex flex-col justify-between">
                     <div>
-                        <!-- 문서 제목 -->
                         <h1 id="docTitle" class="text-2xl font-bold text-center tracking-widest border-b-2 border-slate-900 pb-3 mb-6"></h1>
-                        
-                        <!-- 표 레이아웃 -->
                         <div id="docTableContainer" class="mb-6"></div>
-
-                        <!-- 본문 상세 내용 -->
                         <div id="docContentContainer" class="py-10 px-4 min-h-[120px] text-center font-bold text-lg leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider"></div>
                     </div>
 
-                    <!-- 하단 날짜 / 서명 영역 -->
                     <div class="text-center space-y-6 pt-4 border-t border-slate-200">
                         <p id="docFooterText" class="text-xs text-slate-600 leading-normal"></p>
                         <div id="docDate" class="text-sm font-medium tracking-wide"></div>
@@ -204,7 +194,7 @@
         </section>
     </main>
 
-    <!-- [B] 연차 관리기 전용 대시보드 레이아웃 (선택 시 전환) -->
+    <!-- [B] 연차 관리기 전용 대시보드 레이아웃 -->
     <main id="annualLeaveLayout" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-6">
         
         <!-- 상단 컨트롤 툴바 -->
@@ -214,7 +204,7 @@
                     <i data-lucide="calendar" class="w-5 h-5 text-blue-600"></i>
                     <span>스마트 직원 연차 관리 시스템</span>
                 </h2>
-                <p class="text-xs text-slate-500 mt-1">입사일 기준 연차 수식 자동 계산 및 엑셀(XLSX) 데이터 호환 관리기</p>
+                <p class="text-xs text-slate-500 mt-1">입사일 기준 연차 수식 자동 계산 및 엑셀(XLSX) 연동 커스텀 관리기</p>
             </div>
             
             <div class="flex items-center gap-2 flex-wrap">
@@ -227,14 +217,10 @@
                     <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
                     <span>엑셀 내보내기 (.xlsx)</span>
                 </button>
-                <button onclick="downloadSampleExcel()" class="bg-slate-700 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition">
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>샘플 서식 다운로드</span>
-                </button>
             </div>
         </div>
 
-        <!-- 엑셀 데이터 테이블 영역 -->
+        <!-- 직원 목록 테이블 -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
                 <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
@@ -247,7 +233,6 @@
                 </button>
             </div>
 
-            <!-- 직원 목록 테이블 -->
             <div class="overflow-x-auto border border-slate-200 rounded-lg">
                 <table class="w-full text-xs text-left border-collapse">
                     <thead class="bg-slate-100 text-slate-700 uppercase font-bold border-b border-slate-200">
@@ -264,7 +249,7 @@
                         </tr>
                     </thead>
                     <tbody id="employeeTableBody" class="divide-y divide-slate-200 bg-white">
-                        <!-- JS로 동적 생성 -->
+                        <!-- JS 생성 -->
                     </tbody>
                 </table>
             </div>
@@ -296,15 +281,36 @@
                         </tr>
                     </thead>
                     <tbody id="usageTableBody" class="divide-y divide-slate-200 bg-white">
-                        <!-- JS로 동적 생성 -->
+                        <!-- JS 생성 -->
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <!-- 📌 [신규 추가] 연차별 연차 발생 갯수 사용자 커스텀 설정 기준표 -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+                <div>
+                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                        <i data-lucide="settings" class="w-4 h-4 text-slate-600"></i>
+                        <span>📌 근속연수별 기본 연차 발생 기준 설정</span>
+                    </h3>
+                    <p class="text-[11px] text-slate-500 mt-0.5">사업장 규정에 맞춰 연차수를 직접 수정하시면 상단 직원들의 발생 연차가 자동 재계산됩니다.</p>
+                </div>
+                <button onclick="resetLeaveRuleToDefault()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-2.5 py-1 rounded border border-slate-300 font-semibold transition">
+                    기본값(법정 기준) 초기화
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2 text-xs" id="leaveRulesGrid">
+                <!-- JS 생성 -->
+            </div>
+        </div>
+
     </main>
 
     <script>
-        // 1. 개편된 문서 서식 데이터 (요청 사양 적용)
+        // 1. 개편된 문서 서식 데이터
         const FORMS = {
             '증명서·인증': [
                 {
@@ -352,7 +358,23 @@
             ]
         };
 
-        // 2. 스마트 연차 계산 로직 (엑셀 함수 일치 구현)
+        // 2. 근속연수별 기본 연차 발생수 테이블 (기본 법정 기준값)
+        const DEFAULT_LEAVE_RULES = {
+            under1Year: 11, // 1년 미만 (월차 개념 최대 11개)
+            year1: 15,      // 1년차
+            year2: 15,      // 2년차
+            year3: 16,      // 3년차
+            year4: 16,      // 4년차
+            year5: 17,      // 5년차
+            year6: 17,      // 6년차
+            year7: 18,      // 7년차
+            year8: 18,      // 8년차
+            year10Plus: 25 // 10년 이상 최대
+        };
+
+        // 사용자 설정용 연차 규칙 객체
+        let leaveRules = { ...DEFAULT_LEAVE_RULES };
+
         let employees = [
             { id: 1, dept: '주간 미화', name: '김철수', joinDate: '2022-07-01', note: '우수 사원' },
             { id: 2, dept: '주간 미화', name: '이영희', joinDate: '2024-01-15', note: '' },
@@ -364,7 +386,7 @@
             { id: 102, date: '2026-11-05', empName: '이영희', type: '반차', days: 0.5, reason: '병원 진료' }
         ];
 
-        // 근속 연수 및 법정 연차 계산 함수
+        // 동적 설정 반영 연차 계산 함수
         function calculateLeaveDays(joinDateStr) {
             if (!joinDateStr) return { total: 0, currentYear: 0 };
             const joinDate = new Date(joinDateStr);
@@ -379,11 +401,33 @@
             let currentYear = 0;
 
             if (years < 1) {
-                total = Math.min(11, Math.max(0, months));
-                currentYear = 11;
+                total = Math.min(leaveRules.under1Year, Math.max(0, months));
+                currentYear = leaveRules.under1Year;
             } else {
-                total = 11 + (15 * years) + Math.floor(Math.pow(years - 1, 2) / 4);
-                currentYear = Math.min(25, 15 + Math.floor((years - 1) / 2));
+                // 연차별 동적 규칙 적용
+                if (years === 1) currentYear = leaveRules.year1;
+                else if (years === 2) currentYear = leaveRules.year2;
+                else if (years === 3) currentYear = leaveRules.year3;
+                else if (years === 4) currentYear = leaveRules.year4;
+                else if (years === 5) currentYear = leaveRules.year5;
+                else if (years === 6) currentYear = leaveRules.year6;
+                else if (years === 7) currentYear = leaveRules.year7;
+                else if (years === 8) currentYear = leaveRules.year8;
+                else currentYear = leaveRules.year10Plus;
+
+                // 누적 발생 계산
+                total = leaveRules.under1Year;
+                for (let y = 1; y <= years; y++) {
+                    if (y === 1) total += leaveRules.year1;
+                    else if (y === 2) total += leaveRules.year2;
+                    else if (y === 3) total += leaveRules.year3;
+                    else if (y === 4) total += leaveRules.year4;
+                    else if (y === 5) total += leaveRules.year5;
+                    else if (y === 6) total += leaveRules.year6;
+                    else if (y === 7) total += leaveRules.year7;
+                    else if (y === 8) total += leaveRules.year8;
+                    else total += leaveRules.year10Plus;
+                }
             }
 
             return { total, currentYear };
@@ -437,13 +481,11 @@
 
         function selectForm(formId) {
             if (currentCat === '연차 관리기') {
-                // 연차 관리기 전용 대시보드 출력
                 documentViewLayout.classList.add('hidden');
                 annualLeaveLayout.classList.remove('hidden');
                 documentActionBtns.classList.add('hidden');
                 renderLeaveDashboard();
             } else {
-                // 문서 서식 화면 출력
                 documentViewLayout.classList.remove('hidden');
                 annualLeaveLayout.classList.add('hidden');
                 documentActionBtns.classList.remove('hidden');
@@ -460,17 +502,59 @@
         function renderLeaveDashboard() {
             renderEmployeeTable();
             renderUsageTable();
+            renderRulesGrid();
             if (window.lucide) lucide.createIcons();
+        }
+
+        function renderRulesGrid() {
+            const grid = document.getElementById('leaveRulesGrid');
+            grid.innerHTML = '';
+
+            const ruleLabels = [
+                { key: 'under1Year', label: '1년 미만' },
+                { key: 'year1', label: '1년차' },
+                { key: 'year2', label: '2년차' },
+                { key: 'year3', label: '3년차' },
+                { key: 'year4', label: '4년차' },
+                { key: 'year5', label: '5년차' },
+                { key: 'year6', label: '6년차' },
+                { key: 'year7', label: '7년차' },
+                { key: 'year8', label: '8년차' },
+                { key: 'year10Plus', label: '10년 이상' }
+            ];
+
+            ruleLabels.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'bg-slate-50 p-2 rounded border border-slate-200 flex flex-col items-center gap-1';
+                div.innerHTML = `
+                    <span class="font-bold text-slate-600 text-[11px]">${r.label}</span>
+                    <div class="flex items-center gap-0.5">
+                        <input type="number" min="0" max="30" value="${leaveRules[r.key]}" onchange="updateRule('${r.key}', parseInt(this.value))" class="w-12 border border-slate-300 rounded text-center py-0.5 font-bold text-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs">
+                        <span class="text-[11px] text-slate-500">개</span>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function updateRule(key, val) {
+            if (isNaN(val) || val < 0) return;
+            leaveRules[key] = val;
+            renderLeaveDashboard();
+        }
+
+        function resetLeaveRuleToDefault() {
+            leaveRules = { ...DEFAULT_LEAVE_RULES };
+            renderLeaveDashboard();
         }
 
         function renderEmployeeTable() {
             const tbody = document.getElementById('employeeTableBody');
             tbody.innerHTML = '';
 
-            employees.forEach((emp, index) => {
+            employees.forEach((emp) => {
                 const leaveInfo = calculateLeaveDays(emp.joinDate);
                 
-                // 사용 연차 합계 구하기
                 const used = leaveUsages
                     .filter(u => u.empName.trim() === emp.name.trim())
                     .reduce((acc, cur) => acc + (parseFloat(cur.days) || 0), 0);
@@ -590,18 +674,30 @@
                 '사유 및 비고': u.reason || ''
             }));
 
+            // 사용자 연차 설정 규칙도 엑셀에 저장
+            const ruleData = [
+                { '항목': '1년미만', '설정연차수': leaveRules.under1Year },
+                { '항목': '1년차', '설정연차수': leaveRules.year1 },
+                { '항목': '2년차', '설정연차수': leaveRules.year2 },
+                { '항목': '3년차', '설정연차수': leaveRules.year3 },
+                { '항목': '4년차', '설정연차수': leaveRules.year4 },
+                { '항목': '5년차', '설정연차수': leaveRules.year5 },
+                { '항목': '6년차', '설정연차수': leaveRules.year6 },
+                { '항목': '7년차', '설정연차수': leaveRules.year7 },
+                { '항목': '8년차', '설정연차수': leaveRules.year8 },
+                { '항목': '10년이상', '설정연차수': leaveRules.year10Plus }
+            ];
+
             const wb = XLSX.utils.book_new();
             const wsEmp = XLSX.utils.json_to_sheet(empData);
             const wsUsage = XLSX.utils.json_to_sheet(usageData);
+            const wsRules = XLSX.utils.json_to_sheet(ruleData);
 
             XLSX.utils.book_append_sheet(wb, wsEmp, "직원 연차관리");
             XLSX.utils.book_append_sheet(wb, wsUsage, "연차사용내역");
+            XLSX.utils.book_append_sheet(wb, wsRules, "연차설정기준");
 
             XLSX.writeFile(wb, "직원_연차관리_시트.xlsx");
-        }
-
-        function downloadSampleExcel() {
-            exportLeaveExcel();
         }
 
         function importLeaveExcel(e) {
@@ -612,6 +708,23 @@
             reader.onload = function(evt) {
                 const data = new Uint8Array(evt.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
+
+                if (workbook.SheetNames.includes("연차설정기준")) {
+                    const ruleSheet = workbook.Sheets["연차설정기준"];
+                    const ruleJson = XLSX.utils.sheet_to_json(ruleSheet);
+                    ruleJson.forEach(row => {
+                        if (row['항목'] === '1년미만') leaveRules.under1Year = parseInt(row['설정연차수']) || 11;
+                        if (row['항목'] === '1년차') leaveRules.year1 = parseInt(row['설정연차수']) || 15;
+                        if (row['항목'] === '2년차') leaveRules.year2 = parseInt(row['설정연차수']) || 15;
+                        if (row['항목'] === '3년차') leaveRules.year3 = parseInt(row['설정연차수']) || 16;
+                        if (row['항목'] === '4년차') leaveRules.year4 = parseInt(row['설정연차수']) || 16;
+                        if (row['항목'] === '5년차') leaveRules.year5 = parseInt(row['설정연차수']) || 17;
+                        if (row['항목'] === '6년차') leaveRules.year6 = parseInt(row['설정연차수']) || 17;
+                        if (row['항목'] === '7년차') leaveRules.year7 = parseInt(row['설정연차수']) || 18;
+                        if (row['항목'] === '8년차') leaveRules.year8 = parseInt(row['설정연차수']) || 18;
+                        if (row['항목'] === '10년이상') leaveRules.year10Plus = parseInt(row['설정연차수']) || 25;
+                    });
+                }
 
                 if (workbook.SheetNames.includes("직원 연차관리")) {
                     const empSheet = workbook.Sheets["직원 연차관리"];
@@ -638,7 +751,7 @@
                     }));
                 }
 
-                alert('엑셀 파일 데이터를 성공적으로 불러왔습니다!');
+                alert('연차 데이터 및 연차 설정 기준을 성공적으로 불러왔습니다!');
                 renderLeaveDashboard();
             };
             reader.readAsArrayBuffer(file);
