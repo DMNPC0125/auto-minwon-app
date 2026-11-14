@@ -7,7 +7,7 @@
 
     <!-- 구글 애드센스 승인/연동 코드 -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7434707652698346"
-         crossorigin="anonymous"></script>
+         crossorigin="anonymous" onerror="window.__adsBlocked=true;"></script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,13 +24,20 @@
         
         .a4-page {
             width: 210mm;
+            height: 297mm;
             min-height: 297mm;
-            padding: 15mm 15mm;
+            max-height: 297mm;
+            /* 1. 상단 여백 22.5mm & 5. 하단 여백 22.5mm 고정 */
+            padding: 22.5mm 15mm 22.5mm 15mm;
             margin: 0 auto;
             background: white;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             box-sizing: border-box;
             transform-origin: top center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
         }
 
         .preview-wrapper {
@@ -54,21 +61,63 @@
         }
 
         @media print {
-            body { background: white; margin: 0; padding: 0; }
-            .no-print { display: none !important; }
-            .preview-wrapper { overflow: visible !important; }
-            .a4-page {
-                width: 100% !important;
-                min-height: auto !important;
-                box-shadow: none !important;
+            @page { size: A4 portrait; margin: 0; }
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                background: white;
+                margin: 0 !important;
                 padding: 0 !important;
+                overflow: hidden !important;
+            }
+            .no-print { display: none !important; }
+            #documentViewLayout {
+                display: block !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            #documentViewLayout > section.no-print {
+                display: none !important;
+            }
+            #documentViewLayout > section:not(.no-print) {
+                display: block !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .preview-wrapper {
+                display: block !important;
+                overflow: visible !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .a4-page {
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                box-shadow: none !important;
+                padding: 22.5mm 15mm 22.5mm 15mm !important;
                 margin: 0 !important;
                 transform: none !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                break-after: avoid !important;
+                break-inside: avoid !important;
             }
         }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- 알림 토스트 메시지 컨테이너 -->
+    <div id="toastContainer" class="no-print fixed bottom-5 right-5 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- 상단 헤더 -->
     <header class="no-print bg-slate-900 text-white sticky top-0 z-50 shadow-md">
@@ -90,7 +139,7 @@
                     <i data-lucide="printer" class="w-4 h-4"></i>
                     <span>인쇄하기</span>
                 </button>
-                <button onclick="downloadPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition">
+                <button id="pdfSaveBtn" onclick="downloadPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition">
                     <i data-lucide="download" class="w-4 h-4"></i>
                     <span>PDF 저장</span>
                 </button>
@@ -106,7 +155,7 @@
              data-ad-slot="1234567890"
              data-ad-format="horizontal"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <script>try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}</script>
     </div>
 
     <!-- [A] 양식 서식용 메인 레이아웃 -->
@@ -121,7 +170,7 @@
 
             <div id="dynamicInputFields" class="space-y-3"></div>
 
-            <div class="border-t pt-4 space-y-3">
+            <div id="issuerInfoSection" class="border-t pt-4 space-y-3">
                 <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">발급 기관 / 대표자 정보</h3>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
@@ -151,27 +200,31 @@
             </div>
         </section>
 
-        <!-- 우측 미리보기 (A4 레이아웃) -->
+        <!-- 우측 미리보기 (고정 표준 A4 레이아웃) -->
         <section class="lg:col-span-7 flex flex-col items-center">
             <div class="preview-wrapper">
-                <div id="a4Paper" class="a4-page flex flex-col justify-between">
-                    <div>
-                        <h1 id="docTitle" class="text-2xl font-bold text-center tracking-widest border-b-2 border-slate-900 pb-3 mb-6"></h1>
-                        <div id="docTableContainer" class="mb-6"></div>
-                        <div id="docContentContainer" class="py-6 px-4 min-h-[80px] text-center font-bold text-base leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider"></div>
-                    </div>
+                <div id="a4Paper" class="a4-page flex flex-col">
+                    <!-- 1. 양식 제목: 기존 대비 2pt 확대(text-[27px]), 2. 제목 아래 밑줄 제거 -->
+                    <h1 id="docTitle" class="text-[27px] font-bold text-center tracking-widest leading-tight"></h1>
 
-                    <div class="text-center space-y-6 pt-4 border-t border-slate-200">
-                        <p id="docFooterText" class="text-xs text-slate-600 leading-normal"></p>
+                    <!-- 3. 전체 표: 쪽 맨 위~제목 간격(22.5mm)만큼 제목 아래에서 띄움 -->
+                    <div id="docTableContainer" class="mt-[22.5mm] shrink-0"></div>
+
+                    <!-- 4. 표와 하단 작성일자 사이 정중앙 배치 및 단어 단위 줄바꿈(break-keep) -->
+                    <div id="docContentContainer" class="flex-1 flex items-center justify-center text-center font-bold text-lg leading-relaxed px-6 py-4 whitespace-pre-wrap break-keep tracking-wider"></div>
+
+                    <!-- 5. 쪽 맨 아래쪽에서 22.5mm(padding-bottom) 간격으로 하단 고정 배치 -->
+                    <div class="mt-auto shrink-0 text-center space-y-4 pt-3 border-t border-slate-200">
+                        <p id="docFooterText" class="text-xs text-slate-600 leading-normal break-keep"></p>
                         <div id="docDate" class="text-sm font-medium tracking-wide"></div>
                         
-                        <div class="flex flex-col items-center justify-center space-y-2 pt-2">
+                        <div class="flex flex-col items-center justify-center space-y-1.5 pt-1">
                             <div class="text-sm font-bold tracking-wider" id="displayCompany">주식회사 한국상사</div>
                             <div class="flex items-center justify-center space-x-2">
-                                <span class="text-sm font-semibold">대표자:</span>
+                                <span id="displaySignerLabel" class="text-sm font-semibold">대표자:</span>
                                 <span id="displayCEO" class="text-sm font-bold min-w-[50px]">홍 길 동</span>
                                 <div class="relative w-12 h-12 border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400 rounded-full">
-                                    <span class="no-print">(인)</span>
+                                    <span id="stampPlaceholder" class="no-print">(인)</span>
                                     <img id="stampImage" alt="도장 날인" class="absolute inset-0 w-full h-full object-contain hidden" />
                                     <img id="sigImage" alt="직접 서명" class="absolute inset-0 w-full h-full object-contain hidden" />
                                 </div>
@@ -189,7 +242,7 @@
                      data-ad-slot="0987654321"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <script>try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}</script>
             </div>
         </section>
     </main>
@@ -287,7 +340,7 @@
             </div>
         </div>
 
-        <!-- 📌 연차별 연차 발생 갯수 사용자 커스텀 설정 기준표 -->
+        <!-- 근속연수별 기본 연차 발생 기준 설정표 -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
                 <div>
@@ -310,7 +363,40 @@
     </main>
 
     <script>
-        // 1. 개편된 문서 서식 데이터 (내용증명서는 '부동산·민사'에 포함)
+        // 미리보기 환경 등에서 외부 광고 스크립트 차단 시 발생하는 미처리 Promise 거부 방어
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event && event.reason && (event.reason.isTrusted || String(event.reason).includes('adsbygoogle'))) {
+                event.preventDefault();
+            }
+        });
+
+        // HTML 특수문자 이스케이프 (입력값 내 <, >, " 등으로 인한 레이아웃 깨짐 방지)
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // 비차단 안내 토스트 메시지 (alert 대체)
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            const bgClass = type === 'error' ? 'bg-red-600' : (type === 'success' ? 'bg-emerald-600' : 'bg-slate-800');
+            toast.className = `${bgClass} text-white text-xs font-medium px-4 py-2.5 rounded-lg shadow-lg transition-opacity duration-300 pointer-events-auto`;
+            toast.innerText = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 1. 문서 서식 데이터 (내용증명서는 '부동산·민사'에 포함)
         const FORMS = {
             '증명서·인증': [
                 {
@@ -357,20 +443,20 @@
                     name: '내용증명서',
                     isNoticeDoc: true,
                     fields: { 
-                        '제목': '전세보증금 반환 요청의 건', 
+                        '제목': '전세보증금 반환 요청', 
                         '발신인 성명': '홍길동', 
-                        '발신인 주소': '서울특별시 강남구 테헤란로 123, 101동 202호', 
                         '발신인 연락처': '010-1234-5678', 
+                        '발신인 주소': '서울특별시 강남구 테헤란로 123, 101동 202호', 
                         '수신인 성명/상호': '김철수', 
-                        '수신인 주소': '경기도 평택시 현화길 45, 301호', 
                         '수신인 연락처': '010-9876-5432', 
-                        '사실관계': '2024년 3월 1일 체결한 임대차 계약(보증금 1억원)의 만료일(2026년 3월 1일)이 도래함에 따라 재계약 의사가 없음을 사전에 통지함.', 
-                        '요구사항': '임대차 계약 만료일에 맞춰 전세보증금 100,000,000원을 지정 계좌(OO은행 123-456-789012)로 반환해 줄 것.', 
+                        '수신인 주소': '경기도 평택시 현화길 45, 301호', 
+                        '사실관계': '2024년 3월 1일 체결한 임대차 계약(보증금 100,000,000원)의 만료일(2026년 3월 1일)이 도래함에 따라 재계약 의사가 없음을 사전에 통지함.', 
+                        '요구사항': '임대차 계약 만료일에 맞춰 전세보증금 100,000,000원을 지정 계좌(OO은행 123-456-789012, 예금주: 홍길동)로 반환해 줄 것.', 
                         '이행 기한': '2026년 3월 1일까지', 
                         '미이행 시 조치': '상기 기한 내 보증금 미반환 시 임차권등기명령 신청 및 보증금 반환 청구 소송 등 가능한 모든 법적 조치를 취할 예정임.' 
                     },
                     content: '위와 같이 내용증명을 발송합니다.',
-                    footer: '본 내용증명서는 확정일자 및 통지 사실을 입증하기 위해 발급되었습니다.'
+                    footer: '본 내용증명서는 통지 사실 및 발송 일자를 입증하기 위해 작성되었습니다.'
                 }
             ],
             '연차 관리기': [
@@ -378,18 +464,18 @@
             ]
         };
 
-        // 작성 요령 팁 데이터
+        // 내용증명서 작성 요령 가이드
         const FIELD_TIPS = {
-            '제목': '문서의 목적을 한 줄로 표시 (예: 전세보증금 반환 요청, 대여금 반환 요청)',
-            '발신인 성명': '봉투의 발신인 성명과 일치해야 함',
-            '발신인 주소': '봉투의 발신인 주소와 일치해야 함',
-            '발신인 연락처': '연락 가능한 전화번호 작성',
-            '수신인 성명/상호': '실제로 받을 사람 또는 법인 상호',
+            '제목': '전세보증금 반환 요청, 대여금 반환 요청 등 문서의 목적을 한 줄로 표시',
+            '발신인 성명': '봉투의 발신인 정보와 일치',
+            '발신인 연락처': '봉투의 발신인 정보와 일치',
+            '발신인 주소': '봉투의 발신인 정보와 일치',
+            '수신인 성명/상호': '실제로 받을 수 있는 성명 또는 상호 확인',
+            '수신인 연락처': '수신인 연락처 기재',
             '수신인 주소': '실제로 우편을 받을 수 있는 정확한 주소 확인',
-            '수신인 연락처': '수신인 연락처 작성',
             '사실관계': '계약일, 금액, 지급일, 미이행 사실 등 날짜와 숫자를 중심으로 기술',
             '요구사항': '반환 금액, 입금 계좌, 이행 방법 등 원하는 조치를 구체적으로 표시',
-            '이행 기한': '"빠른 시일 내"보다 특정 날짜 또는 수령일부터 정한 기간으로 명확히 기재',
+            '이행 기한': '"빠른 시일 내"보다 특정 날짜 또는 수령일부터 정한 기간으로 명확한 기한 기재',
             '미이행 시 조치': '법적 절차 등 예정된 대응을 사실에 근거해 짧게 기술'
         };
 
@@ -524,6 +610,17 @@
                 currentForm = FORMS[currentCat].find(f => f.id === formId) || FORMS[currentCat][0];
                 formData = { ...currentForm.fields };
                 document.getElementById('currentFormBadge').innerText = currentForm.name;
+
+                // 내용증명서일 때는 발급기관 입력창 대신 발신인 성명으로 하단 서명란 연동
+                const issuerInfoSection = document.getElementById('issuerInfoSection');
+                if (issuerInfoSection) {
+                    if (currentForm.isNoticeDoc) {
+                        issuerInfoSection.classList.add('hidden');
+                    } else {
+                        issuerInfoSection.classList.remove('hidden');
+                    }
+                }
+
                 renderInputs();
                 renderPreview();
             }
@@ -595,14 +692,14 @@
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition';
                 tr.innerHTML = `
-                    <td class="p-2 border-r"><input type="text" value="${emp.dept}" onchange="updateEmp(${emp.id}, 'dept', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
-                    <td class="p-2 border-r"><input type="text" value="${emp.name}" onchange="updateEmp(${emp.id}, 'name', this.value)" class="w-full border rounded px-1.5 py-1 text-xs font-bold"></td>
-                    <td class="p-2 border-r"><input type="date" value="${emp.joinDate}" onchange="updateEmp(${emp.id}, 'joinDate', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
+                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(emp.dept)}" onchange="updateEmp(${emp.id}, 'dept', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
+                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(emp.name)}" onchange="updateEmp(${emp.id}, 'name', this.value)" class="w-full border rounded px-1.5 py-1 text-xs font-bold"></td>
+                    <td class="p-2 border-r"><input type="date" value="${escapeHTML(emp.joinDate)}" onchange="updateEmp(${emp.id}, 'joinDate', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
                     <td class="p-2 text-center border-r font-bold text-blue-600 bg-blue-50/30">${leaveInfo.total}일</td>
                     <td class="p-2 text-center border-r font-bold text-red-600 bg-red-50/30">${used}일</td>
                     <td class="p-2 text-center border-r font-bold text-emerald-600 bg-emerald-50/30">${remain}일</td>
                     <td class="p-2 text-center border-r text-slate-600">${leaveInfo.currentYear}일</td>
-                    <td class="p-2 border-r"><input type="text" value="${emp.note || ''}" onchange="updateEmp(${emp.id}, 'note', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
+                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(emp.note || '')}" onchange="updateEmp(${emp.id}, 'note', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
                     <td class="p-2 text-center">
                         <button onclick="deleteEmp(${emp.id})" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                     </td>
@@ -616,12 +713,12 @@
             tbody.innerHTML = '';
 
             leaveUsages.forEach((u) => {
-                let empOptions = employees.map(e => `<option value="${e.name}" ${e.name === u.empName ? 'selected' : ''}>${e.name} (${e.dept})</option>`).join('');
+                let empOptions = employees.map(e => `<option value="${escapeHTML(e.name)}" ${e.name === u.empName ? 'selected' : ''}>${escapeHTML(e.name)} (${escapeHTML(e.dept)})</option>`).join('');
 
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition';
                 tr.innerHTML = `
-                    <td class="p-2 border-r"><input type="date" value="${u.date}" onchange="updateUsage(${u.id}, 'date', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
+                    <td class="p-2 border-r"><input type="date" value="${escapeHTML(u.date)}" onchange="updateUsage(${u.id}, 'date', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
                     <td class="p-2 border-r"><select onchange="updateUsage(${u.id}, 'empName', this.value)" class="w-full border rounded px-1.5 py-1 text-xs font-semibold">${empOptions}</select></td>
                     <td class="p-2 border-r">
                         <select onchange="updateUsage(${u.id}, 'type', this.value)" class="w-full border rounded px-1.5 py-1 text-xs">
@@ -632,7 +729,7 @@
                         </select>
                     </td>
                     <td class="p-2 border-r"><input type="number" step="0.5" value="${u.days}" onchange="updateUsage(${u.id}, 'days', parseFloat(this.value))" class="w-full border rounded px-1.5 py-1 text-xs text-center font-bold"></td>
-                    <td class="p-2 border-r"><input type="text" value="${u.reason || ''}" onchange="updateUsage(${u.id}, 'reason', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
+                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(u.reason || '')}" onchange="updateUsage(${u.id}, 'reason', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
                     <td class="p-2 text-center">
                         <button onclick="deleteUsage(${u.id})" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                     </td>
@@ -736,53 +833,58 @@
 
             const reader = new FileReader();
             reader.onload = function(evt) {
-                const data = new Uint8Array(evt.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
+                try {
+                    const data = new Uint8Array(evt.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
 
-                if (workbook.SheetNames.includes("연차설정기준")) {
-                    const ruleSheet = workbook.Sheets["연차설정기준"];
-                    const ruleJson = XLSX.utils.sheet_to_json(ruleSheet);
-                    ruleJson.forEach(row => {
-                        if (row['항목'] === '1년미만') leaveRules.under1Year = parseInt(row['설정연차수']) || 11;
-                        if (row['항목'] === '1년차') leaveRules.year1 = parseInt(row['설정연차수']) || 15;
-                        if (row['항목'] === '2년차') leaveRules.year2 = parseInt(row['설정연차수']) || 15;
-                        if (row['항목'] === '3년차') leaveRules.year3 = parseInt(row['설정연차수']) || 16;
-                        if (row['항목'] === '4년차') leaveRules.year4 = parseInt(row['설정연차수']) || 16;
-                        if (row['항목'] === '5년차') leaveRules.year5 = parseInt(row['설정연차수']) || 17;
-                        if (row['항목'] === '6년차') leaveRules.year6 = parseInt(row['설정연차수']) || 17;
-                        if (row['항목'] === '7년차') leaveRules.year7 = parseInt(row['설정연차수']) || 18;
-                        if (row['항목'] === '8년차') leaveRules.year8 = parseInt(row['설정연차수']) || 18;
-                        if (row['항목'] === '10년이상') leaveRules.year10Plus = parseInt(row['설정연차수']) || 25;
-                    });
+                    if (workbook.SheetNames.includes("연차설정기준")) {
+                        const ruleSheet = workbook.Sheets["연차설정기준"];
+                        const ruleJson = XLSX.utils.sheet_to_json(ruleSheet);
+                        ruleJson.forEach(row => {
+                            if (row['항목'] === '1년미만') leaveRules.under1Year = parseInt(row['설정연차수']) || 11;
+                            if (row['항목'] === '1년차') leaveRules.year1 = parseInt(row['설정연차수']) || 15;
+                            if (row['항목'] === '2년차') leaveRules.year2 = parseInt(row['설정연차수']) || 15;
+                            if (row['항목'] === '3년차') leaveRules.year3 = parseInt(row['설정연차수']) || 16;
+                            if (row['항목'] === '4년차') leaveRules.year4 = parseInt(row['설정연차수']) || 16;
+                            if (row['항목'] === '5년차') leaveRules.year5 = parseInt(row['설정연차수']) || 17;
+                            if (row['항목'] === '6년차') leaveRules.year6 = parseInt(row['설정연차수']) || 17;
+                            if (row['항목'] === '7년차') leaveRules.year7 = parseInt(row['설정연차수']) || 18;
+                            if (row['항목'] === '8년차') leaveRules.year8 = parseInt(row['설정연차수']) || 18;
+                            if (row['항목'] === '10년이상') leaveRules.year10Plus = parseInt(row['설정연차수']) || 25;
+                        });
+                    }
+
+                    if (workbook.SheetNames.includes("직원 연차관리")) {
+                        const empSheet = workbook.Sheets["직원 연차관리"];
+                        const empJson = XLSX.utils.sheet_to_json(empSheet);
+                        employees = empJson.map((row, i) => ({
+                            id: i + 1,
+                            dept: row['업무/부서'] || row['업무'] || '부서',
+                            name: row['이름'] || `직원_${i+1}`,
+                            joinDate: formatDateVal(row['입사일']),
+                            note: row['비고'] || ''
+                        }));
+                    }
+
+                    if (workbook.SheetNames.includes("연차사용내역")) {
+                        const usageSheet = workbook.Sheets["연차사용내역"];
+                        const usageJson = XLSX.utils.sheet_to_json(usageSheet);
+                        leaveUsages = usageJson.map((row, i) => ({
+                            id: 100 + i + 1,
+                            date: formatDateVal(row['사용일자']),
+                            empName: row['이름'] || '',
+                            type: row['구분'] || '연차',
+                            days: parseFloat(row['사용차감일수']) || 1,
+                            reason: row['사유 및 비고'] || ''
+                        }));
+                    }
+
+                    showToast('연차 데이터 및 설정 기준을 성공적으로 불러왔습니다!', 'success');
+                    renderLeaveDashboard();
+                } catch (err) {
+                    console.error(err);
+                    showToast('엑셀 파일을 읽는 중 오류가 발생했습니다. 파일 형식을 확인해 주세요.', 'error');
                 }
-
-                if (workbook.SheetNames.includes("직원 연차관리")) {
-                    const empSheet = workbook.Sheets["직원 연차관리"];
-                    const empJson = XLSX.utils.sheet_to_json(empSheet);
-                    employees = empJson.map((row, i) => ({
-                        id: i + 1,
-                        dept: row['업무/부서'] || row['업무'] || '부서',
-                        name: row['이름'] || `직원_${i+1}`,
-                        joinDate: formatDateVal(row['입사일']),
-                        note: row['비고'] || ''
-                    }));
-                }
-
-                if (workbook.SheetNames.includes("연차사용내역")) {
-                    const usageSheet = workbook.Sheets["연차사용내역"];
-                    const usageJson = XLSX.utils.sheet_to_json(usageSheet);
-                    leaveUsages = usageJson.map((row, i) => ({
-                        id: 100 + i + 1,
-                        date: formatDateVal(row['사용일자']),
-                        empName: row['이름'] || '',
-                        type: row['구분'] || '연차',
-                        days: parseFloat(row['사용차감일수']) || 1,
-                        reason: row['사유 및 비고'] || ''
-                    }));
-                }
-
-                alert('연차 데이터 및 연차 설정 기준을 성공적으로 불러왔습니다!');
-                renderLeaveDashboard();
             };
             reader.readAsArrayBuffer(file);
         }
@@ -796,7 +898,7 @@
             return String(val).replace(/\./g, '-');
         }
 
-        // ================= 기존 민원 양식 JS 로직 =================
+        // ================= 민원 양식 및 내용증명서 렌더링 로직 =================
         const dynamicInputFields = document.getElementById('dynamicInputFields');
         const docTitle = document.getElementById('docTitle');
         const docTableContainer = document.getElementById('docTableContainer');
@@ -810,20 +912,35 @@
                 const div = document.createElement('div');
                 div.className = 'flex flex-col gap-1';
                 
-                const tip = FIELD_TIPS[key] ? `<span class="text-[11px] text-slate-400 font-normal ml-1">(${FIELD_TIPS[key]})</span>` : '';
+                const tipHtml = FIELD_TIPS[key]
+                    ? `<span class="text-[11px] text-slate-400 font-normal">작성 요령: ${escapeHTML(FIELD_TIPS[key])}</span>`
+                    : '';
                 
                 const isTextArea = key === '사실관계' || key === '요구사항' || key === '미이행 시 조치';
                 
+                const label = document.createElement('label');
+                label.className = 'text-xs font-semibold text-slate-700';
+                label.innerText = key;
+                div.appendChild(label);
+
                 if (isTextArea) {
-                    div.innerHTML = `
-                        <label class="text-xs font-semibold text-slate-700">${key}${tip}</label>
-                        <textarea oninput="updateField('${key}', this.value)" rows="3" class="border border-slate-300 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500">${formData[key]}</textarea>
-                    `;
+                    const ta = document.createElement('textarea');
+                    ta.rows = 3;
+                    ta.className = 'border border-slate-300 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500';
+                    ta.value = formData[key] || '';
+                    ta.oninput = (e) => updateField(key, e.target.value);
+                    div.appendChild(ta);
                 } else {
-                    div.innerHTML = `
-                        <label class="text-xs font-semibold text-slate-700">${key}${tip}</label>
-                        <input type="text" value="${formData[key]}" oninput="updateField('${key}', this.value)" class="border border-slate-300 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    `;
+                    const inp = document.createElement('input');
+                    inp.type = 'text';
+                    inp.className = 'border border-slate-300 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500';
+                    inp.value = formData[key] || '';
+                    inp.oninput = (e) => updateField(key, e.target.value);
+                    div.appendChild(inp);
+                }
+
+                if (tipHtml) {
+                    div.insertAdjacentHTML('beforeend', tipHtml);
                 }
                 dynamicInputFields.appendChild(div);
             });
@@ -838,11 +955,11 @@
             docTitle.innerText = currentForm.name;
             docContentContainer.innerText = currentForm.content;
             
-            // "위와 같이 내용증명을 발송합니다." 문구를 가운데 정렬하도록 설정
+            // 모든 양식 공통: 표와 작성일자 중간 정중앙 위치 + 단어 단위 자연스러운 줄바꿈(break-keep)
             if (currentForm.isNoticeDoc) {
-                docContentContainer.className = "py-6 px-4 text-center font-bold text-base leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider";
+                docContentContainer.className = "flex-1 flex items-center justify-center text-center font-bold text-base leading-relaxed px-6 py-2 whitespace-pre-wrap break-keep tracking-wider";
             } else {
-                docContentContainer.className = "py-10 px-4 min-h-[120px] text-center font-bold text-lg leading-relaxed mb-6 whitespace-pre-wrap flex items-center justify-center tracking-wider";
+                docContentContainer.className = "flex-1 flex items-center justify-center text-center font-bold text-lg leading-relaxed px-6 py-4 whitespace-pre-wrap break-keep tracking-wider";
             }
             
             docFooterText.innerText = currentForm.footer;
@@ -852,36 +969,40 @@
 
             let tableHTML = '';
             
-            // 내용증명서 전용 분기 처리 (발신인, 수신인 성명/주소/연락처 독립적 구분 표 생성)
+            // 내용증명서 전용 고정 규격 표 (A4 1장 내 여유 있게 안착하도록 행 높이 최적화)
             if (currentForm.isNoticeDoc) {
                 tableHTML = `
-                <table class="w-full border-collapse border border-slate-900 text-xs mb-4">
+                <table class="w-full border-collapse border border-slate-900 text-xs mb-3">
                     <tbody>
                         <tr class="border-b border-slate-900">
-                            <td rowspan="3" class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900 w-20">발신인</td>
-                            <td class="bg-slate-50 font-semibold p-1.5 text-center border-r border-slate-900 w-16">성명</td>
-                            <td class="p-1.5 font-medium border-r border-slate-900">${formData['발신인 성명'] || ''}</td>
+                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900 w-24">제 목</td>
+                            <td colspan="2" class="p-1.5 font-bold border-r border-slate-900 text-sm">${escapeHTML(formData['제목'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1.5 text-center border-r border-slate-900">주소</td>
-                            <td class="p-1.5 border-r border-slate-900">${formData['발신인 주소'] || ''}</td>
+                            <td rowspan="3" class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900 w-24">발신인</td>
+                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900 w-20">성명</td>
+                            <td class="p-1 font-medium border-r border-slate-900">${escapeHTML(formData['발신인 성명'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1.5 text-center border-r border-slate-900">연락처</td>
-                            <td class="p-1.5 border-r border-slate-900">${formData['발신인 연락처'] || ''}</td>
+                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">연락처</td>
+                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['발신인 연락처'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td rowspan="3" class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900">수신인</td>
-                            <td class="bg-slate-50 font-semibold p-1.5 text-center border-r border-slate-900">성명/상호</td>
-                            <td class="p-1.5 font-medium border-r border-slate-900">${formData['수신인 성명/상호'] || ''}</td>
+                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">주소</td>
+                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['발신인 주소'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1.5 text-center border-r border-slate-900">주소</td>
-                            <td class="p-1.5 border-r border-slate-900">${formData['수신인 주소'] || ''}</td>
+                            <td rowspan="3" class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">수신인</td>
+                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">성명/상호</td>
+                            <td class="p-1 font-medium border-r border-slate-900">${escapeHTML(formData['수신인 성명/상호'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1.5 text-center border-r border-slate-900">연락처</td>
-                            <td class="p-1.5 border-r border-slate-900">${formData['수신인 연락처'] || ''}</td>
+                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">연락처</td>
+                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['수신인 연락처'])}</td>
+                        </tr>
+                        <tr class="border-b border-slate-900">
+                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">주소</td>
+                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['수신인 주소'])}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -889,24 +1010,20 @@
                 <table class="w-full border-collapse border border-slate-900 text-xs">
                     <tbody>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900 w-24">제 목</td>
-                            <td class="p-2 font-bold border-r border-slate-900 text-sm">${formData['제목'] || ''}</td>
+                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900 w-24">1. 사실관계</td>
+                            <td class="p-1.5 border-r border-slate-900 whitespace-pre-wrap leading-snug break-keep">${escapeHTML(formData['사실관계'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900">1. 사실관계</td>
-                            <td class="p-2 border-r border-slate-900 whitespace-pre-wrap leading-relaxed">${formData['사실관계'] || ''}</td>
+                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">2. 요구사항</td>
+                            <td class="p-1.5 border-r border-slate-900 whitespace-pre-wrap leading-snug break-keep">${escapeHTML(formData['요구사항'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900">2. 요구사항</td>
-                            <td class="p-2 border-r border-slate-900 whitespace-pre-wrap leading-relaxed">${formData['요구사항'] || ''}</td>
+                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">3. 이행 기한</td>
+                            <td class="p-1.5 font-semibold border-r border-slate-900 text-red-600">${escapeHTML(formData['이행 기한'])}</td>
                         </tr>
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900">3. 이행 기한</td>
-                            <td class="p-2 font-semibold border-r border-slate-900 text-red-600">${formData['이행 기한'] || ''}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-2 text-center border-r border-slate-900">4. 미이행 조치</td>
-                            <td class="p-2 border-r border-slate-900 whitespace-pre-wrap leading-relaxed">${formData['미이행 시 조치'] || ''}</td>
+                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">4. 미이행 시 조치</td>
+                            <td class="p-1.5 border-r border-slate-900 whitespace-pre-wrap leading-snug break-keep">${escapeHTML(formData['미이행 시 조치'])}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -914,12 +1031,13 @@
             } else {
                 tableHTML = '<table class="w-full border-collapse border border-slate-900 text-sm"><tbody>';
                 const keys = Object.keys(formData);
+                const cellPadding = keys.length >= 9 ? 'p-2' : 'p-2.5';
                 
                 keys.forEach(k => {
                     tableHTML += `
                         <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-2.5 text-center border-r border-slate-900 w-36 whitespace-nowrap">${k}</td>
-                            <td class="p-2.5 border-r border-slate-900">${formData[k]}</td>
+                            <td class="bg-slate-100 font-bold ${cellPadding} text-center border-r border-slate-900 w-36 whitespace-nowrap">${escapeHTML(k)}</td>
+                            <td class="${cellPadding} border-r border-slate-900 break-keep">${escapeHTML(formData[k])}</td>
                         </tr>
                     `;
                 });
@@ -928,10 +1046,22 @@
 
             docTableContainer.innerHTML = tableHTML;
 
-            const companyInput = document.getElementById('issuerCompany');
-            const ceoInput = document.getElementById('issuerCEO');
-            if (companyInput) document.getElementById('displayCompany').innerText = companyInput.value || '';
-            if (ceoInput) document.getElementById('displayCEO').innerText = ceoInput.value || '';
+            const displayCompany = document.getElementById('displayCompany');
+            const displaySignerLabel = document.getElementById('displaySignerLabel');
+            const displayCEO = document.getElementById('displayCEO');
+
+            if (currentForm.isNoticeDoc) {
+                if (displayCompany) displayCompany.classList.add('hidden');
+                if (displaySignerLabel) displaySignerLabel.innerText = '발신인:';
+                if (displayCEO) displayCEO.innerText = formData['발신인 성명'] || '';
+            } else {
+                if (displayCompany) displayCompany.classList.remove('hidden');
+                if (displaySignerLabel) displaySignerLabel.innerText = '대표자:';
+                const companyInput = document.getElementById('issuerCompany');
+                const ceoInput = document.getElementById('issuerCEO');
+                if (companyInput && displayCompany) displayCompany.innerText = companyInput.value || '';
+                if (ceoInput && displayCEO) displayCEO.innerText = ceoInput.value || '';
+            }
         }
 
         // 서명 캔버스
@@ -942,71 +1072,160 @@
             ctx = canvas.getContext('2d');
             ctx.strokeStyle = '#000000';
             ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
 
             const getPos = (e) => {
                 const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return { x: clientX - rect.left, y: clientY - rect.top };
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
             };
 
-            const start = (e) => { isDrawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); };
-            const move = (e) => { if (!isDrawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
-            const stop = () => { if (isDrawing) { isDrawing = false; syncSignature(); } };
+            const start = (e) => {
+                if (e.cancelable) e.preventDefault();
+                isDrawing = true;
+                ctx.beginPath();
+                const p = getPos(e);
+                ctx.moveTo(p.x, p.y);
+            };
+            const move = (e) => {
+                if (!isDrawing) return;
+                if (e.cancelable) e.preventDefault();
+                const p = getPos(e);
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+            };
+            const stop = () => {
+                if (isDrawing) {
+                    isDrawing = false;
+                    syncSignature();
+                }
+            };
 
             canvas.addEventListener('mousedown', start);
             canvas.addEventListener('mousemove', move);
             canvas.addEventListener('mouseup', stop);
-            canvas.addEventListener('touchstart', start);
-            canvas.addEventListener('touchmove', move);
+            canvas.addEventListener('mouseleave', stop);
+            canvas.addEventListener('touchstart', start, { passive: false });
+            canvas.addEventListener('touchmove', move, { passive: false });
             canvas.addEventListener('touchend', stop);
         }
 
         function clearCanvas() {
-            if (!ctx) return;
+            if (!ctx || !canvas) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            document.getElementById('sigImage').classList.add('hidden');
+            const sigImg = document.getElementById('sigImage');
+            if (sigImg) sigImg.classList.add('hidden');
         }
 
         function syncSignature() {
             const sigImg = document.getElementById('sigImage');
-            sigImg.src = canvas.toDataURL();
+            if (!sigImg || !canvas) return;
+            sigImg.src = canvas.toDataURL('image/png');
             sigImg.classList.remove('hidden');
         }
 
-        // 도장 업로드
+        // 도장 이미지 업로드
         function initStampUpload() {
             const stampInput = document.getElementById('stampUpload');
             if (!stampInput) return;
             stampInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        const stampImg = document.getElementById('stampImage');
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const stampImg = document.getElementById('stampImage');
+                    if (stampImg) {
                         stampImg.src = evt.target.result;
                         stampImg.classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                }
+                    }
+                };
+                reader.readAsDataURL(file);
             });
         }
 
-        // PDF 다운로드
-        function downloadPDF() {
+        // PDF 다운로드 (화면 축소·스크롤과 무관하게 정확한 210mm x 297mm 1페이지 A4 출력 보장)
+        async function downloadPDF() {
             const element = document.getElementById('a4Paper');
+            if (!element) return;
             if (!window.html2pdf) {
-                alert('PDF 생성 라이브러리를 로딩 중입니다. 잠시 후 다시 시도해 주세요.');
+                showToast('PDF 생성 라이브러리를 로딩 중입니다. 잠시 후 다시 시도해 주세요.', 'error');
                 return;
             }
+
+            showToast('A4 규격 PDF 파일을 생성하고 있습니다...', 'info');
+
+            // 화면 배율(transform: scale)이나 스크롤 오차를 완전히 배제하기 위한 원본 100% 정배율 임시 복제본 생성
+            const offscreenHost = document.createElement('div');
+            offscreenHost.style.position = 'fixed';
+            offscreenHost.style.left = '-10000px';
+            offscreenHost.style.top = '0';
+            offscreenHost.style.width = '210mm';
+            offscreenHost.style.height = '297mm';
+            offscreenHost.style.background = '#ffffff';
+            offscreenHost.style.zIndex = '-1';
+
+            const clone = element.cloneNode(true);
+            clone.style.transform = 'none';
+            clone.style.margin = '0';
+            clone.style.boxShadow = 'none';
+            clone.style.width = '210mm';
+            clone.style.height = '297mm';
+            clone.style.minHeight = '297mm';
+            clone.style.maxHeight = '297mm';
+            clone.style.padding = '22.5mm 15mm 22.5mm 15mm';
+            clone.style.boxSizing = 'border-box';
+
+            // 도장이나 서명이 첨부된 경우 PDF에서 '(인)' 안내 텍스트 숨김
+            const hasStamp = !clone.querySelector('#stampImage')?.classList.contains('hidden');
+            const hasSig = !clone.querySelector('#sigImage')?.classList.contains('hidden');
+            const placeholder = clone.querySelector('#stampPlaceholder');
+            if (placeholder && (hasStamp || hasSig)) {
+                placeholder.style.display = 'none';
+            }
+
+            offscreenHost.appendChild(clone);
+            document.body.appendChild(offscreenHost);
+
             const opt = {
                 margin: 0,
                 filename: `${currentForm.name}_완성본.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    scrollX: 0,
+                    scrollY: 0,
+                    windowWidth: 794,
+                    windowHeight: 1123
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-            html2pdf().set(opt).from(element).save();
+
+            try {
+                const worker = html2pdf().set(opt).from(clone).toPdf();
+                const pdf = await worker.get('pdf');
+                // 미세 픽셀 오차로 빈 2페이지가 생성될 경우 1페이지만 남기고 자동 삭제
+                while (pdf.internal.getNumberOfPages() > 1) {
+                    pdf.deletePage(pdf.internal.getNumberOfPages());
+                }
+                await worker.save();
+                showToast(`${currentForm.name}_완성본.pdf 저장이 완료되었습니다.`, 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('PDF 저장 중 오류가 발생했습니다. 다시 시도해 주세요.', 'error');
+            } finally {
+                if (offscreenHost.parentNode) {
+                    offscreenHost.parentNode.removeChild(offscreenHost);
+                }
+            }
         }
 
         if (document.readyState === 'loading') {
