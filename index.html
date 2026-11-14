@@ -1161,24 +1161,32 @@
 
             showToast('A4 규격 PDF 파일을 생성하고 있습니다...', 'info');
 
-            // 화면 배율(transform: scale)이나 스크롤 오차를 완전히 배제하기 위한 원본 100% 정배율 임시 복제본 생성
+            // 96DPI 기준 표준 A4 정확 픽셀 크기 (210mm = 793.7px -> 794px, 297mm = 1122.5px -> 1123px)
+            const A4_WIDTH_PX = 794;
+            const A4_HEIGHT_PX = 1123;
+
+            // 브라우저 창 너비·스크롤 영향을 받지 않도록 정확한 A4 픽셀 규격의 임시 캡처 컨테이너 생성
             const offscreenHost = document.createElement('div');
             offscreenHost.style.position = 'fixed';
-            offscreenHost.style.left = '-10000px';
+            offscreenHost.style.left = '0';
             offscreenHost.style.top = '0';
-            offscreenHost.style.width = '210mm';
-            offscreenHost.style.height = '297mm';
+            offscreenHost.style.width = `${A4_WIDTH_PX}px`;
+            offscreenHost.style.height = `${A4_HEIGHT_PX}px`;
+            offscreenHost.style.margin = '0';
+            offscreenHost.style.padding = '0';
             offscreenHost.style.background = '#ffffff';
-            offscreenHost.style.zIndex = '-1';
+            offscreenHost.style.zIndex = '-9999';
+            offscreenHost.style.pointerEvents = 'none';
+            offscreenHost.style.overflow = 'hidden';
 
             const clone = element.cloneNode(true);
             clone.style.transform = 'none';
             clone.style.margin = '0';
             clone.style.boxShadow = 'none';
-            clone.style.width = '210mm';
-            clone.style.height = '297mm';
-            clone.style.minHeight = '297mm';
-            clone.style.maxHeight = '297mm';
+            clone.style.width = `${A4_WIDTH_PX}px`;
+            clone.style.height = `${A4_HEIGHT_PX}px`;
+            clone.style.minHeight = `${A4_HEIGHT_PX}px`;
+            clone.style.maxHeight = `${A4_HEIGHT_PX}px`;
             clone.style.padding = '22.5mm 15mm 22.5mm 15mm';
             clone.style.boxSizing = 'border-box';
 
@@ -1201,10 +1209,14 @@
                     scale: 2,
                     useCORS: true,
                     logging: false,
+                    x: 0,
+                    y: 0,
                     scrollX: 0,
                     scrollY: 0,
-                    windowWidth: 794,
-                    windowHeight: 1123
+                    width: A4_WIDTH_PX,
+                    height: A4_HEIGHT_PX,
+                    windowWidth: A4_WIDTH_PX,
+                    windowHeight: A4_HEIGHT_PX
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
