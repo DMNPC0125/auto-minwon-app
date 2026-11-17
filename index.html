@@ -3,44 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>각종양식.kr - 대한민국 대표 민원·서식 및 연차 관리기</title>
+    <title>각종양식.kr - 대한민국 대표 무료 민원·업무 서식 생성기 &amp; 연차 관리 시스템</title>
 
-<meta name="naver-site-verification" content="3fca1b259607551a912f38528c90066f393b6ba4" />
-<meta name="google-site-verification" content="FLo2-Xq9_Jt65lmIYWZDK0_jxS2AxNS3k8rT57Fnjq8" />
+    <!-- 검색엔진 최적화(SEO) 메타태그 -->
+    <meta name="description" content="위촉증명서, 재직증명서, 해촉증명서, 경력증명서, 내용증명서, 차용증, 위임장 무료 온라인 작성 및 A4 PDF 저장·인쇄와 입사일 기준 직원 연차 자동 계산기를 별도 회원가입 없이 무료로 이용하세요.">
+    <meta name="keywords" content="각종양식, 위촉증명서, 재직증명서, 해촉증명서, 경력증명서, 내용증명서 작성, 차용증 양식, 위임장 양식, 무료 서식, PDF 저장, 직원 연차 계산기, 연차 관리">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xn--p39an74bk2bn6d.kr/">
 
-    <!-- 구글 애드센스 승인/연동 코드 -->
+    <!-- ▼▼▼ 구글 서치콘솔 & 네이버 서치어드바이저 소유권 확인 메타태그 (발급받은 코드로 교체하세요) ▼▼▼ -->
+    <!-- <meta name="naver-site-verification" content="네이버_서치어드바이저_인증코드" /> -->
+    <!-- <meta name="google-site-verification" content="구글_서치콘솔_인증코드" /> -->
+    <!-- ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ -->
+
+    <!-- 오픈그래프(Open Graph) - 네이버, 카카오톡, SNS 공유 최적화 -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="각종양식.kr">
+    <meta property="og:title" content="각종양식.kr - 대한민국 대표 무료 민원·업무 서식 생성기 & 연차 관리 시스템">
+    <meta property="og:description" content="위촉·재직·해촉·경력증명서, 내용증명서, 차용증, 위임장 무료 작성, 자필 싸인·공식 규격 도장 날인 및 A4 PDF 출력, 직원 연차 자동 계산기를 바로 이용해 보세요.">
+    <meta property="og:url" content="https://xn--p39an74bk2bn6d.kr/">
+    <meta property="og:locale" content="ko_KR">
+
+    <!-- Schema.org WebApplication 구조화 데이터 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "각종양식.kr",
+      "alternateName": "대한민국 대표 무료 민원·업무 서식 생성기 & 연차 관리 시스템",
+      "url": "https://xn--p39an74bk2bn6d.kr/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko",
+      "description": "위촉증명서, 재직증명서, 해촉증명서, 경력증명서, 내용증명서, 차용증, 위임장 무료 온라인 작성 및 A4 PDF 저장·인쇄와 근로기준법 기반 직원 연차 자동 계산기를 제공하는 무료 웹 서비스입니다.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      }
+    }
+    </script>
+
+    <!-- 구글 애드센스 스크립트 -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7434707652698346"
          crossorigin="anonymous" onerror="window.__adsBlocked=true;"></script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- html2pdf.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- SheetJS (Excel 파싱/생성) CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- html2canvas & jsPDF CDN (1:1 정배율 A4 PDF 출력용) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- 웹폰트: Pretendard & Noto Sans KR (UI) / Noto Serif KR (공식 문서 명조체) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
-        
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* A4 표준 용지 규격 (794px x 1123px / 210mm x 297mm) 및 엄격한 상·하 여백(22.5mm) */
         .a4-page {
-            width: 210mm;
-            height: 297mm;
-            min-height: 297mm;
-            max-height: 297mm;
-            /* 1. 상단 여백 22.5mm & 5. 하단 여백 22.5mm 고정 */
+            width: 794px;
+            height: 1123px;
+            min-height: 1123px;
+            max-height: 1123px;
             padding: 22.5mm 15mm 22.5mm 15mm;
             margin: 0 auto;
-            background: white;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            background-color: #ffffff;
+            color: #111827;
+            font-family: 'Noto Serif KR', serif;
+            box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.14), 0 4px 10px -2px rgba(15, 23, 42, 0.06);
             box-sizing: border-box;
-            transform-origin: top center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transform-origin: top center;
             overflow: hidden;
+            position: relative;
+        }
+
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333333;
+            font-size: 13.5px;
+        }
+
+        .doc-table th,
+        .doc-table td {
+            border: 1px solid #333333;
+            padding: 8px 11px;
+            vertical-align: middle;
+            word-break: keep-all;
+        }
+
+        .doc-table th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            text-align: center;
+            color: #111827;
         }
 
         .preview-wrapper {
@@ -48,32 +115,40 @@
             display: flex;
             justify-content: center;
             overflow: hidden;
+            padding-bottom: 1rem;
         }
 
-        @media screen and (max-width: 1280px) {
-            .a4-page { transform: scale(0.85); margin-bottom: -45mm; }
+        /* 화면 폭에 맞춘 반응형 축소 스케일 (PDF 캡처 시에는 1:1 원본 794x1123 복제본 사용) */
+        @media screen and (max-width: 1320px) {
+            .a4-page { transform: scale(0.82); margin-bottom: -202px; }
         }
         @media screen and (max-width: 1024px) {
-            .a4-page { transform: scale(0.95); margin-bottom: -15mm; }
+            .a4-page { transform: scale(0.90); margin-bottom: -112px; }
         }
         @media screen and (max-width: 768px) {
-            .a4-page { transform: scale(0.65); margin-bottom: -100mm; }
+            .a4-page { transform: scale(0.62); margin-bottom: -426px; }
         }
         @media screen and (max-width: 480px) {
-            .a4-page { transform: scale(0.48); margin-bottom: -155mm; }
+            .a4-page { transform: scale(0.44); margin-bottom: -628px; }
         }
 
+        /* 인쇄 전용 스타일: 우측 A4 용지만 210mm x 297mm 1페이지 정배율 출력 */
         @media print {
-            @page { size: A4 portrait; margin: 0; }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
             html, body {
-                width: 210mm;
-                height: 297mm;
-                background: white;
+                width: 210mm !important;
+                height: 297mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                background: #ffffff !important;
                 overflow: hidden !important;
             }
-            .no-print { display: none !important; }
+            .no-print {
+                display: none !important;
+            }
             #documentViewLayout {
                 display: block !important;
                 width: 210mm !important;
@@ -81,9 +156,6 @@
                 max-width: none !important;
                 margin: 0 !important;
                 padding: 0 !important;
-            }
-            #documentViewLayout > section.no-print {
-                display: none !important;
             }
             #documentViewLayout > section:not(.no-print) {
                 display: block !important;
@@ -94,20 +166,20 @@
             }
             .preview-wrapper {
                 display: block !important;
-                overflow: visible !important;
                 width: 210mm !important;
                 height: 297mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                overflow: visible !important;
             }
             .a4-page {
                 width: 210mm !important;
                 height: 297mm !important;
                 min-height: 297mm !important;
                 max-height: 297mm !important;
-                box-shadow: none !important;
                 padding: 22.5mm 15mm 22.5mm 15mm !important;
                 margin: 0 !important;
+                box-shadow: none !important;
                 transform: none !important;
                 page-break-after: avoid !important;
                 page-break-inside: avoid !important;
@@ -117,40 +189,78 @@
         }
     </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col antialiased">
 
-    <!-- 알림 토스트 메시지 컨테이너 -->
-    <div id="toastContainer" class="no-print fixed bottom-5 right-5 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+    <!-- 비차단 토스트 알림 컨테이너 -->
+    <div id="toastContainer" class="no-print fixed bottom-5 right-5 z-[110] flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- 상단 헤더 -->
+    <!-- 상단 네비게이션 바 -->
     <header class="no-print bg-slate-900 text-white sticky top-0 z-50 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center space-x-2">
-                <i data-lucide="file-text" class="w-6 h-6 text-blue-400"></i>
-                <span class="font-bold text-lg tracking-tight">각종양식<span class="text-blue-400">.kr</span></span>
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <!-- 브랜드 로고 -->
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchMainTab('인사·노무 서식')">
+                <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-inner">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="font-bold text-lg tracking-tight leading-none">각종양식<span class="text-blue-400">.kr</span></div>
+                    <p class="text-[11px] text-slate-400 mt-0.5">무료 민원·업무 서식 &amp; 연차 관리</p>
+                </div>
             </div>
 
-            <!-- 카테고리 & 서식 선택 바 -->
-            <div class="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
-                <div id="categoryContainer" class="flex gap-1 bg-slate-800 p-1 rounded-lg flex-wrap"></div>
-                <select id="formSelect" class="bg-slate-700 text-white px-3 py-1.5 rounded-lg border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-[220px]"></select>
-            </div>
+            <!-- 메인 카테고리 탭 4종 -->
+            <nav class="flex items-center gap-1.5 bg-slate-800 p-1 rounded-xl flex-wrap">
+                <button type="button" data-tab="인사·노무 서식" onclick="switchMainTab('인사·노무 서식')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">인사·노무 서식</button>
+                <button type="button" data-tab="부동산·민사 서식" onclick="switchMainTab('부동산·민사 서식')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">부동산·민사 서식</button>
+                <button type="button" data-tab="연차 관리 시스템" onclick="switchMainTab('연차 관리 시스템')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">연차 관리 시스템</button>
+                <button type="button" data-tab="이 양식이 필요해!" onclick="switchMainTab('이 양식이 필요해!')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">이 양식이 필요해!</button>
+            </nav>
 
-            <!-- 인쇄 & PDF 버튼 (문서 서식일 때만 활성화) -->
-            <div id="documentActionBtns" class="flex items-center gap-2">
-                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition">
-                    <i data-lucide="printer" class="w-4 h-4"></i>
-                    <span>인쇄하기</span>
-                </button>
-                <button id="pdfSaveBtn" onclick="downloadPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition">
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>PDF 저장</span>
-                </button>
+            <!-- 우측 관리자 로그인 / 로그아웃 버튼 -->
+            <div class="flex items-center gap-2">
+                <div id="adminNavLoggedOut">
+                    <button type="button" onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <span>관리자</span>
+                    </button>
+                </div>
+                <div id="adminNavLoggedIn" class="hidden items-center gap-2">
+                    <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-lg text-xs font-bold">관리자 모드</span>
+                    <button type="button" onclick="logoutAdminUser()" class="bg-slate-800 hover:bg-red-900/60 text-slate-300 hover:text-red-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-medium transition">로그아웃</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하위 문서 양식 선택 서브바 -->
+        <div id="subTemplateBar" class="bg-slate-800/90 border-t border-slate-700/80">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto">
+                <span class="text-[11px] font-semibold text-slate-400 shrink-0 mr-1">양식 선택:</span>
+                <div id="subTemplateButtons" class="flex items-center gap-1.5"></div>
             </div>
         </div>
     </header>
 
-    <!-- 1. 상단 광고 영역 (no-print) -->
+    <!-- 관리자 로그인 시 상단 노란색 UID 배너 -->
+    <div id="adminTopBanner" class="no-print hidden bg-amber-50 border-b border-amber-300 text-amber-950">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="bg-amber-500 text-white font-bold px-2 py-0.5 rounded">ADMIN</span>
+                <span id="adminEmailLabel" class="font-semibold"></span>
+                <span class="text-amber-900">| UID: <code id="adminUidLabel" class="bg-amber-100 border border-amber-300 px-1.5 py-0.5 rounded font-mono select-all"></code></span>
+                <button type="button" onclick="copyAdminUidToClipboard()" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-2.5 py-0.5 rounded transition">UID 복사</button>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-[11px] text-amber-800">'이 양식이 필요해!' 게시판 상태 변경·답변·삭제 권한이 활성화되었습니다.</span>
+                <button type="button" onclick="logoutAdminUser()" class="text-amber-900 underline font-semibold hover:text-red-700">로그아웃</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상단 구글 애드센스 광고 슬롯 -->
     <div class="no-print max-w-7xl w-full mx-auto px-4 pt-4 flex justify-center">
         <ins class="adsbygoogle"
              style="display:block; width:100%; max-width:728px; height:90px;"
@@ -161,75 +271,137 @@
         <script>try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}</script>
     </div>
 
-    <!-- [A] 양식 서식용 메인 레이아웃 -->
-    <main id="documentViewLayout" class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- ===================================================================== -->
+    <!-- [WORKSPACE 1] 표준 문서 생성기 (좌측 입력/서명·도장 + 우측 A4 미리보기) -->
+    <!-- ===================================================================== -->
+    <main id="documentViewLayout" class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- 좌측 작성 폼 (no-print) -->
-        <section class="no-print lg:col-span-5 bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 max-h-[85vh] overflow-y-auto">
-            <h2 class="text-base font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
-                <span>📝 서식 항목 입력</span>
-                <span id="currentFormBadge" class="text-xs font-normal text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200"></span>
-            </h2>
+        <!-- 좌측 입력 패널 -->
+        <section class="no-print lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                    <h2 class="text-base font-bold text-slate-900">서식 항목 입력</h2>
+                    <p class="text-[11px] text-slate-500 mt-0.5">작성 내용은 서버에 저장되지 않으며 창을 닫으면 즉시 파기됩니다.</p>
+                </div>
+                <span id="selectedTemplateBadge" class="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-full shrink-0"></span>
+            </div>
 
-            <div id="dynamicInputFields" class="space-y-3"></div>
+            <!-- 상단 액션 버튼 3종 -->
+            <div class="grid grid-cols-3 gap-2">
+                <button type="button" onclick="downloadA4Pdf()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span>PDF 다운로드</span>
+                </button>
+                <button type="button" onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    <span>인쇄하기</span>
+                </button>
+                <button type="button" onclick="resetFormInputs()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-slate-200 transition">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>초기화</span>
+                </button>
+            </div>
 
-            <div id="issuerInfoSection" class="border-t pt-4 space-y-3">
-                <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">발급 기관 / 대표자 정보</h3>
-                <div class="grid grid-cols-2 gap-2">
+            <!-- 양식별 동적 입력 폼 영역 -->
+            <div id="dynamicFieldsContainer" class="space-y-3"></div>
+
+            <!-- 발급 기관 / 대표자 정보 (내용증명서 외 서식에서 표시) -->
+            <div id="issuerInfoGroup" class="border-t border-slate-100 pt-4 space-y-3">
+                <h3 class="text-xs font-bold text-slate-700">발급 기관 및 대표자 정보</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block text-xs text-slate-600 mb-1">회사/기관명</label>
-                        <input type="text" id="issuerCompany" value="주식회사 한국상사" oninput="renderPreview()" class="w-full border border-slate-300 rounded px-2.5 py-1 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label class="block text-xs font-medium text-slate-600 mb-1">회사 / 기관명</label>
+                        <input type="text" id="fieldIssuerOrg" value="주식회사 한국상사" oninput="renderLiveA4Preview()" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-600 mb-1">대표자 성명</label>
-                        <input type="text" id="issuerCEO" value="홍 길 동" oninput="renderPreview()" class="w-full border border-slate-300 rounded px-2.5 py-1 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label class="block text-xs font-medium text-slate-600 mb-1">대표자 / 작성자 성명</label>
+                        <input type="text" id="fieldIssuerRep" value="홍 길 동" oninput="renderLiveA4Preview()" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">작성 / 발급 일자</label>
+                    <input type="date" id="fieldIssueDate" oninput="renderLiveA4Preview()" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
             </div>
 
-            <div class="border-t pt-4 space-y-3">
-                <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">서명 및 도장 첨부</h3>
-                <div>
-                    <label class="block text-xs text-slate-600 mb-1">직접 서명 (마우스/터치)</label>
-                    <div class="border border-slate-300 rounded-lg overflow-hidden bg-slate-50 relative">
-                        <canvas id="sigCanvas" width="300" height="100" class="w-full h-24 touch-none cursor-crosshair"></canvas>
-                        <button onclick="clearCanvas()" class="absolute top-1 right-1 bg-slate-200 text-slate-600 text-[10px] px-2 py-0.5 rounded hover:bg-slate-300">초기화</button>
+            <!-- 자필 서명 (싸인) & 도장 이미지 업로드 전환 탭 -->
+            <div class="border-t border-slate-100 pt-4 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-slate-700">서명 및 날인 방식 선택</h3>
+                    <span class="text-[11px] text-blue-600 font-medium">모든 양식 자동 규격 적용</span>
+                </div>
+
+                <!-- 모드 전환 버튼 -->
+                <div class="grid grid-cols-2 gap-1.5 bg-slate-100 p-1 rounded-xl">
+                    <button type="button" id="modeSignBtn" onclick="switchSealMode('sign')" class="py-1.5 px-2 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm transition">
+                        자필 서명 (싸인 1.5배)
+                    </button>
+                    <button type="button" id="modeStampBtn" onclick="switchSealMode('stamp')" class="py-1.5 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+                        도장 업로드 (공식 18mm)
+                    </button>
+                </div>
+
+                <!-- 1) 자필 서명 패드 -->
+                <div id="signPadSection" class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] text-slate-500">아래 칸에 마우스 또는 터치로 서명하세요. (문서에 1.5배 확대 반영)</span>
+                        <button type="button" onclick="clearSignaturePad()" class="text-[11px] text-red-600 hover:text-red-700 font-semibold underline">지우기</button>
+                    </div>
+                    <div class="border border-slate-300 rounded-xl overflow-hidden bg-slate-50">
+                        <canvas id="signatureCanvas" width="380" height="120" class="w-full h-28 touch-none cursor-crosshair block"></canvas>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs text-slate-600 mb-1">도장 이미지 첨부 (PNG/JPG)</label>
-                    <input type="file" id="stampUpload" accept="image/*" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 w-full" />
+
+                <!-- 2) 도장 이미지 업로드 패드 -->
+                <div id="stampUploadSection" class="hidden space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] text-slate-500">공식 인감·직인 규격(직경 18mm)으로 정밀 배치됩니다.</span>
+                        <button type="button" id="clearStampBtn" onclick="clearStampUpload()" class="hidden text-[11px] text-red-600 hover:text-red-700 font-semibold underline">도장 제거</button>
+                    </div>
+                    <input type="file" id="stampImageInput" accept="image/*" onchange="handleStampFileSelect(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" />
                 </div>
             </div>
         </section>
 
-        <!-- 우측 미리보기 (고정 표준 A4 레이아웃) -->
+        <!-- 우측 A4 라이브 미리보기 (794px x 1123px) -->
         <section class="lg:col-span-7 flex flex-col items-center">
             <div class="preview-wrapper">
-                <div id="a4Paper" class="a4-page flex flex-col">
-                    <!-- 1. 양식 제목: 기존 대비 2pt 확대(text-[27px]), 2. 제목 아래 밑줄 제거 -->
-                    <h1 id="docTitle" class="text-[27px] font-bold text-center tracking-widest leading-tight"></h1>
+                <div id="a4PreviewSheet" class="a4-page">
+                    <!-- 1. 양식 제목: 27px 굵게, 중앙 정렬, 하단 밑줄 없음 -->
+                    <h1 id="previewDocTitle" class="text-[27px] font-bold text-center tracking-[0.22em] text-gray-900 leading-tight shrink-0"></h1>
 
-                    <!-- 3. 전체 표: 쪽 맨 위~제목 간격(22.5mm)만큼 제목 아래에서 띄움 -->
-                    <div id="docTableContainer" class="mt-[22.5mm] shrink-0"></div>
+                    <!-- 2. 표 영역: 제목 아래 22.5mm 간격 -->
+                    <div id="previewDocTableBox" class="mt-[22.5mm] shrink-0"></div>
 
-                    <!-- 4. 표와 하단 작성일자 사이 정중앙 배치 및 단어 단위 줄바꿈(break-keep) -->
-                    <div id="docContentContainer" class="flex-1 flex items-center justify-center text-center font-bold text-lg leading-relaxed px-6 py-4 whitespace-pre-wrap break-keep tracking-wider"></div>
+                    <!-- 3. 중간 증명/확인 본문: 표와 하단 날짜·서명 블록 사이 정중앙 배치 & 단어 잘림 방지(break-keep) -->
+                    <div class="flex-1 flex items-center justify-center text-center px-6 py-4">
+                        <p id="previewDocStatement" class="text-[16px] font-semibold leading-relaxed text-gray-900 whitespace-pre-wrap break-keep tracking-wide"></p>
+                    </div>
 
-                    <!-- 5. 쪽 맨 아래쪽에서 22.5mm(padding-bottom) 간격으로 하단 고정 배치 -->
-                    <div class="mt-auto shrink-0 text-center space-y-4 pt-3 border-t border-slate-200">
-                        <p id="docFooterText" class="text-xs text-slate-600 leading-normal break-keep"></p>
-                        <div id="docDate" class="text-sm font-medium tracking-wide"></div>
-                        
-                        <div class="flex flex-col items-center justify-center space-y-1.5 pt-1">
-                            <div class="text-sm font-bold tracking-wider" id="displayCompany">주식회사 한국상사</div>
-                            <div class="flex items-center justify-center space-x-2">
-                                <span id="displaySignerLabel" class="text-sm font-semibold">대표자:</span>
-                                <span id="displayCEO" class="text-sm font-bold min-w-[50px]">홍 길 동</span>
-                                <div class="relative w-12 h-12 border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400 rounded-full">
-                                    <span id="stampPlaceholder" class="no-print">(인)</span>
-                                    <img id="stampImage" alt="도장 날인" class="absolute inset-0 w-full h-full object-contain hidden" />
-                                    <img id="sigImage" alt="직접 서명" class="absolute inset-0 w-full h-full object-contain hidden" />
+                    <!-- 4. 하단 작성일자 및 서명/도장 날인 블록 (하단 여백 22.5mm 위 고정) -->
+                    <div class="mt-auto shrink-0 text-center space-y-5 pt-2">
+                        <p id="previewDocSubNote" class="text-[12px] text-gray-600 leading-normal break-keep"></p>
+                        <div id="previewDocDate" class="text-[15px] font-semibold tracking-widest text-gray-900"></div>
+
+                        <div class="flex flex-col items-center justify-center space-y-2.5 pt-1">
+                            <div id="previewOrgName" class="text-[16px] font-bold tracking-wider text-gray-900"></div>
+                            <div class="flex items-center justify-center gap-3">
+                                <span id="previewRoleLabel" class="text-[15px] font-semibold text-gray-800">대표자 :</span>
+                                <span id="previewRepName" class="text-[16px] font-bold tracking-widest text-gray-900 min-w-[64px]"></span>
+
+                                <!-- (인) 표시 및 싸인(1.5배: 120px x 60px) / 도장(공식 18mm: 68px x 68px) 중첩 영역 -->
+                                <div class="relative w-[68px] h-[68px] flex items-center justify-center overflow-visible">
+                                    <span id="previewSealText" class="text-[13px] text-gray-500 font-medium select-none">(인)</span>
+                                    <!-- 자필 서명 (기존 대비 1.5배 크기: 120px x 60px) -->
+                                    <img id="previewSignatureImg" alt="자필서명" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] h-[60px] max-w-none object-contain pointer-events-none z-20" />
+                                    <!-- 공식 규격 도장 (직경 18mm = 68px x 68px 정원 비율) -->
+                                    <img id="previewStampImg" alt="공식도장" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[68px] h-[68px] aspect-square object-contain pointer-events-none z-10 opacity-95" />
                                 </div>
                             </div>
                         </div>
@@ -237,8 +409,8 @@
                 </div>
             </div>
 
-            <!-- 2. 우측 A4 하단 광고 영역 (no-print) -->
-            <div class="no-print w-full mt-6 flex justify-center border-t border-slate-200 pt-4">
+            <!-- 우측 하단 애드센스 슬롯 -->
+            <div class="no-print w-full mt-4 flex justify-center">
                 <ins class="adsbygoogle"
                      style="display:block; width:100%; max-width:728px; height:90px;"
                      data-ad-client="ca-pub-7434707652698346"
@@ -250,130 +422,211 @@
         </section>
     </main>
 
-    <!-- [B] 연차 관리기 전용 대시보드 레이아웃 -->
-    <main id="annualLeaveLayout" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-6">
+    <!-- ===================================================================== -->
+    <!-- [WORKSPACE 2] 직원 연차 관리 시스템 (근로기준법 자동 계산 + CSV/인쇄) -->
+    <!-- ===================================================================== -->
+    <main id="annualLeaveLayout" class="no-print hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-6">
         
-        <!-- 상단 컨트롤 툴바 -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
             <div>
-                <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                    <i data-lucide="calendar" class="w-5 h-5 text-blue-600"></i>
-                    <span>스마트 직원 연차 관리 시스템</span>
-                </h2>
-                <p class="text-xs text-slate-500 mt-1">입사일 기준 연차 수식 자동 계산 및 엑셀(XLSX) 연동 커스텀 관리기</p>
+                <h2 class="text-lg font-bold text-slate-900">직원 연차 자동 계산 및 관리 시스템</h2>
+                <p class="text-xs text-slate-500 mt-1">대한민국 근로기준법 제60조 기준(1년 미만 월 1일 최대 11일, 1년 이상 15일 + 2년마다 1일 가산, 최대 25일 한도) 자동 산출</p>
             </div>
-            
-            <div class="flex items-center gap-2 flex-wrap">
-                <label class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer border border-slate-300 flex items-center gap-1 transition">
-                    <i data-lucide="upload" class="w-4 h-4 text-slate-600"></i>
-                    <span>엑셀 불러오기</span>
-                    <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden" onchange="importLeaveExcel(event)" />
-                </label>
-                <button onclick="exportLeaveExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition shadow-sm">
-                    <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-                    <span>엑셀 내보내기 (.xlsx)</span>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="addLeaveEmployee()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition shadow-sm">
+                    + 직원 추가
+                </button>
+                <button type="button" onclick="downloadLeaveCsv()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition shadow-sm">
+                    CSV 엑셀 다운로드
+                </button>
+                <button type="button" onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition shadow-sm">
+                    대장 인쇄하기
                 </button>
             </div>
         </div>
 
-        <!-- 직원 목록 테이블 -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex items-center justify-between">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                    <i data-lucide="users" class="w-4 h-4 text-blue-500"></i>
-                    <span>직원별 연차 현황 목록</span>
-                </h3>
-                <button onclick="addEmployeeRow()" class="bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-md font-semibold border border-blue-200 flex items-center gap-1 transition">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>직원 추가</span>
-                </button>
+        <!-- 기준일 및 통계 요약 카드 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <label class="block text-xs font-bold text-slate-600 mb-1.5">연차 산정 기준일</label>
+                <input type="date" id="leaveCalcBaseDate" onchange="renderAnnualLeaveTable()" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                <span class="text-xs text-slate-500">전체 등록 인원</span>
+                <span id="leaveStatCount" class="text-xl font-bold text-slate-900 mt-1">0명</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                <span class="text-xs text-slate-500">총 발생 연차 합계</span>
+                <span id="leaveStatAccrued" class="text-xl font-bold text-blue-600 mt-1">0일</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                <span class="text-xs text-slate-500">총 잔여 연차 합계</span>
+                <span id="leaveStatRemaining" class="text-xl font-bold text-emerald-600 mt-1">0일</span>
+            </div>
+        </div>
 
-            <div class="overflow-x-auto border border-slate-200 rounded-lg">
+        <!-- 직원 연차 계산 테이블 -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
                 <table class="w-full text-xs text-left border-collapse">
-                    <thead class="bg-slate-100 text-slate-700 uppercase font-bold border-b border-slate-200">
+                    <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
                         <tr>
-                            <th class="p-2.5 text-center border-r">부서/업무</th>
-                            <th class="p-2.5 text-center border-r">이름</th>
-                            <th class="p-2.5 text-center border-r">입사일</th>
-                            <th class="p-2.5 text-center border-r bg-blue-50/50">총 발생 연차</th>
-                            <th class="p-2.5 text-center border-r bg-red-50/50">사용 연차</th>
-                            <th class="p-2.5 text-center border-r bg-emerald-50/50">잔여 연차</th>
-                            <th class="p-2.5 text-center border-r">올해 발생수</th>
-                            <th class="p-2.5 text-center border-r">비고</th>
-                            <th class="p-2.5 text-center">관리</th>
+                            <th class="p-3 text-center">No</th>
+                            <th class="p-3">직원 성명</th>
+                            <th class="p-3">부서 / 직급</th>
+                            <th class="p-3">입사일</th>
+                            <th class="p-3 text-center">근속 기간</th>
+                            <th class="p-3 text-center bg-blue-50/70 text-blue-800">발생 연차</th>
+                            <th class="p-3 text-center bg-amber-50/70 text-amber-800">사용 연차</th>
+                            <th class="p-3 text-center bg-emerald-50/70 text-emerald-800">잔여 연차</th>
+                            <th class="p-3 text-center">관리</th>
                         </tr>
                     </thead>
-                    <tbody id="employeeTableBody" class="divide-y divide-slate-200 bg-white">
-                        <!-- JS 생성 -->
-                    </tbody>
+                    <tbody id="leaveTableBody" class="divide-y divide-slate-200"></tbody>
                 </table>
             </div>
-        </div>
-
-        <!-- 연차 사용 상세 내역 테이블 -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex items-center justify-between">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                    <i data-lucide="history" class="w-4 h-4 text-orange-500"></i>
-                    <span>연차 사용 기록 상세 (연동 데이터)</span>
-                </h3>
-                <button onclick="addUsageRow()" class="bg-orange-50 hover:bg-orange-100 text-orange-600 text-xs px-3 py-1 rounded-md font-semibold border border-orange-200 flex items-center gap-1 transition">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>사용 내역 추가</span>
-                </button>
-            </div>
-
-            <div class="overflow-x-auto border border-slate-200 rounded-lg">
-                <table class="w-full text-xs text-left border-collapse">
-                    <thead class="bg-slate-100 text-slate-700 uppercase font-bold border-b border-slate-200">
-                        <tr>
-                            <th class="p-2.5 text-center border-r">사용일자</th>
-                            <th class="p-2.5 text-center border-r">직원 선택 (이름)</th>
-                            <th class="p-2.5 text-center border-r">구분</th>
-                            <th class="p-2.5 text-center border-r">차감 일수</th>
-                            <th class="p-2.5 text-center border-r">사유 및 비고</th>
-                            <th class="p-2.5 text-center">관리</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usageTableBody" class="divide-y divide-slate-200 bg-white">
-                        <!-- JS 생성 -->
-                    </tbody>
-                </table>
+            <div class="p-3.5 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex flex-wrap justify-between gap-2">
+                <span>* 1년 미만 근속자: 1개월 개근 시 1일씩 최대 11일 발생 / 1년 이상 근속 시 기본 15일 + 2년마다 1일 가산(최대 25일 한도)</span>
+                <span>* 입력한 직원 정보는 서버에 전송되지 않고 현재 브라우저에서만 처리됩니다.</span>
             </div>
         </div>
-
-        <!-- 근속연수별 기본 연차 발생 기준 설정표 -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex items-center justify-between border-b pb-3">
-                <div>
-                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                        <i data-lucide="settings" class="w-4 h-4 text-slate-600"></i>
-                        <span>📌 근속연수별 기본 연차 발생 기준 설정</span>
-                    </h3>
-                    <p class="text-[11px] text-slate-500 mt-0.5">사업장 규정에 맞춰 연차수를 직접 수정하시면 상단 직원들의 발생 연차가 자동 재계산됩니다.</p>
-                </div>
-                <button onclick="resetLeaveRuleToDefault()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-2.5 py-1 rounded border border-slate-300 font-semibold transition">
-                    기본값(법정 기준) 초기화
-                </button>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2 text-xs" id="leaveRulesGrid">
-                <!-- JS 생성 -->
-            </div>
-        </div>
-
     </main>
 
-    <script>
-        // 미리보기 환경 등에서 외부 광고 스크립트 차단 시 발생하는 미처리 Promise 거부 방어
-        window.addEventListener('unhandledrejection', function(event) {
-            if (event && event.reason && (event.reason.isTrusted || String(event.reason).includes('adsbygoogle'))) {
-                event.preventDefault();
-            }
-        });
+    <!-- ===================================================================== -->
+    <!-- [WORKSPACE 3] '이 양식이 필요해!' 게시판 + '👍 나도!' 실시간 공감 누적 -->
+    <!-- ===================================================================== -->
+    <main id="requestBoardLayout" class="no-print hidden flex-1 max-w-5xl w-full mx-auto p-4 space-y-6">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">이 양식이 필요해! (신규 서식 추가 요청 게시판)</h2>
+                <p class="text-xs text-slate-500 mt-1">
+                    로그인 없이 필요한 양식을 남겨주시면 순차적으로 제작해 드립니다. 이미 등록된 요청에는 <strong>👍 나도!</strong> 버튼을 눌러 공감해 주세요!
+                </p>
+            </div>
+            <span id="requestCountBadge" class="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-3 py-1.5 rounded-xl">총 0건의 요청</span>
+        </div>
 
-        // HTML 특수문자 이스케이프 (입력값 내 <, >, " 등으로 인한 레이아웃 깨짐 방지)
+        <!-- 게스트 양식 요청 입력 폼 -->
+        <section class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <h3 class="text-sm font-bold text-slate-800 border-b border-slate-100 pb-2">새 양식 추가 요청하기</h3>
+            <form onsubmit="submitGuestFormRequest(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">닉네임 (선택)</label>
+                        <input type="text" id="guestAuthorInput" placeholder="익명" maxlength="20" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">필요한 양식명 <span class="text-red-500">*</span></label>
+                        <input type="text" id="guestTitleInput" required placeholder="예: 표준근로계약서, 사직서, 거래명세서, 영수증 등" maxlength="60" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">상세 내용 <span class="text-red-500">*</span></label>
+                    <textarea id="guestContentInput" required rows="3" maxlength="500" placeholder="양식에 들어갔으면 하는 항목이나 사용 용도를 자유롭게 적어주세요. (개인정보 입력 금지)" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" id="guestSubmitBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl text-xs transition shadow-sm">
+                        요청 등록하기
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- 접수된 요청 목록 (오른편 '👍 나도!' 실시간 공감 누적 버튼 포함) -->
+        <section class="space-y-3">
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-bold text-slate-800">접수된 요청 목록</h3>
+                <span class="text-[11px] text-slate-400">실시간 업데이트</span>
+            </div>
+            <div id="requestsListContainer" class="space-y-3">
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 text-center text-xs text-slate-400">
+                    요청 목록을 불러오는 중입니다...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- 관리자 로그인 모달 (Google 계정 로그인 & 이메일/비밀번호 로그인) -->
+    <!-- ===================================================================== -->
+    <div id="adminLoginModal" class="no-print fixed inset-0 z-[100] bg-slate-900/60 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl border border-slate-200 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-base font-bold text-slate-900">홈페이지 관리자 로그인</h3>
+                <button type="button" onclick="closeAdminLoginModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-1">&times;</button>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+                관리자 계정으로 인증하면 <strong>'이 양식이 필요해!'</strong> 게시판의 진행 상태(검토중/제작완료) 변경, 관리자 답변 작성 및 게시글 삭제가 가능합니다.
+            </p>
+
+            <!-- Google 계정 원클릭 로그인 -->
+            <button type="button" onclick="signInAdminGoogle()" class="w-full bg-white hover:bg-slate-50 text-slate-700 font-semibold py-2.5 px-4 border border-slate-300 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96z"/>
+                </svg>
+                <span>Google 계정으로 관리자 로그인</span>
+            </button>
+
+            <div class="relative flex py-1 items-center">
+                <div class="flex-grow border-t border-slate-200"></div>
+                <span class="flex-shrink mx-2 text-[11px] text-slate-400">또는 이메일 로그인</span>
+                <div class="flex-grow border-t border-slate-200"></div>
+            </div>
+
+            <form onsubmit="signInAdminEmail(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">관리자 이메일</label>
+                    <input type="email" id="adminEmailField" required placeholder="admin@example.com" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">비밀번호</label>
+                    <input type="password" id="adminPassField" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-xs transition">
+                    이메일로 로그인
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 삭제 확인 모달 (confirm() 대체) -->
+    <div id="deleteConfirmModal" class="no-print fixed inset-0 z-[105] bg-slate-900/60 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-xl border border-slate-200 space-y-4 text-center">
+            <h4 class="text-sm font-bold text-slate-900">요청 게시글 삭제</h4>
+            <p class="text-xs text-slate-500">선택하신 요청 게시글을 영구적으로 삭제하시겠습니까?</p>
+            <div class="flex gap-2">
+                <button type="button" onclick="closeDeleteConfirmModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">취소</button>
+                <button type="button" onclick="executeDeleteRequest()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-xl text-xs transition">삭제하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 안내 푸터 (유니코드 주소 제거, '각종양식.kr' 단독 표기) -->
+    <footer class="no-print bg-white border-t border-slate-200 mt-10">
+        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-500 leading-relaxed">
+            <div class="space-y-2">
+                <div class="font-bold text-sm text-slate-800">각종양식.kr</div>
+                <p>별도의 회원가입이나 프로그램 설치 없이 웹 브라우저에서 즉시 표준 민원·법률·업무 서식을 작성하고 A4 규격 PDF 저장 및 인쇄할 수 있는 무료 웹 서비스입니다.</p>
+            </div>
+            <div class="space-y-2">
+                <div class="font-bold text-sm text-slate-800">제공 서식 및 업무도구 안내</div>
+                <p>인사·노무 서식(위촉증명서, 재직증명서, 해촉증명서, 경력증명서), 부동산·민사 서식(내용증명서, 차용증, 위임장), 근로기준법 기준 직원 연차 자동 계산기를 무료로 제공합니다.</p>
+            </div>
+            <div class="space-y-2">
+                <div class="font-bold text-sm text-slate-800">개인정보 보호 원칙</div>
+                <p>서식 작성기 및 연차 관리 시스템에 입력하시는 성명, 생년월일, 주소, 연락처 등 모든 개인정보는 외부 서버에 일절 저장되지 않으며, 브라우저 창을 닫거나 새로고침하면 즉시 영구 파기됩니다.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- [SCRIPT 1] 서식 템플릿 · A4 1:1 PDF 출력 · 싸인(1.5배)/도장(18mm) · 연차 -->
+    <!-- ===================================================================== -->
+    <script>
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -384,869 +637,1114 @@
                 .replace(/'/g, '&#39;');
         }
 
-        // 비차단 안내 토스트 메시지 (alert 대체)
-        function showToast(message, type = 'info') {
+        function showToast(msg, type = 'info') {
             const container = document.getElementById('toastContainer');
             if (!container) return;
-            const toast = document.createElement('div');
-            const bgClass = type === 'error' ? 'bg-red-600' : (type === 'success' ? 'bg-emerald-600' : 'bg-slate-800');
-            toast.className = `${bgClass} text-white text-xs font-medium px-4 py-2.5 rounded-lg shadow-lg transition-opacity duration-300 pointer-events-auto`;
-            toast.innerText = message;
-            container.appendChild(toast);
+            const palette = {
+                info: 'bg-slate-800 text-white border-slate-700',
+                success: 'bg-emerald-600 text-white border-emerald-500',
+                error: 'bg-red-600 text-white border-red-500'
+            };
+            const el = document.createElement('div');
+            el.className = `pointer-events-auto px-4 py-2.5 rounded-xl shadow-lg border text-xs font-medium transition-opacity duration-300 ${palette[type] || palette.info}`;
+            el.innerText = msg;
+            container.appendChild(el);
             setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 300);
+            }, 3200);
         }
 
-        // 1. 문서 서식 데이터 (내용증명서는 '부동산·민사'에 포함)
-        const FORMS = {
-            '증명서·인증': [
+        // 카테고리별 표준 문서 양식 정의
+        const FORM_TEMPLATES = {
+            '인사·노무 서식': [
                 {
-                    id: 'p1',
+                    id: 'appointment',
                     name: '위촉증명서',
-                    fields: { '성명': '홍길동', '생년월일': '1980-01-01', '연락처': '010-1234-5678', '주소': '경기도 평택시 현화길 12', '입사일자': '2026-01-01', '담당': '교육 및 강의', '직책': '강사', '용도': '관공서 제출용' },
-                    content: '상기와 같이 위촉하였음을 증명합니다.',
-                    footer: '본 증명서는 위촉 사실 확인을 위해 발급되었습니다.'
-                },
-                {
-                    id: 'p2',
-                    name: '재직증명서',
-                    fields: { '성명': '홍길동', '생년월일': '1980-01-01', '주민등록번호': '[주민등록번호 작성]', '직책': '교사', '주소': '경기도 평택시 현화길 12', '재직기간': '2024.03.01 ~ 재직중', '용도': '금융기관 제출용' },
-                    content: '상기와 같이 재직하고 있음을 증명합니다.',
-                    footer: '본 증명서는 원본과 다름없음을 확인합니다.'
-                },
-                {
-                    id: 'p3',
-                    name: '해촉증명서',
-                    fields: { '성명': '홍길동', '생년월일': '1980-01-01', '주민등록번호': '[주민등록번호 작성]', '소속': '교육부', '재직기간': '2024.03.01 ~ 2026.10.31', '회사주소': '서울특별시 종로구 세종대로 1', '용도': '건강보험공단 제출용' },
-                    content: '위의 사실을 증명합니다.',
-                    footer: '본 해촉증명서는 해촉 및 퇴직 사실을 확인하기 위해 발급되었습니다.'
-                }
-            ],
-            '주민·행정': [
-                {
-                    id: 'm1',
-                    name: '위임장',
-                    fields: { '위임인 성명': '홍길동', '위임인 주민등록번호': '[주민등록번호 작성]', '위임인 연락처': '010-1234-5678', '위임인 주소': '경기도 평택시 현화길 12', '대리인 성명': '이영희', '대리인 주민등록번호': '[주민등록번호 작성]', '대리인 연락처': '010-2222-3333', '위임 내용': '민원 서류 대리 수령' },
-                    content: '본 위임장에 기재된 위임 사항에 대하여 대리인에게 전권을 위임합니다.',
-                    footer: '허위 위임장 작성 시 관련 법률에 따라 처벌받을 수 있습니다.'
-                }
-            ],
-            '부동산·민사': [
-                {
-                    id: 'b1',
-                    name: '차용증',
-                    fields: { '채무자 성명': '박첨지', '채무자 주민등록번호': '[주민등록번호 작성]', '채무자 연락처': '010-5555-6666', '채무자 주소': '경기도 평택시 안중읍 123', '채권자 성명': '김정도', '채권자 주민등록번호': '[주민등록번호 작성]', '채권자 연락처': '010-7777-8888', '차용금액': '금 10,000,000원', '변제기일': '2027년 12월 31일', '이자율': '연 5%' },
-                    content: '채무자는 채권자로부터 위 금액을 정히 차용하였으며, 지정된 변제기일까지 이자와 원금을 성실히 변제할 것을 약속합니다.',
-                    footer: '위 원금 및 이자를 기한 내 상환하지 않을 경우 법적 책임이 발생합니다.'
-                },
-                {
-                    id: 'b2',
-                    name: '내용증명서',
-                    isNoticeDoc: true,
-                    fields: { 
-                        '제목': '전세보증금 반환 요청', 
-                        '발신인 성명': '홍길동', 
-                        '발신인 연락처': '010-1234-5678', 
-                        '발신인 주소': '서울특별시 강남구 테헤란로 123, 101동 202호', 
-                        '수신인 성명/상호': '김철수', 
-                        '수신인 연락처': '010-9876-5432', 
-                        '수신인 주소': '경기도 평택시 현화길 45, 301호', 
-                        '사실관계': '2024년 3월 1일 체결한 임대차 계약(보증금 100,000,000원)의 만료일(2026년 3월 1일)이 도래함에 따라 재계약 의사가 없음을 사전에 통지함.', 
-                        '요구사항': '임대차 계약 만료일에 맞춰 전세보증금 100,000,000원을 지정 계좌(OO은행 123-456-789012, 예금주: 홍길동)로 반환해 줄 것.', 
-                        '이행 기한': '2026년 3월 1일까지', 
-                        '미이행 시 조치': '상기 기한 내 보증금 미반환 시 임차권등기명령 신청 및 보증금 반환 청구 소송 등 가능한 모든 법적 조치를 취할 예정임.' 
+                    isNotice: false,
+                    fields: {
+                        '성명': '김 민 수',
+                        '생년월일': '1988. 05. 14.',
+                        '주소': '서울특별시 강남구 테헤란로 123',
+                        '소속 / 부서': '경영지원본부 자문단',
+                        '위촉 직위': '전문 자문위원',
+                        '위촉 기간': '2026. 01. 01. ~ 2026. 12. 31.',
+                        '발급 용도': '기관 제출용'
                     },
-                    content: '위와 같이 내용증명을 발송합니다.',
-                    footer: '본 내용증명서는 통지 사실 및 발송 일자를 입증하기 위해 작성되었습니다.'
+                    statement: '위 사람은 당사의 규정에 의거하여 위와 같이 위촉되었음을 증명합니다.',
+                    subNote: '본 증명서는 사실과 상위 없음을 확인하며 위 용도에 한하여 유효합니다.'
+                },
+                {
+                    id: 'employment',
+                    name: '재직증명서',
+                    isNotice: false,
+                    fields: {
+                        '성명': '이 서 연',
+                        '생년월일': '1992. 09. 21.',
+                        '주소': '경기도 성남시 분당구 판교역로 235',
+                        '소속 부서': '기획마케팅팀',
+                        '직위 / 직급': '과장',
+                        '입사일자': '2021. 03. 02.',
+                        '재직 기간': '2021. 03. 02. ~ 현재 재직 중',
+                        '발급 용도': '금융기관 제출용'
+                    },
+                    statement: '위 사람은 현재 당사에 재직하고 있음을 증명합니다.',
+                    subNote: '본 증명서는 위 기재 사항이 사실과 틀림없음을 확인합니다.'
+                },
+                {
+                    id: 'dismissal',
+                    name: '해촉증명서',
+                    isNotice: false,
+                    fields: {
+                        '성명': '박 지 훈',
+                        '생년월일': '1985. 11. 03.',
+                        '주소': '서울특별시 송파구 올림픽로 300',
+                        '소속 / 직책': '프리랜서 외부강사',
+                        '위촉 기간': '2024. 03. 01. ~ 2026. 10. 31.',
+                        '해촉 일자': '2026. 10. 31.',
+                        '해촉 사유': '계약 기간 만료',
+                        '발급 용도': '국민연금·건강보험 공단 제출용'
+                    },
+                    statement: '위 사람은 당사와의 위촉 계약이 종료되어 위 일자부로 해촉되었음을 증명합니다.',
+                    subNote: '본 증명서는 건강보험 및 국민연금 자격 변동 신고 등 증빙용으로 발급합니다.'
+                },
+                {
+                    id: 'career',
+                    name: '경력증명서',
+                    isNotice: false,
+                    fields: {
+                        '성명': '최 유 진',
+                        '생년월일': '1990. 02. 18.',
+                        '주소': '인천광역시 연수구 송도과학로 56',
+                        '근무 부서': '기술연구소 개발1팀',
+                        '최종 직위': '선임연구원',
+                        '근무 기간': '2020. 04. 01. ~ 2026. 09. 30.',
+                        '담당 업무': '웹 플랫폼 설계 및 시스템 운영 총괄',
+                        '발급 용도': '경력 증빙 제출용'
+                    },
+                    statement: '위 사람은 당사에서 위와 같이 성실히 근무하였음을 증명합니다.',
+                    subNote: '위 기재 사항은 당사 인사기록부와 일치함을 확인합니다.'
                 }
             ],
-            '연차 관리기': [
-                { id: 'leave_app', name: '직원 연차관리 시스템 (Excel 연동)' }
+            '부동산·민사 서식': [
+                {
+                    id: 'legal_notice',
+                    name: '내용증명서',
+                    isNotice: true,
+                    fields: {
+                        '문서 제목': '임대차계약 만료에 따른 보증금 반환 요청의 건',
+                        '발신인 성명': '홍 길 동',
+                        '발신인 연락처': '010-1234-5678',
+                        '발신인 주소': '서울특별시 서초구 서초대로 77길 15, 302호',
+                        '수신인 성명/상호': '김 철 수',
+                        '수신인 연락처': '010-9876-5432',
+                        '수신인 주소': '서울특별시 강남구 역삼로 210, 501호',
+                        '사실관계': '발신인은 2024년 11월 1일 수신인 소유의 위 목적물에 대하여 임대차보증금 금 일억원정(₩100,000,000)에 임대차계약을 체결하고 거주해 왔으며, 계약 만료 3개월 전 갱신 거절 의사를 명확히 통지하였습니다.',
+                        '요구사항': '임대차계약 만료일인 2026년 10월 31일이 경과하였음에도 보증금이 반환되지 않고 있으므로, 본 내용증명 수령일로부터 7일 이내에 발신인 명의 계좌로 보증금 전액을 반환하여 주시기 바랍니다.',
+                        '이행 기한': '본 통지서 수령일로부터 7일 이내',
+                        '미이행 시 조치': '기한 내 이행되지 않을 경우 임차권등기명령 신청 및 보증금반환청구소송 등 일체의 법적 절차를 진행할 예정입니다.'
+                    },
+                    statement: '위와 같이 통지하오니 기한 내 원만히 이행하여 주시기 바랍니다.',
+                    subNote: '본 내용증명은 우체국 내용증명 우편 발송 및 법적 증빙 목적으로 작성되었습니다.'
+                },
+                {
+                    id: 'iou',
+                    name: '차용증',
+                    isNotice: false,
+                    fields: {
+                        '차용 금액': '금 일천만원정 (₩10,000,000)',
+                        '채무자(빌리는 사람)': '박 현 우 (생년월일: 1989. 07. 12.)',
+                        '채무자 연락처/주소': '010-2222-3333 / 경기도 수원시 영통구 광교중앙로 140',
+                        '채권자(빌려주는 사람)': '정 수 민',
+                        '변제 기일': '2027년 05월 31일',
+                        '이자율 및 지급일': '연 5.0% (매월 말일 채권자 계좌로 지급)',
+                        '변제 방법': '채권자 지정 예금계좌 계좌이체',
+                        '특약 사항': '변제기일 경과 시 기한의 이익을 상실하며 즉시 원리금을 일시 변제함'
+                    },
+                    statement: '위 금액을 채무자가 채권자로부터 틀림없이 차용하였으며, 위 약정 기일 내에 이의 없이 변제할 것을 확약합니다.',
+                    subNote: '후일을 증명하기 위하여 본 차용증을 작성하고 서명·날인합니다.'
+                },
+                {
+                    id: 'power_of_attorney',
+                    name: '위임장',
+                    isNotice: false,
+                    fields: {
+                        '위임인(본인) 성명': '강 도 윤',
+                        '위임인 생년월일': '1983. 12. 05.',
+                        '위임인 주소': '서울특별시 마포구 월드컵북로 396',
+                        '수임인(대리인) 성명': '한 지 민',
+                        '수임인 생년월일': '1991. 04. 27.',
+                        '수임인 관계/연락처': '배우자 / 010-5555-7777',
+                        '위임 사항': '각종 제증명서 발급 신청 및 수령에 관한 일체의 권한'
+                    },
+                    statement: '위임인은 위 수임인에게 상기 위임 사항에 관한 일체의 권한을 정히 위임합니다.',
+                    subNote: '※ 위임인의 신분증 사본을 함께 첨부하여 제출하시기 바랍니다.'
+                }
             ]
         };
 
-        // 내용증명서 작성 요령 가이드
-        const FIELD_TIPS = {
-            '제목': '전세보증금 반환 요청, 대여금 반환 요청 등 문서의 목적을 한 줄로 표시',
-            '발신인 성명': '봉투의 발신인 정보와 일치',
-            '발신인 연락처': '봉투의 발신인 정보와 일치',
-            '발신인 주소': '봉투의 발신인 정보와 일치',
-            '수신인 성명/상호': '실제로 받을 수 있는 성명 또는 상호 확인',
-            '수신인 연락처': '수신인 연락처 기재',
-            '수신인 주소': '실제로 우편을 받을 수 있는 정확한 주소 확인',
-            '사실관계': '계약일, 금액, 지급일, 미이행 사실 등 날짜와 숫자를 중심으로 기술',
-            '요구사항': '반환 금액, 입금 계좌, 이행 방법 등 원하는 조치를 구체적으로 표시',
-            '이행 기한': '"빠른 시일 내"보다 특정 날짜 또는 수령일부터 정한 기간으로 명확한 기한 기재',
-            '미이행 시 조치': '법적 절차 등 예정된 대응을 사실에 근거해 짧게 기술'
-        };
+        let currentMainTab = '인사·노무 서식';
+        let currentTemplate = FORM_TEMPLATES['인사·노무 서식'][0];
+        let currentFieldData = { ...currentTemplate.fields };
+        let currentSealMode = 'sign'; // 'sign' (자필 서명 1.5배) | 'stamp' (도장 공식 18mm)
+        let signatureDataUrl = '';
+        let stampDataUrl = '';
 
-        // 2. 근속연수별 기본 연차 발생수 테이블 (기본 법정 기준값)
-        const DEFAULT_LEAVE_RULES = {
-            under1Year: 11,
-            year1: 15,
-            year2: 15,
-            year3: 16,
-            year4: 16,
-            year5: 17,
-            year6: 17,
-            year7: 18,
-            year8: 18,
-            year10Plus: 25
-        };
+        function initApplication() {
+            const today = new Date().toISOString().split('T')[0];
+            const issueInput = document.getElementById('fieldIssueDate');
+            if (issueInput) issueInput.value = today;
 
-        let leaveRules = { ...DEFAULT_LEAVE_RULES };
+            const leaveBaseInput = document.getElementById('leaveCalcBaseDate');
+            if (leaveBaseInput) leaveBaseInput.value = today;
 
-        let employees = [
-            { id: 1, dept: '주간 미화', name: '김철수', joinDate: '2022-07-01', note: '우수 사원' },
-            { id: 2, dept: '주간 미화', name: '이영희', joinDate: '2024-01-15', note: '' },
-            { id: 3, dept: '행정팀', name: '박민수', joinDate: '2025-06-01', note: '신규 입사' }
-        ];
+            setupSignatureCanvas();
+            switchMainTab('인사·노무 서식');
+            renderAnnualLeaveTable();
+        }
 
-        let leaveUsages = [
-            { id: 101, date: '2026-11-01', empName: '김철수', type: '연차', days: 1, reason: '개인 사유' },
-            { id: 102, date: '2026-11-05', empName: '이영희', type: '반차', days: 0.5, reason: '병원 진료' }
-        ];
+        // 메인 탭 전환
+        function switchMainTab(tabName) {
+            currentMainTab = tabName;
 
-        function calculateLeaveDays(joinDateStr) {
-            if (!joinDateStr) return { total: 0, currentYear: 0 };
-            const joinDate = new Date(joinDateStr);
-            const today = new Date();
-            
-            let months = (today.getFullYear() - joinDate.getFullYear()) * 12 + (today.getMonth() - joinDate.getMonth());
-            if (today.getDate() < joinDate.getDate()) months--;
-
-            let years = Math.floor(months / 12);
-
-            let total = 0;
-            let currentYear = 0;
-
-            if (years < 1) {
-                total = Math.min(leaveRules.under1Year, Math.max(0, months));
-                currentYear = leaveRules.under1Year;
-            } else {
-                if (years === 1) currentYear = leaveRules.year1;
-                else if (years === 2) currentYear = leaveRules.year2;
-                else if (years === 3) currentYear = leaveRules.year3;
-                else if (years === 4) currentYear = leaveRules.year4;
-                else if (years === 5) currentYear = leaveRules.year5;
-                else if (years === 6) currentYear = leaveRules.year6;
-                else if (years === 7) currentYear = leaveRules.year7;
-                else if (years === 8) currentYear = leaveRules.year8;
-                else currentYear = leaveRules.year10Plus;
-
-                total = leaveRules.under1Year;
-                for (let y = 1; y <= years; y++) {
-                    if (y === 1) total += leaveRules.year1;
-                    else if (y === 2) total += leaveRules.year2;
-                    else if (y === 3) total += leaveRules.year3;
-                    else if (y === 4) total += leaveRules.year4;
-                    else if (y === 5) total += leaveRules.year5;
-                    else if (y === 6) total += leaveRules.year6;
-                    else if (y === 7) total += leaveRules.year7;
-                    else if (y === 8) total += leaveRules.year8;
-                    else total += leaveRules.year10Plus;
+            document.querySelectorAll('.main-tab-btn').forEach(btn => {
+                const isActive = btn.getAttribute('data-tab') === tabName;
+                const isReq = btn.getAttribute('data-tab') === '이 양식이 필요해!';
+                if (isActive) {
+                    btn.className = isReq
+                        ? 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 transition shadow-sm'
+                        : 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition shadow-sm';
+                } else {
+                    btn.className = isReq
+                        ? 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-amber-300 hover:bg-slate-700 transition'
+                        : 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition';
                 }
+            });
+
+            const docLayout = document.getElementById('documentViewLayout');
+            const leaveLayout = document.getElementById('annualLeaveLayout');
+            const boardLayout = document.getElementById('requestBoardLayout');
+            const subBar = document.getElementById('subTemplateBar');
+
+            if (tabName === '인사·노무 서식' || tabName === '부동산·민사 서식') {
+                docLayout.classList.remove('hidden');
+                leaveLayout.classList.add('hidden');
+                boardLayout.classList.add('hidden');
+                subBar.classList.remove('hidden');
+                renderSubTemplateButtons(tabName);
+                selectFormTemplate(FORM_TEMPLATES[tabName][0].id);
+            } else if (tabName === '연차 관리 시스템') {
+                docLayout.classList.add('hidden');
+                leaveLayout.classList.remove('hidden');
+                boardLayout.classList.add('hidden');
+                subBar.classList.add('hidden');
+                renderAnnualLeaveTable();
+            } else if (tabName === '이 양식이 필요해!') {
+                docLayout.classList.add('hidden');
+                leaveLayout.classList.add('hidden');
+                boardLayout.classList.remove('hidden');
+                subBar.classList.add('hidden');
             }
-
-            return { total, currentYear };
         }
 
-        // 애플리케이션 상태
-        let currentCat = '증명서·인증';
-        let currentForm = FORMS['증명서·인증'][0];
-        let formData = {};
-
-        // DOM 요소
-        const categoryContainer = document.getElementById('categoryContainer');
-        const formSelect = document.getElementById('formSelect');
-        const documentViewLayout = document.getElementById('documentViewLayout');
-        const annualLeaveLayout = document.getElementById('annualLeaveLayout');
-        const documentActionBtns = document.getElementById('documentActionBtns');
-
-        function initApp() {
-            renderCategories();
-            selectCategory(currentCat);
-            initCanvas();
-            initStampUpload();
-            if (window.lucide) lucide.createIcons();
-        }
-
-        function renderCategories() {
-            categoryContainer.innerHTML = '';
-            Object.keys(FORMS).forEach(cat => {
+        function renderSubTemplateButtons(category) {
+            const container = document.getElementById('subTemplateButtons');
+            container.innerHTML = '';
+            FORM_TEMPLATES[category].forEach(tpl => {
                 const btn = document.createElement('button');
-                btn.className = `px-2.5 py-1 rounded text-xs font-medium transition ${cat === currentCat ? 'bg-blue-600 text-white' : 'text-slate-300 hover:text-white'}`;
-                btn.innerText = cat;
-                btn.onclick = () => selectCategory(cat);
-                categoryContainer.appendChild(btn);
+                btn.type = 'button';
+                btn.setAttribute('data-tpl', tpl.id);
+                btn.innerText = tpl.name;
+                btn.onclick = () => selectFormTemplate(tpl.id);
+                btn.className = 'sub-tpl-item px-3 py-1 rounded-lg text-xs font-semibold transition whitespace-nowrap';
+                container.appendChild(btn);
             });
         }
 
-        function selectCategory(cat) {
-            currentCat = cat;
-            renderCategories();
-            formSelect.innerHTML = '';
-            FORMS[cat].forEach(f => {
-                const opt = document.createElement('option');
-                opt.value = f.id;
-                opt.innerText = f.name;
-                formSelect.appendChild(opt);
+        function selectFormTemplate(tplId) {
+            const list = FORM_TEMPLATES[currentMainTab] || [];
+            currentTemplate = list.find(t => t.id === tplId) || list[0];
+            currentFieldData = { ...currentTemplate.fields };
+
+            document.querySelectorAll('.sub-tpl-item').forEach(btn => {
+                const active = btn.getAttribute('data-tpl') === currentTemplate.id;
+                btn.className = active
+                    ? 'sub-tpl-item px-3 py-1 rounded-lg text-xs font-bold bg-blue-500 text-white shadow-sm whitespace-nowrap'
+                    : 'sub-tpl-item px-3 py-1 rounded-lg text-xs font-medium bg-slate-700/70 text-slate-300 hover:bg-slate-700 hover:text-white whitespace-nowrap';
             });
-            selectForm(FORMS[cat][0].id);
-        }
 
-        formSelect.onchange = (e) => selectForm(e.target.value);
+            document.getElementById('selectedTemplateBadge').innerText = currentTemplate.name;
 
-        function selectForm(formId) {
-            if (currentCat === '연차 관리기') {
-                documentViewLayout.classList.add('hidden');
-                annualLeaveLayout.classList.remove('hidden');
-                documentActionBtns.classList.add('hidden');
-                renderLeaveDashboard();
+            const issuerGroup = document.getElementById('issuerInfoGroup');
+            if (currentTemplate.isNotice) {
+                issuerGroup.classList.add('hidden');
             } else {
-                documentViewLayout.classList.remove('hidden');
-                annualLeaveLayout.classList.add('hidden');
-                documentActionBtns.classList.remove('hidden');
-
-                currentForm = FORMS[currentCat].find(f => f.id === formId) || FORMS[currentCat][0];
-                formData = { ...currentForm.fields };
-                document.getElementById('currentFormBadge').innerText = currentForm.name;
-
-                // 내용증명서일 때는 발급기관 입력창 대신 발신인 성명으로 하단 서명란 연동
-                const issuerInfoSection = document.getElementById('issuerInfoSection');
-                if (issuerInfoSection) {
-                    if (currentForm.isNoticeDoc) {
-                        issuerInfoSection.classList.add('hidden');
-                    } else {
-                        issuerInfoSection.classList.remove('hidden');
-                    }
-                }
-
-                renderInputs();
-                renderPreview();
+                issuerGroup.classList.remove('hidden');
             }
+
+            renderDynamicInputFields();
+            renderLiveA4Preview();
         }
 
-        // ================= 연차 관리기 UI 렌더링 & 이벤트 =================
-        function renderLeaveDashboard() {
-            renderEmployeeTable();
-            renderUsageTable();
-            renderRulesGrid();
-            if (window.lucide) lucide.createIcons();
-        }
+        function renderDynamicInputFields() {
+            const container = document.getElementById('dynamicFieldsContainer');
+            container.innerHTML = '';
 
-        function renderRulesGrid() {
-            const grid = document.getElementById('leaveRulesGrid');
-            grid.innerHTML = '';
-
-            const ruleLabels = [
-                { key: 'under1Year', label: '1년 미만' },
-                { key: 'year1', label: '1년차' },
-                { key: 'year2', label: '2년차' },
-                { key: 'year3', label: '3년차' },
-                { key: 'year4', label: '4년차' },
-                { key: 'year5', label: '5년차' },
-                { key: 'year6', label: '6년차' },
-                { key: 'year7', label: '7년차' },
-                { key: 'year8', label: '8년차' },
-                { key: 'year10Plus', label: '10년 이상' }
-            ];
-
-            ruleLabels.forEach(r => {
-                const div = document.createElement('div');
-                div.className = 'bg-slate-50 p-2 rounded border border-slate-200 flex flex-col items-center gap-1';
-                div.innerHTML = `
-                    <span class="font-bold text-slate-600 text-[11px]">${r.label}</span>
-                    <div class="flex items-center gap-0.5">
-                        <input type="number" min="0" max="30" value="${leaveRules[r.key]}" onchange="updateRule('${r.key}', parseInt(this.value))" class="w-12 border border-slate-300 rounded text-center py-0.5 font-bold text-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs">
-                        <span class="text-[11px] text-slate-500">개</span>
-                    </div>
+            if (currentTemplate.isNotice) {
+                const dateVal = document.getElementById('fieldIssueDate')?.value || new Date().toISOString().split('T')[0];
+                const dateBox = document.createElement('div');
+                dateBox.innerHTML = `
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">통지(작성) 일자</label>
+                    <input type="date" value="${escapeHTML(dateVal)}" onchange="document.getElementById('fieldIssueDate').value=this.value; renderLiveA4Preview();" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 `;
-                grid.appendChild(div);
-            });
-        }
-
-        function updateRule(key, val) {
-            if (isNaN(val) || val < 0) return;
-            leaveRules[key] = val;
-            renderLeaveDashboard();
-        }
-
-        function resetLeaveRuleToDefault() {
-            leaveRules = { ...DEFAULT_LEAVE_RULES };
-            renderLeaveDashboard();
-        }
-
-        function renderEmployeeTable() {
-            const tbody = document.getElementById('employeeTableBody');
-            tbody.innerHTML = '';
-
-            employees.forEach((emp) => {
-                const leaveInfo = calculateLeaveDays(emp.joinDate);
-                
-                const used = leaveUsages
-                    .filter(u => u.empName.trim() === emp.name.trim())
-                    .reduce((acc, cur) => acc + (parseFloat(cur.days) || 0), 0);
-
-                const remain = leaveInfo.total - used;
-
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 transition';
-                tr.innerHTML = `
-                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(emp.dept)}" onchange="updateEmp(${emp.id}, 'dept', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
-                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(emp.name)}" onchange="updateEmp(${emp.id}, 'name', this.value)" class="w-full border rounded px-1.5 py-1 text-xs font-bold"></td>
-                    <td class="p-2 border-r"><input type="date" value="${escapeHTML(emp.joinDate)}" onchange="updateEmp(${emp.id}, 'joinDate', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
-                    <td class="p-2 text-center border-r font-bold text-blue-600 bg-blue-50/30">${leaveInfo.total}일</td>
-                    <td class="p-2 text-center border-r font-bold text-red-600 bg-red-50/30">${used}일</td>
-                    <td class="p-2 text-center border-r font-bold text-emerald-600 bg-emerald-50/30">${remain}일</td>
-                    <td class="p-2 text-center border-r text-slate-600">${leaveInfo.currentYear}일</td>
-                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(emp.note || '')}" onchange="updateEmp(${emp.id}, 'note', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
-                    <td class="p-2 text-center">
-                        <button onclick="deleteEmp(${emp.id})" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function renderUsageTable() {
-            const tbody = document.getElementById('usageTableBody');
-            tbody.innerHTML = '';
-
-            leaveUsages.forEach((u) => {
-                let empOptions = employees.map(e => `<option value="${escapeHTML(e.name)}" ${e.name === u.empName ? 'selected' : ''}>${escapeHTML(e.name)} (${escapeHTML(e.dept)})</option>`).join('');
-
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 transition';
-                tr.innerHTML = `
-                    <td class="p-2 border-r"><input type="date" value="${escapeHTML(u.date)}" onchange="updateUsage(${u.id}, 'date', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
-                    <td class="p-2 border-r"><select onchange="updateUsage(${u.id}, 'empName', this.value)" class="w-full border rounded px-1.5 py-1 text-xs font-semibold">${empOptions}</select></td>
-                    <td class="p-2 border-r">
-                        <select onchange="updateUsage(${u.id}, 'type', this.value)" class="w-full border rounded px-1.5 py-1 text-xs">
-                            <option value="연차" ${u.type === '연차' ? 'selected' : ''}>연차</option>
-                            <option value="반차" ${u.type === '반차' ? 'selected' : ''}>반차</option>
-                            <option value="조퇴" ${u.type === '조퇴' ? 'selected' : ''}>조퇴</option>
-                            <option value="경조사" ${u.type === '경조사' ? 'selected' : ''}>경조사</option>
-                        </select>
-                    </td>
-                    <td class="p-2 border-r"><input type="number" step="0.5" value="${u.days}" onchange="updateUsage(${u.id}, 'days', parseFloat(this.value))" class="w-full border rounded px-1.5 py-1 text-xs text-center font-bold"></td>
-                    <td class="p-2 border-r"><input type="text" value="${escapeHTML(u.reason || '')}" onchange="updateUsage(${u.id}, 'reason', this.value)" class="w-full border rounded px-1.5 py-1 text-xs"></td>
-                    <td class="p-2 text-center">
-                        <button onclick="deleteUsage(${u.id})" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function updateEmp(id, key, val) {
-            const emp = employees.find(e => e.id === id);
-            if (emp) {
-                emp[key] = val;
-                renderLeaveDashboard();
+                container.appendChild(dateBox);
             }
-        }
 
-        function addEmployeeRow() {
-            const newId = Date.now();
-            employees.push({ id: newId, dept: '부서명', name: `직원_${employees.length + 1}`, joinDate: '2026-01-01', note: '' });
-            renderLeaveDashboard();
-        }
-
-        function deleteEmp(id) {
-            employees = employees.filter(e => e.id !== id);
-            renderLeaveDashboard();
-        }
-
-        function updateUsage(id, key, val) {
-            const usage = leaveUsages.find(u => u.id === id);
-            if (usage) {
-                usage[key] = val;
-                renderLeaveDashboard();
-            }
-        }
-
-        function addUsageRow() {
-            const newId = Date.now();
-            const defaultName = employees.length > 0 ? employees[0].name : '';
-            leaveUsages.push({ id: newId, date: new Date().toISOString().substring(0, 10), empName: defaultName, type: '연차', days: 1, reason: '' });
-            renderLeaveDashboard();
-        }
-
-        function deleteUsage(id) {
-            leaveUsages = leaveUsages.filter(u => u.id !== id);
-            renderLeaveDashboard();
-        }
-
-        // ================= 엑셀 내보내기 / 불러오기 (SheetJS) =================
-        function exportLeaveExcel() {
-            const empData = employees.map(e => {
-                const info = calculateLeaveDays(e.joinDate);
-                const used = leaveUsages.filter(u => u.empName.trim() === e.name.trim()).reduce((acc, cur) => acc + (parseFloat(cur.days) || 0), 0);
-                return {
-                    '업무/부서': e.dept,
-                    '이름': e.name,
-                    '입사일': e.joinDate,
-                    '총 연차': info.total,
-                    '사용 연차': used,
-                    '잔여 연차': info.total - used,
-                    '올해 발생수': info.currentYear,
-                    '비고': e.note || ''
-                };
-            });
-
-            const usageData = leaveUsages.map(u => ({
-                '사용일자': u.date,
-                '이름': u.empName,
-                '구분': u.type,
-                '사용차감일수': u.days,
-                '사유 및 비고': u.reason || ''
-            }));
-
-            const ruleData = [
-                { '항목': '1년미만', '설정연차수': leaveRules.under1Year },
-                { '항목': '1년차', '설정연차수': leaveRules.year1 },
-                { '항목': '2년차', '설정연차수': leaveRules.year2 },
-                { '항목': '3년차', '설정연차수': leaveRules.year3 },
-                { '항목': '4년차', '설정연차수': leaveRules.year4 },
-                { '항목': '5년차', '설정연차수': leaveRules.year5 },
-                { '항목': '6년차', '설정연차수': leaveRules.year6 },
-                { '항목': '7년차', '설정연차수': leaveRules.year7 },
-                { '항목': '8년차', '설정연차수': leaveRules.year8 },
-                { '항목': '10년이상', '설정연차수': leaveRules.year10Plus }
-            ];
-
-            const wb = XLSX.utils.book_new();
-            const wsEmp = XLSX.utils.json_to_sheet(empData);
-            const wsUsage = XLSX.utils.json_to_sheet(usageData);
-            const wsRules = XLSX.utils.json_to_sheet(ruleData);
-
-            XLSX.utils.book_append_sheet(wb, wsEmp, "직원 연차관리");
-            XLSX.utils.book_append_sheet(wb, wsUsage, "연차사용내역");
-            XLSX.utils.book_append_sheet(wb, wsRules, "연차설정기준");
-
-            XLSX.writeFile(wb, "직원_연차관리_시트.xlsx");
-        }
-
-        function importLeaveExcel(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try {
-                    const data = new Uint8Array(evt.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-
-                    if (workbook.SheetNames.includes("연차설정기준")) {
-                        const ruleSheet = workbook.Sheets["연차설정기준"];
-                        const ruleJson = XLSX.utils.sheet_to_json(ruleSheet);
-                        ruleJson.forEach(row => {
-                            if (row['항목'] === '1년미만') leaveRules.under1Year = parseInt(row['설정연차수']) || 11;
-                            if (row['항목'] === '1년차') leaveRules.year1 = parseInt(row['설정연차수']) || 15;
-                            if (row['항목'] === '2년차') leaveRules.year2 = parseInt(row['설정연차수']) || 15;
-                            if (row['항목'] === '3년차') leaveRules.year3 = parseInt(row['설정연차수']) || 16;
-                            if (row['항목'] === '4년차') leaveRules.year4 = parseInt(row['설정연차수']) || 16;
-                            if (row['항목'] === '5년차') leaveRules.year5 = parseInt(row['설정연차수']) || 17;
-                            if (row['항목'] === '6년차') leaveRules.year6 = parseInt(row['설정연차수']) || 17;
-                            if (row['항목'] === '7년차') leaveRules.year7 = parseInt(row['설정연차수']) || 18;
-                            if (row['항목'] === '8년차') leaveRules.year8 = parseInt(row['설정연차수']) || 18;
-                            if (row['항목'] === '10년이상') leaveRules.year10Plus = parseInt(row['설정연차수']) || 25;
-                        });
-                    }
-
-                    if (workbook.SheetNames.includes("직원 연차관리")) {
-                        const empSheet = workbook.Sheets["직원 연차관리"];
-                        const empJson = XLSX.utils.sheet_to_json(empSheet);
-                        employees = empJson.map((row, i) => ({
-                            id: i + 1,
-                            dept: row['업무/부서'] || row['업무'] || '부서',
-                            name: row['이름'] || `직원_${i+1}`,
-                            joinDate: formatDateVal(row['입사일']),
-                            note: row['비고'] || ''
-                        }));
-                    }
-
-                    if (workbook.SheetNames.includes("연차사용내역")) {
-                        const usageSheet = workbook.Sheets["연차사용내역"];
-                        const usageJson = XLSX.utils.sheet_to_json(usageSheet);
-                        leaveUsages = usageJson.map((row, i) => ({
-                            id: 100 + i + 1,
-                            date: formatDateVal(row['사용일자']),
-                            empName: row['이름'] || '',
-                            type: row['구분'] || '연차',
-                            days: parseFloat(row['사용차감일수']) || 1,
-                            reason: row['사유 및 비고'] || ''
-                        }));
-                    }
-
-                    showToast('연차 데이터 및 설정 기준을 성공적으로 불러왔습니다!', 'success');
-                    renderLeaveDashboard();
-                } catch (err) {
-                    console.error(err);
-                    showToast('엑셀 파일을 읽는 중 오류가 발생했습니다. 파일 형식을 확인해 주세요.', 'error');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-        function formatDateVal(val) {
-            if (!val) return '2026-01-01';
-            if (typeof val === 'number') {
-                const date = new Date((val - (25567 + 2)) * 86400 * 1000);
-                return date.toISOString().substring(0, 10);
-            }
-            return String(val).replace(/\./g, '-');
-        }
-
-        // ================= 민원 양식 및 내용증명서 렌더링 로직 =================
-        const dynamicInputFields = document.getElementById('dynamicInputFields');
-        const docTitle = document.getElementById('docTitle');
-        const docTableContainer = document.getElementById('docTableContainer');
-        const docContentContainer = document.getElementById('docContentContainer');
-        const docFooterText = document.getElementById('docFooterText');
-        const docDate = document.getElementById('docDate');
-
-        function renderInputs() {
-            dynamicInputFields.innerHTML = '';
-            Object.keys(formData).forEach(key => {
-                const div = document.createElement('div');
-                div.className = 'flex flex-col gap-1';
-                
-                const tipHtml = FIELD_TIPS[key]
-                    ? `<span class="text-[11px] text-slate-400 font-normal">작성 요령: ${escapeHTML(FIELD_TIPS[key])}</span>`
-                    : '';
-                
-                const isTextArea = key === '사실관계' || key === '요구사항' || key === '미이행 시 조치';
-                
+            Object.keys(currentFieldData).forEach(key => {
+                const wrap = document.createElement('div');
                 const label = document.createElement('label');
-                label.className = 'text-xs font-semibold text-slate-700';
+                label.className = 'block text-xs font-semibold text-slate-700 mb-1';
                 label.innerText = key;
-                div.appendChild(label);
+                wrap.appendChild(label);
 
-                if (isTextArea) {
+                const isMultiLine = ['사실관계', '요구사항', '미이행 시 조치', '담당 업무', '특약 사항'].includes(key);
+                if (isMultiLine) {
                     const ta = document.createElement('textarea');
                     ta.rows = 3;
-                    ta.className = 'border border-slate-300 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500';
-                    ta.value = formData[key] || '';
-                    ta.oninput = (e) => updateField(key, e.target.value);
-                    div.appendChild(ta);
+                    ta.value = currentFieldData[key] || '';
+                    ta.className = 'w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs leading-relaxed focus:ring-2 focus:ring-blue-500 focus:outline-none';
+                    ta.oninput = (e) => {
+                        currentFieldData[key] = e.target.value;
+                        renderLiveA4Preview();
+                    };
+                    wrap.appendChild(ta);
                 } else {
                     const inp = document.createElement('input');
                     inp.type = 'text';
-                    inp.className = 'border border-slate-300 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500';
-                    inp.value = formData[key] || '';
-                    inp.oninput = (e) => updateField(key, e.target.value);
-                    div.appendChild(inp);
+                    inp.value = currentFieldData[key] || '';
+                    inp.className = 'w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none';
+                    inp.oninput = (e) => {
+                        currentFieldData[key] = e.target.value;
+                        renderLiveA4Preview();
+                    };
+                    wrap.appendChild(inp);
                 }
-
-                if (tipHtml) {
-                    div.insertAdjacentHTML('beforeend', tipHtml);
-                }
-                dynamicInputFields.appendChild(div);
+                container.appendChild(wrap);
             });
         }
 
-        function updateField(key, val) {
-            formData[key] = val;
-            renderPreview();
+        function resetFormInputs() {
+            currentFieldData = { ...currentTemplate.fields };
+            renderDynamicInputFields();
+            renderLiveA4Preview();
+            showToast('입력 항목이 기본 예시로 초기화되었습니다.', 'info');
         }
 
-        function renderPreview() {
-            docTitle.innerText = currentForm.name;
-            docContentContainer.innerText = currentForm.content;
-            
-            // 모든 양식 공통: 표와 작성일자 중간 정중앙 위치 + 단어 단위 자연스러운 줄바꿈(break-keep)
-            if (currentForm.isNoticeDoc) {
-                docContentContainer.className = "flex-1 flex items-center justify-center text-center font-bold text-base leading-relaxed px-6 py-2 whitespace-pre-wrap break-keep tracking-wider";
-            } else {
-                docContentContainer.className = "flex-1 flex items-center justify-center text-center font-bold text-lg leading-relaxed px-6 py-4 whitespace-pre-wrap break-keep tracking-wider";
-            }
-            
-            docFooterText.innerText = currentForm.footer;
+        function renderLiveA4Preview() {
+            // 1. 제목 (27px 굵게, 중앙, 밑줄 없음)
+            document.getElementById('previewDocTitle').innerText = currentTemplate.name;
 
-            const today = new Date();
-            docDate.innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
-
-            let tableHTML = '';
-            
-            // 내용증명서 전용 고정 규격 표 (A4 1장 내 여유 있게 안착하도록 행 높이 최적화)
-            if (currentForm.isNoticeDoc) {
-                tableHTML = `
-                <table class="w-full border-collapse border border-slate-900 text-xs mb-3">
-                    <tbody>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900 w-24">제 목</td>
-                            <td colspan="2" class="p-1.5 font-bold border-r border-slate-900 text-sm">${escapeHTML(formData['제목'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td rowspan="3" class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900 w-24">발신인</td>
-                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900 w-20">성명</td>
-                            <td class="p-1 font-medium border-r border-slate-900">${escapeHTML(formData['발신인 성명'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">연락처</td>
-                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['발신인 연락처'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">주소</td>
-                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['발신인 주소'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td rowspan="3" class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">수신인</td>
-                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">성명/상호</td>
-                            <td class="p-1 font-medium border-r border-slate-900">${escapeHTML(formData['수신인 성명/상호'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">연락처</td>
-                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['수신인 연락처'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-50 font-semibold p-1 text-center border-r border-slate-900">주소</td>
-                            <td class="p-1 border-r border-slate-900">${escapeHTML(formData['수신인 주소'])}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table class="w-full border-collapse border border-slate-900 text-xs">
-                    <tbody>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900 w-24">1. 사실관계</td>
-                            <td class="p-1.5 border-r border-slate-900 whitespace-pre-wrap leading-snug break-keep">${escapeHTML(formData['사실관계'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">2. 요구사항</td>
-                            <td class="p-1.5 border-r border-slate-900 whitespace-pre-wrap leading-snug break-keep">${escapeHTML(formData['요구사항'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">3. 이행 기한</td>
-                            <td class="p-1.5 font-semibold border-r border-slate-900 text-red-600">${escapeHTML(formData['이행 기한'])}</td>
-                        </tr>
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold p-1.5 text-center border-r border-slate-900">4. 미이행 시 조치</td>
-                            <td class="p-1.5 border-r border-slate-900 whitespace-pre-wrap leading-snug break-keep">${escapeHTML(formData['미이행 시 조치'])}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            // 2. 표 생성
+            const tableBox = document.getElementById('previewDocTableBox');
+            if (currentTemplate.isNotice) {
+                tableBox.innerHTML = `
+                    <table class="doc-table mb-3" style="font-size: 12.5px;">
+                        <tbody>
+                            <tr>
+                                <th style="width: 90px;">제 목</th>
+                                <td colspan="2" class="font-bold text-[14px]">${escapeHTML(currentFieldData['문서 제목'])}</td>
+                            </tr>
+                            <tr>
+                                <th rowspan="3">발 신 인</th>
+                                <th style="width: 85px;">성 명</th>
+                                <td class="font-semibold">${escapeHTML(currentFieldData['발신인 성명'])}</td>
+                            </tr>
+                            <tr>
+                                <th>연 락 처</th>
+                                <td>${escapeHTML(currentFieldData['발신인 연락처'])}</td>
+                            </tr>
+                            <tr>
+                                <th>주 소</th>
+                                <td>${escapeHTML(currentFieldData['발신인 주소'])}</td>
+                            </tr>
+                            <tr>
+                                <th rowspan="3">수 신 인</th>
+                                <th>성명/상호</th>
+                                <td class="font-semibold">${escapeHTML(currentFieldData['수신인 성명/상호'])}</td>
+                            </tr>
+                            <tr>
+                                <th>연 락 처</th>
+                                <td>${escapeHTML(currentFieldData['수신인 연락처'])}</td>
+                            </tr>
+                            <tr>
+                                <th>주 소</th>
+                                <td>${escapeHTML(currentFieldData['수신인 주소'])}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="doc-table" style="font-size: 12.5px;">
+                        <tbody>
+                            <tr>
+                                <th style="width: 110px;">1. 사실관계</th>
+                                <td class="whitespace-pre-wrap leading-snug">${escapeHTML(currentFieldData['사실관계'])}</td>
+                            </tr>
+                            <tr>
+                                <th>2. 요구사항</th>
+                                <td class="whitespace-pre-wrap leading-snug">${escapeHTML(currentFieldData['요구사항'])}</td>
+                            </tr>
+                            <tr>
+                                <th>3. 이행 기한</th>
+                                <td class="font-bold text-red-700">${escapeHTML(currentFieldData['이행 기한'])}</td>
+                            </tr>
+                            <tr>
+                                <th>4. 미이행 시 조치</th>
+                                <td class="whitespace-pre-wrap leading-snug">${escapeHTML(currentFieldData['미이행 시 조치'])}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 `;
             } else {
-                tableHTML = '<table class="w-full border-collapse border border-slate-900 text-sm"><tbody>';
-                const keys = Object.keys(formData);
-                const cellPadding = keys.length >= 9 ? 'p-2' : 'p-2.5';
-                
-                keys.forEach(k => {
-                    tableHTML += `
-                        <tr class="border-b border-slate-900">
-                            <td class="bg-slate-100 font-bold ${cellPadding} text-center border-r border-slate-900 w-36 whitespace-nowrap">${escapeHTML(k)}</td>
-                            <td class="${cellPadding} border-r border-slate-900 break-keep">${escapeHTML(formData[k])}</td>
-                        </tr>
-                    `;
-                });
-                tableHTML += '</tbody></table>';
+                const keys = Object.keys(currentFieldData);
+                const rows = keys.map(k => `
+                    <tr>
+                        <th style="width: 155px;">${escapeHTML(k)}</th>
+                        <td>${escapeHTML(currentFieldData[k])}</td>
+                    </tr>
+                `).join('');
+                tableBox.innerHTML = `<table class="doc-table"><tbody>${rows}</tbody></table>`;
             }
 
-            docTableContainer.innerHTML = tableHTML;
+            // 3. 중간 본문 문구
+            document.getElementById('previewDocStatement').innerText = currentTemplate.statement;
 
-            const displayCompany = document.getElementById('displayCompany');
-            const displaySignerLabel = document.getElementById('displaySignerLabel');
-            const displayCEO = document.getElementById('displayCEO');
+            // 4. 하단 부가 안내 및 작성일자·서명자 정보
+            document.getElementById('previewDocSubNote').innerText = currentTemplate.subNote;
 
-            if (currentForm.isNoticeDoc) {
-                if (displayCompany) displayCompany.classList.add('hidden');
-                if (displaySignerLabel) displaySignerLabel.innerText = '발신인:';
-                if (displayCEO) displayCEO.innerText = formData['발신인 성명'] || '';
+            const rawDate = document.getElementById('fieldIssueDate')?.value;
+            let dateFormatted = '';
+            if (rawDate) {
+                const p = rawDate.split('-');
+                dateFormatted = `${p[0]}년 ${parseInt(p[1], 10)}월 ${parseInt(p[2], 10)}일`;
             } else {
-                if (displayCompany) displayCompany.classList.remove('hidden');
-                if (displaySignerLabel) displaySignerLabel.innerText = '대표자:';
-                const companyInput = document.getElementById('issuerCompany');
-                const ceoInput = document.getElementById('issuerCEO');
-                if (companyInput && displayCompany) displayCompany.innerText = companyInput.value || '';
-                if (ceoInput && displayCEO) displayCEO.innerText = ceoInput.value || '';
+                const now = new Date();
+                dateFormatted = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
+            }
+            document.getElementById('previewDocDate').innerText = dateFormatted;
+
+            const orgEl = document.getElementById('previewOrgName');
+            const roleEl = document.getElementById('previewRoleLabel');
+            const repEl = document.getElementById('previewRepName');
+
+            if (currentTemplate.isNotice) {
+                orgEl.classList.add('hidden');
+                roleEl.innerText = '발신인 :';
+                repEl.innerText = currentFieldData['발신인 성명'] || '';
+            } else {
+                orgEl.classList.remove('hidden');
+                orgEl.innerText = document.getElementById('fieldIssuerOrg')?.value || '';
+                roleEl.innerText = '대표자 :';
+                repEl.innerText = document.getElementById('fieldIssuerRep')?.value || '';
+            }
+
+            // 5. 싸인(1.5배: 120px x 60px) 및 도장(공식 18mm: 68px x 68px) 상태 동기화
+            applySealOverlayToPreview();
+        }
+
+        // ================= 서명(1.5배 확대) & 도장(공식 규격 18mm) 전환 로직 =================
+        function switchSealMode(mode) {
+            currentSealMode = mode;
+            const signBtn = document.getElementById('modeSignBtn');
+            const stampBtn = document.getElementById('modeStampBtn');
+            const signSec = document.getElementById('signPadSection');
+            const stampSec = document.getElementById('stampUploadSection');
+
+            if (mode === 'sign') {
+                signBtn.className = 'py-1.5 px-2 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm transition';
+                stampBtn.className = 'py-1.5 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
+                signSec.classList.remove('hidden');
+                stampSec.classList.add('hidden');
+            } else {
+                stampBtn.className = 'py-1.5 px-2 rounded-lg text-xs font-bold bg-white text-blue-700 shadow-sm transition';
+                signBtn.className = 'py-1.5 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
+                stampSec.classList.remove('hidden');
+                signSec.classList.add('hidden');
+            }
+            applySealOverlayToPreview();
+        }
+
+        function applySealOverlayToPreview() {
+            const sigImg = document.getElementById('previewSignatureImg');
+            const stpImg = document.getElementById('previewStampImg');
+            const sealTxt = document.getElementById('previewSealText');
+
+            if (currentSealMode === 'sign') {
+                stpImg.classList.add('hidden');
+                if (signatureDataUrl) {
+                    sigImg.src = signatureDataUrl;
+                    sigImg.classList.remove('hidden');
+                    sealTxt.classList.add('opacity-40');
+                } else {
+                    sigImg.classList.add('hidden');
+                    sealTxt.classList.remove('opacity-40');
+                }
+            } else {
+                sigImg.classList.add('hidden');
+                if (stampDataUrl) {
+                    stpImg.src = stampDataUrl;
+                    stpImg.classList.remove('hidden');
+                    sealTxt.classList.add('opacity-40');
+                } else {
+                    stpImg.classList.add('hidden');
+                    sealTxt.classList.remove('opacity-40');
+                }
             }
         }
 
-        // 서명 캔버스
-        let canvas, ctx, isDrawing = false;
-        function initCanvas() {
-            canvas = document.getElementById('sigCanvas');
-            if (!canvas) return;
-            ctx = canvas.getContext('2d');
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 2;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
+        let sigCanvas, sigCtx, isDrawingSig = false;
+
+        function setupSignatureCanvas() {
+            sigCanvas = document.getElementById('signatureCanvas');
+            if (!sigCanvas) return;
+            sigCtx = sigCanvas.getContext('2d');
+            sigCtx.strokeStyle = '#111827';
+            sigCtx.lineWidth = 2.6;
+            sigCtx.lineCap = 'round';
+            sigCtx.lineJoin = 'round';
 
             const getPos = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const scaleX = canvas.width / rect.width;
-                const scaleY = canvas.height / rect.height;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return {
-                    x: (clientX - rect.left) * scaleX,
-                    y: (clientY - rect.top) * scaleY
-                };
+                const rect = sigCanvas.getBoundingClientRect();
+                const scaleX = sigCanvas.width / rect.width;
+                const scaleY = sigCanvas.height / rect.height;
+                const cx = e.touches ? e.touches[0].clientX : e.clientX;
+                const cy = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: (cx - rect.left) * scaleX, y: (cy - rect.top) * scaleY };
             };
 
-            const start = (e) => {
+            const startDraw = (e) => {
                 if (e.cancelable) e.preventDefault();
-                isDrawing = true;
-                ctx.beginPath();
+                isDrawingSig = true;
                 const p = getPos(e);
-                ctx.moveTo(p.x, p.y);
+                sigCtx.beginPath();
+                sigCtx.moveTo(p.x, p.y);
             };
-            const move = (e) => {
-                if (!isDrawing) return;
+            const moveDraw = (e) => {
+                if (!isDrawingSig) return;
                 if (e.cancelable) e.preventDefault();
                 const p = getPos(e);
-                ctx.lineTo(p.x, p.y);
-                ctx.stroke();
+                sigCtx.lineTo(p.x, p.y);
+                sigCtx.stroke();
             };
-            const stop = () => {
-                if (isDrawing) {
-                    isDrawing = false;
-                    syncSignature();
-                }
+            const endDraw = () => {
+                if (!isDrawingSig) return;
+                isDrawingSig = false;
+                signatureDataUrl = sigCanvas.toDataURL('image/png');
+                applySealOverlayToPreview();
             };
 
-            canvas.addEventListener('mousedown', start);
-            canvas.addEventListener('mousemove', move);
-            canvas.addEventListener('mouseup', stop);
-            canvas.addEventListener('mouseleave', stop);
-            canvas.addEventListener('touchstart', start, { passive: false });
-            canvas.addEventListener('touchmove', move, { passive: false });
-            canvas.addEventListener('touchend', stop);
+            sigCanvas.addEventListener('mousedown', startDraw);
+            sigCanvas.addEventListener('mousemove', moveDraw);
+            sigCanvas.addEventListener('mouseup', endDraw);
+            sigCanvas.addEventListener('mouseleave', endDraw);
+            sigCanvas.addEventListener('touchstart', startDraw, { passive: false });
+            sigCanvas.addEventListener('touchmove', moveDraw, { passive: false });
+            sigCanvas.addEventListener('touchend', endDraw);
         }
 
-        function clearCanvas() {
-            if (!ctx || !canvas) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const sigImg = document.getElementById('sigImage');
-            if (sigImg) sigImg.classList.add('hidden');
+        function clearSignaturePad() {
+            if (sigCtx && sigCanvas) {
+                sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+            }
+            signatureDataUrl = '';
+            applySealOverlayToPreview();
         }
 
-        function syncSignature() {
-            const sigImg = document.getElementById('sigImage');
-            if (!sigImg || !canvas) return;
-            sigImg.src = canvas.toDataURL('image/png');
-            sigImg.classList.remove('hidden');
+        function handleStampFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                stampDataUrl = evt.target.result;
+                document.getElementById('clearStampBtn').classList.remove('hidden');
+                applySealOverlayToPreview();
+                showToast('도장이 공식 인감 규격(18mm) 크기로 적용되었습니다.', 'success');
+            };
+            reader.readAsDataURL(file);
         }
 
-        // 도장 이미지 업로드
-        function initStampUpload() {
-            const stampInput = document.getElementById('stampUpload');
-            if (!stampInput) return;
-            stampInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const stampImg = document.getElementById('stampImage');
-                    if (stampImg) {
-                        stampImg.src = evt.target.result;
-                        stampImg.classList.remove('hidden');
-                    }
-                };
-                reader.readAsDataURL(file);
-            });
+        function clearStampUpload() {
+            stampDataUrl = '';
+            document.getElementById('stampImageInput').value = '';
+            document.getElementById('clearStampBtn').classList.add('hidden');
+            applySealOverlayToPreview();
         }
 
-        // PDF 다운로드 (화면 축소·스크롤과 무관하게 정확한 210mm x 297mm 1페이지 A4 출력 보장)
-        async function downloadPDF() {
-            const element = document.getElementById('a4Paper');
-            if (!element) return;
-            if (!window.html2pdf) {
-                showToast('PDF 생성 라이브러리를 로딩 중입니다. 잠시 후 다시 시도해 주세요.', 'error');
+        // ================= A4 정배율 1페이지 PDF 저장 (html2canvas + jsPDF) =================
+        async function downloadA4Pdf() {
+            const sourceEl = document.getElementById('a4PreviewSheet');
+            if (!sourceEl || !window.html2canvas || !window.jspdf) {
+                showToast('PDF 생성 모듈을 준비 중입니다. 잠시 후 다시 시도해 주세요.', 'error');
                 return;
             }
 
-            showToast('A4 규격 PDF 파일을 생성하고 있습니다...', 'info');
+            showToast('A4 표준 규격 PDF를 생성하고 있습니다...', 'info');
 
-            // 96DPI 기준 표준 A4 정확 픽셀 크기 (210mm = 793.7px -> 794px, 297mm = 1122.5px -> 1123px)
-            const A4_WIDTH_PX = 794;
-            const A4_HEIGHT_PX = 1123;
+            const A4_WIDTH = 794;
+            const A4_HEIGHT = 1123;
 
-            // 브라우저 창 너비·스크롤 영향을 받지 않도록 정확한 A4 픽셀 규격의 임시 캡처 컨테이너 생성
-            const offscreenHost = document.createElement('div');
-            offscreenHost.style.position = 'fixed';
-            offscreenHost.style.left = '0';
-            offscreenHost.style.top = '0';
-            offscreenHost.style.width = `${A4_WIDTH_PX}px`;
-            offscreenHost.style.height = `${A4_HEIGHT_PX}px`;
-            offscreenHost.style.margin = '0';
-            offscreenHost.style.padding = '0';
-            offscreenHost.style.background = '#ffffff';
-            offscreenHost.style.zIndex = '-9999';
-            offscreenHost.style.pointerEvents = 'none';
-            offscreenHost.style.overflow = 'hidden';
+            const host = document.createElement('div');
+            host.style.position = 'fixed';
+            host.style.left = '0';
+            host.style.top = '0';
+            host.style.width = `${A4_WIDTH}px`;
+            host.style.height = `${A4_HEIGHT}px`;
+            host.style.margin = '0';
+            host.style.padding = '0';
+            host.style.backgroundColor = '#ffffff';
+            host.style.zIndex = '-9999';
+            host.style.pointerEvents = 'none';
+            host.style.overflow = 'hidden';
 
-            const clone = element.cloneNode(true);
+            const clone = sourceEl.cloneNode(true);
             clone.style.transform = 'none';
             clone.style.margin = '0';
             clone.style.boxShadow = 'none';
-            clone.style.width = `${A4_WIDTH_PX}px`;
-            clone.style.height = `${A4_HEIGHT_PX}px`;
-            clone.style.minHeight = `${A4_HEIGHT_PX}px`;
-            clone.style.maxHeight = `${A4_HEIGHT_PX}px`;
+            clone.style.width = `${A4_WIDTH}px`;
+            clone.style.height = `${A4_HEIGHT}px`;
+            clone.style.minHeight = `${A4_HEIGHT}px`;
+            clone.style.maxHeight = `${A4_HEIGHT}px`;
             clone.style.padding = '22.5mm 15mm 22.5mm 15mm';
             clone.style.boxSizing = 'border-box';
 
-            // 도장이나 서명이 첨부된 경우 PDF에서 '(인)' 안내 텍스트 숨김
-            const hasStamp = !clone.querySelector('#stampImage')?.classList.contains('hidden');
-            const hasSig = !clone.querySelector('#sigImage')?.classList.contains('hidden');
-            const placeholder = clone.querySelector('#stampPlaceholder');
-            if (placeholder && (hasStamp || hasSig)) {
-                placeholder.style.display = 'none';
-            }
+            host.appendChild(clone);
+            document.body.appendChild(host);
 
-            offscreenHost.appendChild(clone);
-            document.body.appendChild(offscreenHost);
-
-            const opt = {
-                margin: 0,
-                filename: `${currentForm.name}_완성본.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
+            try {
+                const canvas = await window.html2canvas(clone, {
                     scale: 2,
                     useCORS: true,
                     logging: false,
+                    backgroundColor: '#ffffff',
                     x: 0,
                     y: 0,
                     scrollX: 0,
                     scrollY: 0,
-                    width: A4_WIDTH_PX,
-                    height: A4_HEIGHT_PX,
-                    windowWidth: A4_WIDTH_PX,
-                    windowHeight: A4_HEIGHT_PX
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+                    width: A4_WIDTH,
+                    height: A4_HEIGHT,
+                    windowWidth: A4_WIDTH,
+                    windowHeight: A4_HEIGHT
+                });
 
-            try {
-                const worker = html2pdf().set(opt).from(clone).toPdf();
-                const pdf = await worker.get('pdf');
-                // 미세 픽셀 오차로 빈 2페이지가 생성될 경우 1페이지만 남기고 자동 삭제
-                while (pdf.internal.getNumberOfPages() > 1) {
-                    pdf.deletePage(pdf.internal.getNumberOfPages());
-                }
-                await worker.save();
-                showToast(`${currentForm.name}_완성본.pdf 저장이 완료되었습니다.`, 'success');
+                const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+                pdf.save(`${currentTemplate.name}_각종양식.pdf`);
+                showToast(`${currentTemplate.name}_각종양식.pdf 저장이 완료되었습니다.`, 'success');
             } catch (err) {
-                console.error(err);
-                showToast('PDF 저장 중 오류가 발생했습니다. 다시 시도해 주세요.', 'error');
+                console.error('PDF generation error:', err);
+                showToast('PDF 생성 중 오류가 발생했습니다. 다시 시도해 주세요.', 'error');
             } finally {
-                if (offscreenHost.parentNode) {
-                    offscreenHost.parentNode.removeChild(offscreenHost);
+                if (host.parentNode) {
+                    host.parentNode.removeChild(host);
                 }
             }
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initApp);
-        } else {
-            initApp();
+        // ================= 직원 연차 관리 시스템 =================
+        let annualLeaveList = [
+            { id: 1, name: '김민수', dept: '경영지원팀 / 과장', joinDate: '2022-03-02', usedDays: 4.5 },
+            { id: 2, name: '이서연', dept: '기획마케팅팀 / 대리', joinDate: '2024-06-10', usedDays: 2 },
+            { id: 3, name: '박지훈', dept: '개발팀 / 사원', joinDate: '2026-04-01', usedDays: 1 }
+        ];
+
+        function calculateKoreanStatutoryLeave(joinDateStr, baseDateStr) {
+            if (!joinDateStr || !baseDateStr) return { tenureLabel: '-', accrued: 0 };
+            const join = new Date(joinDateStr);
+            const base = new Date(baseDateStr);
+            if (isNaN(join.getTime()) || isNaN(base.getTime()) || base < join) {
+                return { tenureLabel: '입사 전', accrued: 0 };
+            }
+
+            let months = (base.getFullYear() - join.getFullYear()) * 12 + (base.getMonth() - join.getMonth());
+            if (base.getDate() < join.getDate()) months--;
+            months = Math.max(0, months);
+
+            const years = Math.floor(months / 12);
+            const remMonths = months % 12;
+            const tenureLabel = years > 0 ? `${years}년 ${remMonths}개월` : `${remMonths}개월`;
+
+            let accrued = 0;
+            if (years < 1) {
+                accrued = Math.min(11, months);
+            } else {
+                const bonus = Math.floor((years - 1) / 2);
+                accrued = Math.min(25, 15 + bonus);
+            }
+            return { tenureLabel, accrued };
+        }
+
+        function renderAnnualLeaveTable() {
+            const tbody = document.getElementById('leaveTableBody');
+            if (!tbody) return;
+            const baseDate = document.getElementById('leaveCalcBaseDate')?.value || new Date().toISOString().split('T')[0];
+
+            let totalAccrued = 0;
+            let totalRemaining = 0;
+
+            tbody.innerHTML = annualLeaveList.map((emp, index) => {
+                const { tenureLabel, accrued } = calculateKoreanStatutoryLeave(emp.joinDate, baseDate);
+                const used = parseFloat(emp.usedDays) || 0;
+                const remaining = Math.max(0, accrued - used);
+
+                totalAccrued += accrued;
+                totalRemaining += remaining;
+
+                return `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-2.5 text-center font-semibold text-slate-500">${index + 1}</td>
+                        <td class="p-2.5">
+                            <input type="text" value="${escapeHTML(emp.name)}" onchange="editLeaveEmployee(${emp.id}, 'name', this.value)" class="w-24 border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold">
+                        </td>
+                        <td class="p-2.5">
+                            <input type="text" value="${escapeHTML(emp.dept || '')}" onchange="editLeaveEmployee(${emp.id}, 'dept', this.value)" class="w-36 border border-slate-300 rounded-lg px-2 py-1 text-xs">
+                        </td>
+                        <td class="p-2.5">
+                            <input type="date" value="${escapeHTML(emp.joinDate)}" onchange="editLeaveEmployee(${emp.id}, 'joinDate', this.value)" class="border border-slate-300 rounded-lg px-2 py-1 text-xs">
+                        </td>
+                        <td class="p-2.5 text-center font-medium text-slate-600">${tenureLabel}</td>
+                        <td class="p-2.5 text-center font-bold text-blue-700 bg-blue-50/40">${accrued}일</td>
+                        <td class="p-2.5 text-center bg-amber-50/40">
+                            <input type="number" step="0.5" min="0" value="${used}" onchange="editLeaveEmployee(${emp.id}, 'usedDays', parseFloat(this.value))" class="w-16 border border-amber-300 rounded-lg px-2 py-1 text-xs text-center font-bold text-amber-800 bg-white">
+                        </td>
+                        <td class="p-2.5 text-center font-bold text-emerald-700 bg-emerald-50/40">${remaining}일</td>
+                        <td class="p-2.5 text-center">
+                            <button type="button" onclick="deleteLeaveEmployee(${emp.id})" class="text-red-500 hover:text-red-700 font-bold px-2 py-1 rounded hover:bg-red-50 transition">삭제</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('leaveStatCount').innerText = `${annualLeaveList.length}명`;
+            document.getElementById('leaveStatAccrued').innerText = `${totalAccrued}일`;
+            document.getElementById('leaveStatRemaining').innerText = `${totalRemaining}일`;
+        }
+
+        function addLeaveEmployee() {
+            annualLeaveList.push({
+                id: Date.now(),
+                name: `신규직원${annualLeaveList.length + 1}`,
+                dept: '부서명 / 직급',
+                joinDate: new Date().toISOString().split('T')[0],
+                usedDays: 0
+            });
+            renderAnnualLeaveTable();
+        }
+
+        function editLeaveEmployee(id, field, val) {
+            const item = annualLeaveList.find(e => e.id === id);
+            if (!item) return;
+            item[field] = val;
+            renderAnnualLeaveTable();
+        }
+
+        function deleteLeaveEmployee(id) {
+            annualLeaveList = annualLeaveList.filter(e => e.id !== id);
+            renderAnnualLeaveTable();
+        }
+
+        function downloadLeaveCsv() {
+            const baseDate = document.getElementById('leaveCalcBaseDate')?.value || new Date().toISOString().split('T')[0];
+            const header = ['번호', '성명', '부서/직급', '입사일', '근속기간', '발생연차(일)', '사용연차(일)', '잔여연차(일)'];
+            const rows = annualLeaveList.map((emp, i) => {
+                const { tenureLabel, accrued } = calculateKoreanStatutoryLeave(emp.joinDate, baseDate);
+                const used = parseFloat(emp.usedDays) || 0;
+                const remaining = Math.max(0, accrued - used);
+                return [i + 1, emp.name, emp.dept || '', emp.joinDate, tenureLabel, accrued, used, remaining];
+            });
+
+            const csvContent = '\uFEFF' + [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `직원_연차관리대장_${baseDate}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            showToast('직원 연차관리대장 CSV 파일이 다운로드되었습니다.', 'success');
+        }
+
+        window.addEventListener('DOMContentLoaded', initApplication);
+    </script>
+
+    <!-- ===================================================================== -->
+    <!-- [SCRIPT 2] Firebase v11.0.2 Modular SDK ('이 양식이 필요해!' & 나도!) -->
+    <!-- ===================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signInWithEmailAndPassword,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            doc,
+            updateDoc,
+            deleteDoc,
+            onSnapshot,
+            query,
+            orderBy,
+            increment,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDNyvXpkLfDXV4E5fMwoWIgREEC-zCrkCE",
+            authDomain: "gakjong-yangsik.firebaseapp.com",
+            projectId: "gakjong-yangsik",
+            storageBucket: "gakjong-yangsik.firebasestorage.app",
+            messagingSenderId: "203854502633",
+            appId: "1:203854502633:web:f4b97bd540687456e86e78",
+            measurementId: "G-947CVHRB4V"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentAdminUser = null;
+        let allRequests = [];
+        let targetDeleteDocId = null;
+
+        // 브라우저별 '👍 나도!' 공감 중복 방지 로컬 스토리지 키
+        const LIKED_STORAGE_KEY = 'gakjong_liked_requests_v1';
+        function getLikedSet() {
+            try {
+                const raw = localStorage.getItem(LIKED_STORAGE_KEY);
+                return new Set(raw ? JSON.parse(raw) : []);
+            } catch (e) {
+                return new Set();
+            }
+        }
+        function saveLikedId(docId) {
+            try {
+                const set = getLikedSet();
+                set.add(docId);
+                localStorage.setItem(LIKED_STORAGE_KEY, JSON.stringify([...set]));
+            } catch (e) {}
+        }
+
+        // 관리자 인증 상태 감시
+        onAuthStateChanged(auth, (user) => {
+            currentAdminUser = user;
+            const navOut = document.getElementById('adminNavLoggedOut');
+            const navIn = document.getElementById('adminNavLoggedIn');
+            const topBanner = document.getElementById('adminTopBanner');
+
+            if (user) {
+                navOut.classList.add('hidden');
+                navIn.classList.remove('hidden');
+                navIn.classList.add('flex');
+                topBanner.classList.remove('hidden');
+                document.getElementById('adminEmailLabel').innerText = user.email || '관리자 계정';
+                document.getElementById('adminUidLabel').innerText = user.uid;
+            } else {
+                navOut.classList.remove('hidden');
+                navIn.classList.add('hidden');
+                navIn.classList.remove('flex');
+                topBanner.classList.add('hidden');
+            }
+            renderRequestsList();
+        });
+
+        // Firestore 'requests' 컬렉션 실시간 구독
+        const q = query(collection(db, "requests"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            allRequests = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderRequestsList();
+        }, (err) => {
+            console.error("Firestore subscription error:", err);
+            const box = document.getElementById('requestsListContainer');
+            if (box) {
+                box.innerHTML = `<div class="bg-red-50 p-6 rounded-2xl border border-red-200 text-center text-xs text-red-700">요청 목록을 불러올 수 없습니다. Firebase Firestore 규칙 설정을 확인해 주세요.</div>`;
+            }
+        });
+
+        // 게스트 새 양식 요청 등록
+        window.submitGuestFormRequest = async function(e) {
+            e.preventDefault();
+            const author = document.getElementById('guestAuthorInput').value.trim() || '익명';
+            const title = document.getElementById('guestTitleInput').value.trim();
+            const content = document.getElementById('guestContentInput').value.trim();
+            const btn = document.getElementById('guestSubmitBtn');
+
+            if (!title || !content) {
+                window.showToast('필요한 양식명과 상세 내용을 입력해 주세요.', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.classList.add('opacity-60');
+
+            try {
+                await addDoc(collection(db, "requests"), {
+                    author,
+                    title,
+                    content,
+                    likes: 0,
+                    status: '검토중',
+                    reply: '',
+                    createdAt: serverTimestamp()
+                });
+                document.getElementById('guestTitleInput').value = '';
+                document.getElementById('guestContentInput').value = '';
+                window.showToast('양식 요청이 접수되었습니다! 감사합니다.', 'success');
+            } catch (err) {
+                console.error(err);
+                window.showToast('등록 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-60');
+            }
+        };
+
+        // '👍 나도!' 공감 버튼 클릭 핸들러 (실시간 누적 + 중복 방지)
+        window.handleUpvoteRequest = async function(docId) {
+            const likedSet = getLikedSet();
+            if (likedSet.has(docId)) {
+                window.showToast('이미 공감(👍 나도!)을 누르신 양식입니다.', 'info');
+                return;
+            }
+
+            // 즉시 로컬 중복 방지 처리 및 낙관적 UI 반영
+            saveLikedId(docId);
+            const targetItem = allRequests.find(r => r.id === docId);
+            if (targetItem) {
+                targetItem.likes = (typeof targetItem.likes === 'number' ? targetItem.likes : 0) + 1;
+                renderRequestsList();
+            }
+
+            try {
+                await updateDoc(doc(db, "requests", docId), {
+                    likes: increment(1)
+                });
+                window.showToast('👍 나도! 공감이 반영되었습니다.', 'success');
+            } catch (err) {
+                console.error('Upvote error:', err);
+                window.showToast('공감 반영 중 권한 오류가 발생했습니다. Firestore 규칙을 확인해 주세요.', 'error');
+            }
+        };
+
+        // 관리자 로그인 모달 제어
+        window.openAdminLoginModal = function() {
+            const m = document.getElementById('adminLoginModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        };
+        window.closeAdminLoginModal = function() {
+            const m = document.getElementById('adminLoginModal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        };
+
+        window.signInAdminGoogle = async function() {
+            try {
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+                window.closeAdminLoginModal();
+                window.showToast('Google 관리자 계정으로 로그인되었습니다.', 'success');
+            } catch (err) {
+                console.error(err);
+                window.showToast('Google 로그인 실패: Firebase 승인된 도메인을 확인해 주세요.', 'error');
+            }
+        };
+
+        window.signInAdminEmail = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmailField').value.trim();
+            const pass = document.getElementById('adminPassField').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                window.closeAdminLoginModal();
+                window.showToast('관리자 계정으로 로그인되었습니다.', 'success');
+            } catch (err) {
+                console.error(err);
+                window.showToast('이메일 또는 비밀번호가 일치하지 않습니다.', 'error');
+            }
+        };
+
+        window.logoutAdminUser = async function() {
+            try {
+                await signOut(auth);
+                window.showToast('관리자 로그아웃되었습니다.', 'info');
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        window.copyAdminUidToClipboard = function() {
+            if (!currentAdminUser) return;
+            const inp = document.createElement('input');
+            inp.value = currentAdminUser.uid;
+            document.body.appendChild(inp);
+            inp.select();
+            document.execCommand('copy');
+            document.body.removeChild(inp);
+            window.showToast('관리자 UID가 클립보드에 복사되었습니다!', 'success');
+        };
+
+        // 관리자 상태 & 답변 저장
+        window.saveAdminRequestReply = async function(docId) {
+            if (!currentAdminUser) return;
+            const status = document.getElementById(`adminStatus_${docId}`)?.value || '검토중';
+            const reply = document.getElementById(`adminReply_${docId}`)?.value.trim() || '';
+            try {
+                await updateDoc(doc(db, "requests", docId), { status, reply });
+                window.showToast('진행 상태 및 관리자 답변이 저장되었습니다.', 'success');
+            } catch (err) {
+                console.error(err);
+                window.showToast('저장 권한 오류: Firestore 규칙의 관리자 UID를 확인해 주세요.', 'error');
+            }
+        };
+
+        // 삭제 확인 모달
+        window.openDeleteConfirmModal = function(docId) {
+            if (!currentAdminUser) return;
+            targetDeleteDocId = docId;
+            const m = document.getElementById('deleteConfirmModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        };
+        window.closeDeleteConfirmModal = function() {
+            targetDeleteDocId = null;
+            const m = document.getElementById('deleteConfirmModal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        };
+        window.executeDeleteRequest = async function() {
+            if (!currentAdminUser || !targetDeleteDocId) return;
+            const id = targetDeleteDocId;
+            window.closeDeleteConfirmModal();
+            try {
+                await deleteDoc(doc(db, "requests", id));
+                window.showToast('요청 게시글이 삭제되었습니다.', 'success');
+            } catch (err) {
+                console.error(err);
+                window.showToast('삭제 권한 오류: Firestore 규칙의 관리자 UID를 확인해 주세요.', 'error');
+            }
+        };
+
+        function formatTimestampKo(ts) {
+            if (!ts || !ts.toDate) return '방금 전';
+            const d = ts.toDate();
+            return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function renderRequestsList() {
+            const container = document.getElementById('requestsListContainer');
+            const badge = document.getElementById('requestCountBadge');
+            if (!container) return;
+
+            if (badge) badge.innerText = `총 ${allRequests.length}건의 요청`;
+
+            if (allRequests.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-10 rounded-2xl border border-slate-200 text-center space-y-1">
+                        <p class="text-sm font-semibold text-slate-600">아직 등록된 양식 요청이 없습니다.</p>
+                        <p class="text-xs text-slate-400">위 입력폼에서 필요한 첫 번째 양식을 요청해 보세요!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const likedSet = getLikedSet();
+
+            container.innerHTML = allRequests.map(item => {
+                const displayTitle = item.title || item.formTitle || '제목 없음';
+                const displayContent = item.content || item.details || '';
+                const displayAuthor = item.author || item.nickname || '익명';
+                const displayStatus = item.status || '검토중';
+                const likesCount = typeof item.likes === 'number' ? item.likes : 0;
+                const isLiked = likedSet.has(item.id);
+
+                const statusStyles = {
+                    '검토중': 'bg-slate-100 text-slate-700 border-slate-300',
+                    '접수대기': 'bg-slate-100 text-slate-700 border-slate-300',
+                    '제작중': 'bg-amber-50 text-amber-700 border-amber-300',
+                    '제작완료': 'bg-emerald-50 text-emerald-700 border-emerald-300',
+                    '추가완료': 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                };
+                const badgeClass = statusStyles[displayStatus] || statusStyles['검토중'];
+
+                const upvoteBtnClass = isLiked
+                    ? 'bg-blue-50 text-blue-700 border-blue-400 font-bold shadow-xs'
+                    : 'bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 border-slate-300 hover:border-blue-300 font-semibold';
+
+                const replyBlock = item.reply ? `
+                    <div class="mt-3 bg-blue-50/80 border border-blue-200 rounded-xl p-3 space-y-1">
+                        <div class="text-xs font-bold text-blue-800">↳ 각종양식.kr 관리자 답변</div>
+                        <p class="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed break-keep">${window.escapeHTML(item.reply)}</p>
+                    </div>
+                ` : '';
+
+                const adminControls = currentAdminUser ? `
+                    <div class="mt-3 pt-3 border-t border-dashed border-amber-300 bg-amber-50/60 rounded-xl p-3 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-[11px] font-bold text-amber-900">관리자 관리 도구</span>
+                            <div class="flex items-center gap-2">
+                                <select id="adminStatus_${item.id}" class="border border-slate-300 rounded-lg px-2 py-1 text-xs bg-white font-semibold">
+                                    <option value="검토중" ${displayStatus === '검토중' || displayStatus === '접수대기' ? 'selected' : ''}>검토중</option>
+                                    <option value="제작완료" ${displayStatus === '제작완료' || displayStatus === '추가완료' ? 'selected' : ''}>제작완료</option>
+                                </select>
+                                <button type="button" onclick="openDeleteConfirmModal('${item.id}')" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1 rounded-lg text-xs font-semibold transition">삭제</button>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="adminReply_${item.id}" value="${window.escapeHTML(item.reply || '')}" placeholder="방문자에게 남길 관리자 답변 입력..." class="flex-1 border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <button type="button" onclick="saveAdminRequestReply('${item.id}')" class="bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition shrink-0">저장</button>
+                        </div>
+                    </div>
+                ` : '';
+
+                return `
+                    <article class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-start justify-between gap-3 mb-2">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${badgeClass}">${window.escapeHTML(displayStatus)}</span>
+                                    <h4 class="text-sm font-bold text-slate-900">${window.escapeHTML(displayTitle)}</h4>
+                                </div>
+                                <div class="text-[11px] text-slate-400 flex items-center gap-2">
+                                    <span class="font-semibold text-slate-600">${window.escapeHTML(displayAuthor)}</span>
+                                    <span>•</span>
+                                    <span>${formatTimestampKo(item.createdAt)}</span>
+                                </div>
+                            </div>
+
+                            <!-- 오른편 '👍 나도!' 실시간 공감 누적 버튼 -->
+                            <button type="button" onclick="handleUpvoteRequest('${item.id}')" class="shrink-0 border px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer ${upvoteBtnClass}" title="이 양식이 나도 필요하다면 클릭하세요!">
+                                <span class="text-sm leading-none">👍</span>
+                                <span>나도!</span>
+                                <span class="bg-white/90 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded-md font-extrabold text-[11px]">${likesCount}</span>
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed break-keep mt-1">${window.escapeHTML(displayContent)}</p>
+                        ${replyBlock}
+                        ${adminControls}
+                    </article>
+                `;
+            }).join('');
         }
     </script>
 </body>
