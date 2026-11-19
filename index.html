@@ -277,13 +277,15 @@
                 </div>
             </div>
 
-            <!-- 메인 카테고리 탭 5종 -->
+            <!-- 메인 카테고리 탭 (방문자 현황은 관리자 로그인 시에만 노출) -->
             <nav aria-label="주요 서비스 메뉴" class="flex items-center gap-1.5 bg-slate-800 p-1 rounded-xl flex-wrap">
                 <button type="button" data-tab="인사·노무 서식" onclick="window.switchMainTab('인사·노무 서식')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">인사·노무 서식</button>
                 <button type="button" data-tab="부동산·민사 서식" onclick="window.switchMainTab('부동산·민사 서식')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">부동산·민사 서식</button>
                 <button type="button" data-tab="연차 관리 시스템" onclick="window.switchMainTab('연차 관리 시스템')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">연차 관리 시스템</button>
-                <button type="button" data-tab="방문자 현황" onclick="window.switchMainTab('방문자 현황')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">방문자 현황</button>
                 <button type="button" data-tab="이 양식이 필요해!" onclick="window.switchMainTab('이 양식이 필요해!')" class="main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition">이 양식이 필요해!</button>
+                <button type="button" id="adminVisitorNavBtn" data-tab="방문자 현황" onclick="window.switchMainTab('방문자 현황')" class="main-tab-btn hidden px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition items-center gap-1">
+                    <span>방문자 현황</span>
+                </button>
             </nav>
 
             <!-- 우측 관리자 로그인 / 로그아웃 버튼 -->
@@ -372,7 +374,7 @@
                     </svg>
                     <span>PDF 다운로드</span>
                 </button>
-                <button type="button" onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                <button type="button" onclick="window.printA4Document()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                     </svg>
@@ -687,102 +689,7 @@
     </main>
 
     <!-- ===================================================================== -->
-    <!-- [WORKSPACE 3] 방문자 현황 대시보드 (실시간 접속 추이 및 인기 서식 분석) -->
-    <!-- ===================================================================== -->
-    <main id="visitorStatsLayout" class="no-print hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-6">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
-            <div>
-                <h2 class="text-lg font-bold text-slate-900">각종양식.kr 방문자 현황 및 이용 통계</h2>
-                <p class="text-xs text-slate-500 mt-1">일자별 방문자 수(PV / UV) 추이와 서식별 열람·출력 활용 통계를 실시간으로 모니터링합니다.</p>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>실시간 집계 중</span>
-                </span>
-                <button type="button" id="resetVisitorStatsBtn" onclick="window.resetVisitorAnalytics()" class="hidden bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-semibold px-3 py-1.5 rounded-xl transition">
-                    통계 기록 초기화
-                </button>
-            </div>
-        </div>
-
-        <!-- 핵심 지표 4개 카드 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white p-5 rounded-2xl border border-blue-200/80 shadow-sm">
-                <div class="text-xs font-bold text-blue-700">오늘 방문자 (Today)</div>
-                <div class="mt-2 flex items-baseline gap-2">
-                    <span id="statTodayPv" class="text-2xl font-extrabold text-slate-900">0</span>
-                    <span class="text-xs text-slate-500">회 페이지뷰</span>
-                </div>
-                <div class="mt-1 text-[11px] text-slate-500">순 방문자(UV): <strong id="statTodayUv" class="text-blue-700">0명</strong></div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <div class="text-xs font-bold text-slate-600">최근 7일 방문자 합계</div>
-                <div class="mt-2 flex items-baseline gap-2">
-                    <span id="statWeekPv" class="text-2xl font-extrabold text-slate-900">0</span>
-                    <span class="text-xs text-slate-500">회 페이지뷰</span>
-                </div>
-                <div class="mt-1 text-[11px] text-slate-500">일평균 방문: <strong id="statWeekAvg" class="text-slate-800">0회/일</strong></div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-indigo-200/80 shadow-sm">
-                <div class="text-xs font-bold text-indigo-700">누적 총 방문자 (Total)</div>
-                <div class="mt-2 flex items-baseline gap-2">
-                    <span id="statTotalPv" class="text-2xl font-extrabold text-indigo-900">0</span>
-                    <span class="text-xs text-slate-500">회 누적</span>
-                </div>
-                <div class="mt-1 text-[11px] text-slate-500">누적 순 방문자: <strong id="statTotalUv" class="text-indigo-700">0명</strong></div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-emerald-200/80 shadow-sm">
-                <div class="text-xs font-bold text-emerald-700">가장 많이 찾은 서식 1위</div>
-                <div id="statTopTemplateName" class="mt-2 text-xl font-extrabold text-emerald-800">재직증명서</div>
-                <div class="mt-1 text-[11px] text-slate-500">누적 열람·작성: <strong id="statTopTemplateCount" class="text-emerald-700">0회</strong></div>
-            </div>
-        </div>
-
-        <!-- 주간 방문 추이 막대 그래프 & 서식별 인기도 -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <section class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h3 class="text-sm font-bold text-slate-900">최근 7일간 일별 방문자 추이</h3>
-                    <span class="text-[11px] text-slate-400">페이지뷰(PV) 기준</span>
-                </div>
-                <div id="visitorWeeklyChart" class="h-52 flex items-end justify-between gap-2 pt-6 px-2"></div>
-            </section>
-
-            <section class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h3 class="text-sm font-bold text-slate-900">서식 및 메뉴별 이용 비중</h3>
-                    <span class="text-[11px] text-slate-400">실시간 클릭·열람 누적</span>
-                </div>
-                <div id="templatePopularityList" class="space-y-3"></div>
-            </section>
-        </div>
-
-        <!-- 최근 14일 일자별 상세 기록표 -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="px-5 py-3.5 border-b border-slate-200 bg-slate-50/70 flex items-center justify-between">
-                <h3 class="text-sm font-bold text-slate-900">최근 14일 일자별 방문 기록 상세</h3>
-                <span class="text-[11px] text-slate-500">최신 날짜순 정렬</span>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs text-left border-collapse">
-                    <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                        <tr>
-                            <th class="p-3">날짜</th>
-                            <th class="p-3 text-center">요일</th>
-                            <th class="p-3 text-center">순 방문자 수 (UV)</th>
-                            <th class="p-3 text-center">총 페이지뷰 (PV)</th>
-                            <th class="p-3 text-center">주요 이용 메뉴</th>
-                        </tr>
-                    </thead>
-                    <tbody id="visitorDailyTableBody" class="divide-y divide-slate-200"></tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-
-    <!-- ===================================================================== -->
-    <!-- [WORKSPACE 4] '이 양식이 필요해!' 게시판 + '👍 나도!' 실시간 공감 누적 -->
+    <!-- [WORKSPACE 3] '이 양식이 필요해!' 게시판 + '👍 나도!' 실시간 공감 누적 -->
     <!-- ===================================================================== -->
     <main id="requestBoardLayout" class="no-print hidden flex-1 max-w-5xl w-full mx-auto p-4 space-y-6">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
@@ -831,6 +738,116 @@
                 <div class="bg-white p-8 rounded-2xl border border-slate-200 text-center text-xs text-slate-400">
                     요청 목록을 불러오는 중입니다...
                 </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- [WORKSPACE 4] 관리자 전용 실시간 방문자 현황 대시보드 (Firebase 연동) -->
+    <!-- ===================================================================== -->
+    <main id="visitorStatsLayout" class="no-print hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-6">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                    <span class="bg-amber-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">ADMIN ONLY</span>
+                    <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Firebase 실시간 동기화 중</span>
+                    </span>
+                </div>
+                <h2 class="text-lg font-bold text-slate-900">실시간 방문자 현황 및 서식 이용 통계</h2>
+                <p class="text-xs text-slate-500">모든 방문자의 접속 및 서식 이용 기록이 Firebase Firestore(<code class="bg-slate-100 px-1 py-0.5 rounded">visitor_stats</code>)에 실시간으로 집계됩니다.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="window.openResetStatsModal()" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold px-3.5 py-2 rounded-xl transition">
+                    오늘 통계 초기화
+                </button>
+            </div>
+        </div>
+
+        <!-- 방문자 통계 요약 카드 4종 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-2xl border border-blue-200/80 shadow-sm">
+                <div class="text-xs font-bold text-blue-700">오늘 방문 조회수 (PV)</div>
+                <div class="mt-1.5 flex items-baseline gap-2">
+                    <span id="statTodayPv" class="text-2xl font-extrabold text-slate-900">0</span>
+                    <span class="text-xs text-slate-500">회</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">기준일: <span id="statTodayDateLabel">-</span></p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-emerald-200/80 shadow-sm">
+                <div class="text-xs font-bold text-emerald-700">오늘 순 방문자 (UV)</div>
+                <div class="mt-1.5 flex items-baseline gap-2">
+                    <span id="statTodayUv" class="text-2xl font-extrabold text-emerald-700">0</span>
+                    <span class="text-xs text-slate-500">명</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">기기·브라우저별 당일 첫 방문 기준</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-indigo-200/80 shadow-sm">
+                <div class="text-xs font-bold text-indigo-700">최근 7일 누적 조회 (PV)</div>
+                <div class="mt-1.5 flex items-baseline gap-2">
+                    <span id="statWeekPv" class="text-2xl font-extrabold text-indigo-900">0</span>
+                    <span class="text-xs text-slate-500">회</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">최근 7일 순 방문: <strong id="statWeekUv" class="text-slate-600">0명</strong></p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="text-xs font-bold text-slate-700">전체 누적 조회 (최근 14일)</div>
+                <div class="mt-1.5 flex items-baseline gap-2">
+                    <span id="statTotalPv" class="text-2xl font-extrabold text-slate-900">0</span>
+                    <span class="text-xs text-slate-500">회</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">누적 순 방문: <strong id="statTotalUv" class="text-slate-600">0명</strong></p>
+            </div>
+        </div>
+
+        <!-- 주간 방문 추이 막대 그래프 & 서식별 인기 이용 현황 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- 최근 7일 방문 추이 막대 그래프 -->
+            <section class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">최근 7일 방문자 추이 그래프</h3>
+                        <p class="text-[11px] text-slate-500 mt-0.5">일자별 총 조회수(PV) 및 순 방문자(UV) 실시간 막대 차트</p>
+                    </div>
+                    <div class="flex items-center gap-3 text-[11px]">
+                        <span class="flex items-center gap-1 font-semibold text-blue-700"><span class="w-2.5 h-2.5 rounded-xs bg-blue-600 inline-block"></span>조회(PV)</span>
+                        <span class="flex items-center gap-1 font-semibold text-emerald-700"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-500 inline-block"></span>순방문(UV)</span>
+                    </div>
+                </div>
+                <div id="weeklyVisitorChart" class="h-56 pt-4 pb-1 px-2 grid grid-cols-7 gap-2 items-end border-b border-slate-200"></div>
+                <div id="weeklyVisitorLabels" class="grid grid-cols-7 gap-2 text-center text-[11px] text-slate-600 font-medium"></div>
+            </section>
+
+            <!-- 서식별 인기 이용 현황 -->
+            <section class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="border-b border-slate-100 pb-3">
+                    <h3 class="text-sm font-bold text-slate-900">서식별 실시간 인기 이용 순위</h3>
+                    <p class="text-[11px] text-slate-500 mt-0.5">서식 열람 및 PDF 저장·인쇄 누적 이용 빈도</p>
+                </div>
+                <div id="popularTemplatesChart" class="space-y-3"></div>
+            </section>
+        </div>
+
+        <!-- 최근 14일 일자별 상세 방문 기록 테이블 -->
+        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="px-5 py-3.5 border-b border-slate-200 bg-slate-50/70 flex items-center justify-between">
+                <h3 class="text-sm font-bold text-slate-900">최근 14일 일자별 방문 통계 상세 내역</h3>
+                <span class="text-[11px] text-slate-500">최신 날짜순 정렬</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left border-collapse">
+                    <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                        <tr>
+                            <th class="p-3">날짜</th>
+                            <th class="p-3 text-center">요일</th>
+                            <th class="p-3 text-center">페이지 조회수 (PV)</th>
+                            <th class="p-3 text-center">순 방문자 수 (UV)</th>
+                            <th class="p-3 text-center">방문자당 평균 조회</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dailyStatsTableBody" class="divide-y divide-slate-200"></tbody>
+                </table>
             </div>
         </section>
     </main>
@@ -1028,6 +1045,18 @@
             <div class="flex gap-2">
                 <button type="button" onclick="window.closeDeleteConfirmModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">취소</button>
                 <button type="button" onclick="window.executeDeleteRequest()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-xl text-xs transition">삭제하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오늘 방문자 통계 초기화 확인 모달 -->
+    <div id="resetStatsConfirmModal" class="no-print fixed inset-0 z-[105] bg-slate-900/60 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-xl border border-slate-200 space-y-4 text-center">
+            <h4 class="text-sm font-bold text-slate-900">오늘 방문자 통계 초기화</h4>
+            <p class="text-xs text-slate-500">오늘 날짜의 방문 조회수(PV)와 순 방문자(UV) 수치를 0으로 초기화하시겠습니까?</p>
+            <div class="flex gap-2">
+                <button type="button" onclick="window.closeResetStatsModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">취소</button>
+                <button type="button" onclick="window.executeResetTodayStats()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-xl text-xs transition">초기화</button>
             </div>
         </div>
     </div>
@@ -1411,237 +1440,48 @@
             let signatureDataUrl = '';
             let stampDataUrl = '';
 
-            // ================= 방문자 현황 통계 엔진 =================
-            const VISITOR_STORAGE_KEY = 'gakjong_visitor_analytics_v1';
-            const SESSION_FLAG_KEY = 'gakjong_visitor_session_counted_v1';
-
-            function getDefaultVisitorData() {
-                const daily = {};
-                const baseSeed = [42, 58, 63, 71, 49, 36, 68, 79, 85, 74, 92, 88, 61, 54];
-                const now = new Date();
-                for (let i = 13; i >= 1; i--) {
-                    const d = new Date(now);
-                    d.setDate(now.getDate() - i);
-                    const key = d.toISOString().split('T')[0];
-                    const pv = baseSeed[13 - i] || 50;
-                    daily[key] = {
-                        pv: pv,
-                        uv: Math.max(1, Math.round(pv * 0.72)),
-                        topMenu: i % 3 === 0 ? '연차 관리 시스템' : (i % 2 === 0 ? '재직증명서' : '차용증')
-                    };
-                }
-                const todayKey = now.toISOString().split('T')[0];
-                daily[todayKey] = { pv: 0, uv: 0, topMenu: '위촉증명서' };
-
-                return {
-                    daily: daily,
-                    templates: {
-                        '위촉증명서': 142,
-                        '재직증명서': 238,
-                        '해촉증명서': 185,
-                        '경력증명서': 164,
-                        '내용증명서': 129,
-                        '차용증': 197,
-                        '위임장': 153,
-                        '연차 관리 시스템': 211
-                    }
-                };
-            }
-
-            function loadVisitorData() {
-                try {
-                    const raw = localStorage.getItem(VISITOR_STORAGE_KEY);
-                    if (raw) {
-                        const parsed = JSON.parse(raw);
-                        if (parsed && parsed.daily && parsed.templates) return parsed;
-                    }
-                } catch (e) {}
-                const def = getDefaultVisitorData();
-                saveVisitorData(def);
-                return def;
-            }
-
-            function saveVisitorData(data) {
-                try {
-                    localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(data));
-                } catch (e) {}
-            }
-
-            function recordPageVisit() {
-                const data = loadVisitorData();
-                const todayKey = new Date().toISOString().split('T')[0];
-                if (!data.daily[todayKey]) {
-                    data.daily[todayKey] = { pv: 0, uv: 0, topMenu: '인사·노무 서식' };
-                }
-                data.daily[todayKey].pv += 1;
-
-                let isNewSession = false;
-                try {
-                    if (!sessionStorage.getItem(SESSION_FLAG_KEY)) {
-                        sessionStorage.setItem(SESSION_FLAG_KEY, '1');
-                        isNewSession = true;
-                    }
-                } catch (e) {
-                    isNewSession = true;
-                }
-                if (isNewSession) {
-                    data.daily[todayKey].uv += 1;
-                }
-                saveVisitorData(data);
-            }
-
-            function trackTemplateUsage(name) {
-                if (!name) return;
-                const data = loadVisitorData();
-                data.templates[name] = (data.templates[name] || 0) + 1;
-                const todayKey = new Date().toISOString().split('T')[0];
-                if (data.daily[todayKey]) {
-                    data.daily[todayKey].topMenu = name;
-                }
-                saveVisitorData(data);
-            }
-
-            window.renderVisitorDashboard = function () {
-                const data = loadVisitorData();
-                const todayKey = new Date().toISOString().split('T')[0];
-                const allDates = Object.keys(data.daily).sort();
-
-                const todayObj = data.daily[todayKey] || { pv: 1, uv: 1, topMenu: '재직증명서' };
-                let totalPv = 0;
-                let totalUv = 0;
-                allDates.forEach(function (k) {
-                    totalPv += (data.daily[k].pv || 0);
-                    totalUv += (data.daily[k].uv || 0);
-                });
-
-                const last7Keys = [];
-                const now = new Date();
-                for (let i = 6; i >= 0; i--) {
-                    const d = new Date(now);
-                    d.setDate(now.getDate() - i);
-                    last7Keys.push(d.toISOString().split('T')[0]);
-                }
-
-                let weekPv = 0;
-                last7Keys.forEach(function (k) {
-                    weekPv += (data.daily[k] ? data.daily[k].pv : 0);
-                });
-
-                const elTodayPv = document.getElementById('statTodayPv');
-                const elTodayUv = document.getElementById('statTodayUv');
-                const elWeekPv = document.getElementById('statWeekPv');
-                const elWeekAvg = document.getElementById('statWeekAvg');
-                const elTotalPv = document.getElementById('statTotalPv');
-                const elTotalUv = document.getElementById('statTotalUv');
-
-                if (elTodayPv) elTodayPv.innerText = todayObj.pv.toLocaleString();
-                if (elTodayUv) elTodayUv.innerText = todayObj.uv.toLocaleString() + '명';
-                if (elWeekPv) elWeekPv.innerText = weekPv.toLocaleString();
-                if (elWeekAvg) elWeekAvg.innerText = Math.round(weekPv / 7).toLocaleString() + '회/일';
-                if (elTotalPv) elTotalPv.innerText = totalPv.toLocaleString();
-                if (elTotalUv) elTotalUv.innerText = totalUv.toLocaleString() + '명';
-
-                // 인기 서식 랭킹
-                const tplEntries = Object.entries(data.templates).sort(function (a, b) { return b[1] - a[1]; });
-                const topEntry = tplEntries[0] || ['재직증명서', 1];
-                const elTopName = document.getElementById('statTopTemplateName');
-                const elTopCount = document.getElementById('statTopTemplateCount');
-                if (elTopName) elTopName.innerText = topEntry[0];
-                if (elTopCount) elTopCount.innerText = topEntry[1].toLocaleString() + '회';
-
-                const popContainer = document.getElementById('templatePopularityList');
-                if (popContainer) {
-                    const maxVal = Math.max(1, topEntry[1]);
-                    popContainer.innerHTML = tplEntries.slice(0, 6).map(function (entry, idx) {
-                        const pct = Math.max(8, Math.round((entry[1] / maxVal) * 100));
-                        return '<div class="space-y-1">' +
-                            '<div class="flex justify-between text-xs">' +
-                            '<span class="font-semibold text-slate-700">' + (idx + 1) + '. ' + escapeHTML(entry[0]) + '</span>' +
-                            '<span class="font-bold text-blue-700">' + entry[1].toLocaleString() + '회</span>' +
-                            '</div>' +
-                            '<div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">' +
-                            '<div class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width:' + pct + '%"></div>' +
-                            '</div>' +
-                            '</div>';
-                    }).join('');
-                }
-
-                // 최근 7일 막대 그래프
-                const chartContainer = document.getElementById('visitorWeeklyChart');
-                if (chartContainer) {
-                    const maxWeekPv = Math.max(10, ...last7Keys.map(function (k) { return data.daily[k] ? data.daily[k].pv : 0; }));
-                    chartContainer.innerHTML = last7Keys.map(function (k) {
-                        const val = data.daily[k] ? data.daily[k].pv : 0;
-                        const hPct = Math.max(10, Math.round((val / maxWeekPv) * 100));
-                        const shortDate = k.slice(5).replace('-', '/');
-                        const isToday = k === todayKey;
-                        return '<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">' +
-                            '<span class="text-[11px] font-bold ' + (isToday ? 'text-blue-700' : 'text-slate-600') + '">' + val + '</span>' +
-                            '<div class="w-full max-w-[38px] rounded-t-lg transition-all duration-300 ' + (isToday ? 'bg-blue-600' : 'bg-slate-300 hover:bg-blue-400') + '" style="height:' + hPct + '%"></div>' +
-                            '<span class="text-[11px] ' + (isToday ? 'font-bold text-blue-700' : 'text-slate-500') + '">' + shortDate + '</span>' +
-                            '</div>';
-                    }).join('');
-                }
-
-                // 최근 14일 일자별 테이블
-                const tbody = document.getElementById('visitorDailyTableBody');
-                if (tbody) {
-                    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
-                    const recent14 = allDates.slice(-14).reverse();
-                    tbody.innerHTML = recent14.map(function (dateStr) {
-                        const item = data.daily[dateStr] || { pv: 0, uv: 0, topMenu: '-' };
-                        const dObj = new Date(dateStr);
-                        const dayLabel = isNaN(dObj.getTime()) ? '-' : dayNames[dObj.getDay()] + '요일';
-                        const isToday = dateStr === todayKey;
-                        return '<tr class="' + (isToday ? 'bg-blue-50/40 font-semibold' : 'hover:bg-slate-50') + '">' +
-                            '<td class="p-3">' + escapeHTML(dateStr) + (isToday ? ' <span class="ml-1 text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded">TODAY</span>' : '') + '</td>' +
-                            '<td class="p-3 text-center text-slate-500">' + dayLabel + '</td>' +
-                            '<td class="p-3 text-center font-bold text-slate-800">' + (item.uv || 0).toLocaleString() + '명</td>' +
-                            '<td class="p-3 text-center font-bold text-blue-700">' + (item.pv || 0).toLocaleString() + '회</td>' +
-                            '<td class="p-3 text-center text-slate-600">' + escapeHTML(item.topMenu || '재직증명서') + '</td>' +
-                            '</tr>';
-                    }).join('');
-                }
-            };
-
-            window.resetVisitorAnalytics = function () {
-                try {
-                    localStorage.removeItem(VISITOR_STORAGE_KEY);
-                    sessionStorage.removeItem(SESSION_FLAG_KEY);
-                } catch (e) {}
-                recordPageVisit();
-                window.renderVisitorDashboard();
-                showToast('방문자 통계 데이터가 초기 상태로 재설정되었습니다.', 'info');
-            };
-
-            // ================= 메인 탭 전환 =================
+            // 메인 탭 전환 (방문자 현황은 관리자 로그인 상태에서만 진입 허용)
             window.switchMainTab = function (tabName) {
+                if (tabName === '방문자 현황' && !window.__isAdminAuthenticated) {
+                    tabName = '인사·노무 서식';
+                }
                 currentMainTab = tabName;
 
                 document.querySelectorAll('.main-tab-btn').forEach(function (btn) {
                     const isActive = btn.getAttribute('data-tab') === tabName;
                     const isReq = btn.getAttribute('data-tab') === '이 양식이 필요해!';
+                    const isVisitor = btn.getAttribute('data-tab') === '방문자 현황';
+                    const hiddenClass = (isVisitor && !window.__isAdminAuthenticated) ? ' hidden' : (isVisitor ? ' inline-flex' : '');
+
                     if (isActive) {
-                        btn.className = isReq
-                            ? 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 transition shadow-sm'
-                            : 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition shadow-sm';
+                        if (isReq) {
+                            btn.className = 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 transition shadow-sm' + hiddenClass;
+                        } else if (isVisitor) {
+                            btn.className = 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-emerald-600 text-white transition shadow-sm items-center gap-1' + hiddenClass;
+                        } else {
+                            btn.className = 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition shadow-sm' + hiddenClass;
+                        }
                     } else {
-                        btn.className = isReq
-                            ? 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-amber-300 hover:bg-slate-700 transition'
-                            : 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition';
+                        if (isReq) {
+                            btn.className = 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-amber-300 hover:bg-slate-700 transition' + hiddenClass;
+                        } else if (isVisitor) {
+                            btn.className = 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-emerald-300 hover:bg-slate-700 transition items-center gap-1' + hiddenClass;
+                        } else {
+                            btn.className = 'main-tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition' + hiddenClass;
+                        }
                     }
                 });
 
                 const docLayout = document.getElementById('documentViewLayout');
                 const leaveLayout = document.getElementById('annualLeaveLayout');
-                const visitorLayout = document.getElementById('visitorStatsLayout');
                 const boardLayout = document.getElementById('requestBoardLayout');
+                const visitorLayout = document.getElementById('visitorStatsLayout');
                 const subBar = document.getElementById('subTemplateBar');
 
                 if (docLayout) docLayout.classList.add('hidden');
                 if (leaveLayout) leaveLayout.classList.add('hidden');
-                if (visitorLayout) visitorLayout.classList.add('hidden');
                 if (boardLayout) boardLayout.classList.add('hidden');
+                if (visitorLayout) visitorLayout.classList.add('hidden');
                 if (subBar) subBar.classList.add('hidden');
 
                 if (tabName === '인사·노무 서식' || tabName === '부동산·민사 서식') {
@@ -1651,13 +1491,14 @@
                     window.selectFormTemplate(FORM_TEMPLATES[tabName][0].id);
                 } else if (tabName === '연차 관리 시스템') {
                     if (leaveLayout) leaveLayout.classList.remove('hidden');
-                    trackTemplateUsage('연차 관리 시스템');
                     window.renderAnnualLeaveAll();
-                } else if (tabName === '방문자 현황') {
-                    if (visitorLayout) visitorLayout.classList.remove('hidden');
-                    window.renderVisitorDashboard();
                 } else if (tabName === '이 양식이 필요해!') {
                     if (boardLayout) boardLayout.classList.remove('hidden');
+                } else if (tabName === '방문자 현황' && window.__isAdminAuthenticated) {
+                    if (visitorLayout) visitorLayout.classList.remove('hidden');
+                    if (typeof window.renderVisitorDashboard === 'function') {
+                        window.renderVisitorDashboard();
+                    }
                 }
             };
 
@@ -1681,8 +1522,6 @@
                 currentTemplate = list.find(function (t) { return t.id === tplId; }) || list[0];
                 currentFieldData = Object.assign({}, currentTemplate.fields);
 
-                trackTemplateUsage(currentTemplate.name);
-
                 document.querySelectorAll('.sub-tpl-item').forEach(function (btn) {
                     const active = btn.getAttribute('data-tpl') === currentTemplate.id;
                     btn.className = active
@@ -1690,8 +1529,8 @@
                         : 'sub-tpl-item px-3 py-1 rounded-lg text-xs font-medium bg-slate-700/70 text-slate-300 hover:bg-slate-700 hover:text-white whitespace-nowrap';
                 });
 
-                const badgeEl = document.getElementById('selectedTemplateBadge');
-                if (badgeEl) badgeEl.innerText = currentTemplate.name;
+                const badge = document.getElementById('selectedTemplateBadge');
+                if (badge) badge.innerText = currentTemplate.name;
 
                 const issuerGroup = document.getElementById('issuerInfoGroup');
                 if (issuerGroup) {
@@ -1705,6 +1544,10 @@
                 renderDynamicInputFields();
                 window.renderLiveA4Preview();
                 renderActiveTemplateGuide();
+
+                if (typeof window.trackTemplateUsage === 'function') {
+                    window.trackTemplateUsage(currentTemplate.id);
+                }
             };
 
             function renderActiveTemplateGuide() {
@@ -1729,8 +1572,9 @@
                     const issueInput = document.getElementById('fieldIssueDate');
                     const dateVal = (issueInput && issueInput.value) ? issueInput.value : new Date().toISOString().split('T')[0];
                     const dateBox = document.createElement('div');
-                    dateBox.innerHTML = '<label class="block text-xs font-semibold text-slate-700 mb-1">통지(작성) 일자</label>' +
-                        '<input type="date" value="' + escapeHTML(dateVal) + '" onchange="document.getElementById(\'fieldIssueDate\').value=this.value; window.renderLiveA4Preview();" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">';
+                    dateBox.innerHTML =
+                        '<label class="block text-xs font-semibold text-slate-700 mb-1">통지(작성) 일자</label>' +
+                        '<input type="date" value="' + escapeHTML(dateVal) + '" onchange="var el=document.getElementById(\'fieldIssueDate\'); if(el) el.value=this.value; window.renderLiveA4Preview();" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">';
                     container.appendChild(dateBox);
                 }
 
@@ -1774,9 +1618,11 @@
                 showToast('입력 항목이 기본 예시로 초기화되었습니다.', 'info');
             };
 
-            // 표 셀 내부 상·하·좌·우 정중앙 정렬용 HTML 헬퍼
-            function makeCenteredCell(text, extraClass) {
-                return '<div class="doc-cell-box ' + (extraClass || '') + '"><span class="doc-cell-text">' + escapeHTML(text) + '</span></div>';
+            function makeCellHtml(tag, text, extraStyle, textClass, isLeft) {
+                const justify = isLeft ? 'justify-content: flex-start; text-align: left;' : 'justify-content: center; text-align: center;';
+                const styleAttr = extraStyle ? ' style="' + extraStyle + '"' : '';
+                const clsAttr = textClass ? ' class="' + textClass + '"' : '';
+                return '<' + tag + styleAttr + '><div class="doc-cell-box" style="' + justify + '"><span' + clsAttr + '>' + escapeHTML(text) + '</span></div></' + tag + '>';
             }
 
             window.renderLiveA4Preview = function () {
@@ -1789,27 +1635,65 @@
                         tableBox.innerHTML =
                             '<table class="doc-table mb-3" style="font-size: 12.5px;">' +
                             '<tbody>' +
-                            '<tr><th style="width: 90px;">' + makeCenteredCell('제 목', 'doc-cell-compact') + '</th><td colspan="2" class="font-bold text-[14px]">' + makeCenteredCell(currentFieldData['문서 제목'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th rowspan="3">' + makeCenteredCell('발 신 인', 'doc-cell-compact') + '</th><th style="width: 85px;">' + makeCenteredCell('성 명', 'doc-cell-compact') + '</th><td class="font-semibold">' + makeCenteredCell(currentFieldData['발신인 성명'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('연 락 처', 'doc-cell-compact') + '</th><td>' + makeCenteredCell(currentFieldData['발신인 연락처'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('주 소', 'doc-cell-compact') + '</th><td>' + makeCenteredCell(currentFieldData['발신인 주소'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th rowspan="3">' + makeCenteredCell('수 신 인', 'doc-cell-compact') + '</th><th>' + makeCenteredCell('성명/상호', 'doc-cell-compact') + '</th><td class="font-semibold">' + makeCenteredCell(currentFieldData['수신인 성명/상호'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('연 락 처', 'doc-cell-compact') + '</th><td>' + makeCenteredCell(currentFieldData['수신인 연락처'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('주 소', 'doc-cell-compact') + '</th><td>' + makeCenteredCell(currentFieldData['수신인 주소'], 'doc-cell-compact') + '</td></tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '제 목', 'width: 90px;', '', false) +
+                                '<td colspan="2"><div class="doc-cell-box" style="justify-content: center; text-align: center;"><span class="font-bold text-[14px]">' + escapeHTML(currentFieldData['문서 제목']) + '</span></div></td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<th rowspan="3" style="width: 90px;"><div class="doc-cell-box" style="min-height: 112px;"><span>발 신 인</span></div></th>' +
+                                makeCellHtml('th', '성 명', 'width: 85px;', '', false) +
+                                makeCellHtml('td', currentFieldData['발신인 성명'], '', 'font-semibold', false) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '연 락 처', '', '', false) +
+                                makeCellHtml('td', currentFieldData['발신인 연락처'], '', '', false) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '주 소', '', '', false) +
+                                makeCellHtml('td', currentFieldData['발신인 주소'], '', '', false) +
+                            '</tr>' +
+                            '<tr>' +
+                                '<th rowspan="3" style="width: 90px;"><div class="doc-cell-box" style="min-height: 112px;"><span>수 신 인</span></div></th>' +
+                                makeCellHtml('th', '성명/상호', 'width: 85px;', '', false) +
+                                makeCellHtml('td', currentFieldData['수신인 성명/상호'], '', 'font-semibold', false) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '연 락 처', '', '', false) +
+                                makeCellHtml('td', currentFieldData['수신인 연락처'], '', '', false) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '주 소', '', '', false) +
+                                makeCellHtml('td', currentFieldData['수신인 주소'], '', '', false) +
+                            '</tr>' +
                             '</tbody>' +
                             '</table>' +
                             '<table class="doc-table" style="font-size: 12.5px;">' +
                             '<tbody>' +
-                            '<tr><th style="width: 110px;">' + makeCenteredCell('1. 사실관계', 'doc-cell-compact') + '</th><td class="whitespace-pre-wrap">' + makeCenteredCell(currentFieldData['사실관계'], 'doc-cell-compact doc-cell-left') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('2. 요구사항', 'doc-cell-compact') + '</th><td class="whitespace-pre-wrap">' + makeCenteredCell(currentFieldData['요구사항'], 'doc-cell-compact doc-cell-left') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('3. 이행 기한', 'doc-cell-compact') + '</th><td class="font-bold text-red-700">' + makeCenteredCell(currentFieldData['이행 기한'], 'doc-cell-compact') + '</td></tr>' +
-                            '<tr><th>' + makeCenteredCell('4. 미이행 시 조치', 'doc-cell-compact') + '</th><td class="whitespace-pre-wrap">' + makeCenteredCell(currentFieldData['미이행 시 조치'], 'doc-cell-compact doc-cell-left') + '</td></tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '1. 사실관계', 'width: 115px;', '', false) +
+                                makeCellHtml('td', currentFieldData['사실관계'], '', 'whitespace-pre-wrap leading-snug', true) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '2. 요구사항', '', '', false) +
+                                makeCellHtml('td', currentFieldData['요구사항'], '', 'whitespace-pre-wrap leading-snug', true) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '3. 이행 기한', '', '', false) +
+                                makeCellHtml('td', currentFieldData['이행 기한'], '', 'font-bold text-red-700', false) +
+                            '</tr>' +
+                            '<tr>' +
+                                makeCellHtml('th', '4. 미이행 시 조치', '', '', false) +
+                                makeCellHtml('td', currentFieldData['미이행 시 조치'], '', 'whitespace-pre-wrap leading-snug', true) +
+                            '</tr>' +
                             '</tbody>' +
                             '</table>';
                     } else {
                         const keys = Object.keys(currentFieldData);
                         const rows = keys.map(function (k) {
-                            return '<tr><th style="width: 165px;">' + makeCenteredCell(k) + '</th><td>' + makeCenteredCell(currentFieldData[k]) + '</td></tr>';
+                            return '<tr>' +
+                                makeCellHtml('th', k, 'width: 165px;', '', false) +
+                                makeCellHtml('td', currentFieldData[k], '', '', false) +
+                                '</tr>';
                         }).join('');
                         tableBox.innerHTML = '<table class="doc-table"><tbody>' + rows + '</tbody></table>';
                     }
@@ -1821,7 +1705,8 @@
                 const subNoteEl = document.getElementById('previewDocSubNote');
                 if (subNoteEl) subNoteEl.innerText = currentTemplate.subNote;
 
-                const rawDate = document.getElementById('fieldIssueDate') ? document.getElementById('fieldIssueDate').value : '';
+                const issueInput = document.getElementById('fieldIssueDate');
+                const rawDate = issueInput ? issueInput.value : '';
                 let dateFormatted = '';
                 if (rawDate) {
                     const p = rawDate.split('-');
@@ -1844,16 +1729,18 @@
                 } else {
                     if (orgEl) {
                         orgEl.classList.remove('hidden');
-                        orgEl.innerText = document.getElementById('fieldIssuerOrg') ? document.getElementById('fieldIssuerOrg').value : '';
+                        const orgInp = document.getElementById('fieldIssuerOrg');
+                        orgEl.innerText = orgInp ? orgInp.value : '';
                     }
                     if (roleEl) roleEl.innerText = '대표자 :';
-                    if (repEl) repEl.innerText = document.getElementById('fieldIssuerRep') ? document.getElementById('fieldIssuerRep').value : '';
+                    const repInp = document.getElementById('fieldIssuerRep');
+                    if (repEl) repEl.innerText = repInp ? repInp.value : '';
                 }
 
                 applySealOverlayToPreview();
             };
 
-            // ================= 서명(1.5배 확대) & 도장(공식 규격 18mm) 전환 로직 =================
+            // ================= 서명(1.5배 확대: 120x60px) & 도장(공식 규격 18mm: 68x68px) =================
             window.switchSealMode = function (mode) {
                 currentSealMode = mode;
                 const signBtn = document.getElementById('modeSignBtn');
@@ -1963,7 +1850,7 @@
             };
 
             window.handleStampFileSelect = function (e) {
-                const file = e.target.files[0];
+                const file = e && e.target && e.target.files ? e.target.files[0] : null;
                 if (!file) return;
                 const reader = new FileReader();
                 reader.onload = function (evt) {
@@ -1979,13 +1866,20 @@
             window.clearStampUpload = function () {
                 stampDataUrl = '';
                 const inp = document.getElementById('stampImageInput');
-                const clearBtn = document.getElementById('clearStampBtn');
+                const btn = document.getElementById('clearStampBtn');
                 if (inp) inp.value = '';
-                if (clearBtn) clearBtn.classList.add('hidden');
+                if (btn) btn.classList.add('hidden');
                 applySealOverlayToPreview();
             };
 
-            // ================= A4 정배율 1페이지 PDF 저장 (표 셀 상하좌우 정중앙 정밀 보정) =================
+            window.printA4Document = function () {
+                if (typeof window.trackTemplateUsage === 'function' && currentTemplate) {
+                    window.trackTemplateUsage(currentTemplate.id);
+                }
+                window.print();
+            };
+
+            // ================= A4 정배율 1페이지 PDF 저장 (표 셀 상·하·좌·우 정중앙 보정) =================
             window.downloadA4Pdf = async function () {
                 const sourceEl = document.getElementById('a4PreviewSheet');
                 if (!sourceEl || !window.html2canvas || !window.jspdf) {
@@ -1994,8 +1888,10 @@
                 }
 
                 showToast('A4 표준 규격 PDF를 생성하고 있습니다...', 'info');
+                if (typeof window.trackTemplateUsage === 'function' && currentTemplate) {
+                    window.trackTemplateUsage(currentTemplate.id);
+                }
 
-                // 웹폰트(Noto Serif KR) 로드 완료 대기
                 if (document.fonts && document.fonts.ready) {
                     try { await document.fonts.ready; } catch (e) {}
                 }
@@ -2027,27 +1923,20 @@
                 clone.style.padding = '22.5mm 15mm 22.5mm 15mm';
                 clone.style.boxSizing = 'border-box';
 
-                // html2canvas 캡처 시 명조체 베이스라인 하단 쏠림을 방지하는 정밀 수직·수평 중앙 보정
-                clone.querySelectorAll('.doc-table th, .doc-table td').forEach(function (cell) {
-                    cell.style.padding = '0';
-                    cell.style.verticalAlign = 'middle';
-                });
+                // html2canvas 캡처 시 명조체 베이스라인 하단 쏠림 보정 (위·아래·좌·우 정중앙 유지)
                 clone.querySelectorAll('.doc-cell-box').forEach(function (box) {
-                    const isLeft = box.classList.contains('doc-cell-left');
                     box.style.display = 'flex';
                     box.style.alignItems = 'center';
-                    box.style.justifyContent = isLeft ? 'flex-start' : 'center';
-                    box.style.textAlign = isLeft ? 'left' : 'center';
                     box.style.width = '100%';
+                    box.style.height = '100%';
                     box.style.boxSizing = 'border-box';
-                });
-                clone.querySelectorAll('.doc-cell-text').forEach(function (span) {
-                    span.style.display = 'block';
-                    span.style.width = '100%';
-                    span.style.lineHeight = '1.35';
-                    span.style.margin = '0';
-                    span.style.padding = '0';
-                    span.style.transform = 'translateY(-3.5px)';
+                    box.style.padding = '8px 11px';
+                    const spanEl = box.querySelector('span');
+                    if (spanEl) {
+                        spanEl.style.display = 'block';
+                        spanEl.style.lineHeight = '1.35';
+                        spanEl.style.transform = 'translateY(-2.5px)';
+                    }
                 });
 
                 host.appendChild(clone);
@@ -2090,7 +1979,7 @@
                 }
             };
 
-            // ================= 직원 연차 관리 시스템 (가상 인물·가상 일자 기본 데이터) =================
+            // ================= 직원 연차 관리 시스템 (100% 가상 인물·일자 예시 데이터) =================
             let annualLeaveList = [
                 { id: 101, dept: '총무인사팀', name: '강하늘', joinDate: '2022-04-01' },
                 { id: 102, dept: '기획운영팀', name: '서지혜', joinDate: '2023-03-02' },
@@ -2100,13 +1989,13 @@
             ];
 
             let leaveUsageRecords = [
-                { id: 201, date: '2023-05-15', dept: '총무인사팀', name: '강하늘', type: '연차', days: 1, reason: '개인사유' },
+                { id: 201, date: '2023-05-12', dept: '총무인사팀', name: '강하늘', type: '연차', days: 1, reason: '개인사유' },
                 { id: 202, date: '2024-08-05~07', dept: '총무인사팀', name: '강하늘', type: '연차', days: 3, reason: '하계휴가' },
-                { id: 203, date: '2026-03-18', dept: '총무인사팀', name: '강하늘', type: '반차(오후)', days: 0.5, reason: '치과진료' },
+                { id: 203, date: '2026-03-18', dept: '총무인사팀', name: '강하늘', type: '반차(오후)', days: 0.5, reason: '병원진료' },
                 { id: 204, date: '2026-07-24', dept: '총무인사팀', name: '강하늘', type: '연차', days: 1, reason: '가족행사' },
                 { id: 205, date: '2024-11-11', dept: '기획운영팀', name: '서지혜', type: '연차', days: 1, reason: '개인용무' },
                 { id: 206, date: '2026-04-10', dept: '기획운영팀', name: '서지혜', type: '연차', days: 1, reason: '개인사유' },
-                { id: 207, date: '2026-09-14~15', dept: '재무회계팀', name: '윤도현', type: '연차', days: 2, reason: '명절연휴 개인일정' },
+                { id: 207, date: '2026-09-14~15', dept: '재무회계팀', name: '윤도현', type: '연차', days: 2, reason: '가을휴가' },
                 { id: 208, date: '2026-06-19', dept: '고객지원팀', name: '한소라', type: '반차(오전)', days: 0.5, reason: '은행업무' },
                 { id: 209, date: '2026-10-16', dept: '품질관리팀', name: '임준호', type: '연차', days: 1, reason: '개인사유' }
             ];
@@ -2595,11 +2484,12 @@
                 const usageDateInput = document.getElementById('usageDateInput');
                 if (usageDateInput) usageDateInput.value = today;
 
-                recordPageVisit();
                 setupSignatureCanvas();
                 window.switchMainTab('인사·노무 서식');
                 window.renderAnnualLeaveAll();
-                window.renderVisitorDashboard();
+                if (typeof window.renderVisitorDashboard === 'function') {
+                    window.renderVisitorDashboard();
+                }
             }
 
             if (document.readyState === 'loading') {
@@ -2611,7 +2501,7 @@
     </script>
 
     <!-- ===================================================================== -->
-    <!-- [SCRIPT 2] Firebase v11.0.2 Modular SDK ('이 양식이 필요해!' & 나도!) -->
+    <!-- [SCRIPT 2] Firebase v11.0.2 Modular SDK ('이 양식이 필요해!' & 실시간 방문자 통계) -->
     <!-- ===================================================================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -2628,11 +2518,13 @@
             collection,
             addDoc,
             doc,
+            setDoc,
             updateDoc,
             deleteDoc,
             onSnapshot,
             query,
             orderBy,
+            limit,
             increment,
             serverTimestamp
         } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
@@ -2660,6 +2552,301 @@
         let allRequests = [];
         let targetDeleteDocId = null;
 
+        // 실시간 방문자 통계 상태 (Firestore 'visitor_stats' & 'visitor_meta/templates' 구독)
+        let firestoreDailyStatsMap = {};
+        let firestoreTemplateCounts = {
+            appointment: 0,
+            employment: 0,
+            dismissal: 0,
+            career: 0,
+            legal_notice: 0,
+            iou: 0,
+            power_of_attorney: 0
+        };
+        let unsubscribeStatsListener = null;
+        let unsubscribeTemplatesListener = null;
+
+        function getTodayKstDateKey() {
+            const now = new Date();
+            const kst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+            return kst.toISOString().split('T')[0];
+        }
+
+        function getPastKstDateKeys(daysCount) {
+            const list = [];
+            const now = new Date();
+            const kstNow = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+            for (let i = daysCount - 1; i >= 0; i--) {
+                const d = new Date(kstNow.getTime() - (i * 86400000));
+                list.push(d.toISOString().split('T')[0]);
+            }
+            return list;
+        }
+
+        // 모든 접속자의 실제 방문을 Firebase Firestore('visitor_stats/{YYYY-MM-DD}')에 실시간 누적
+        async function recordRealtimeSiteVisit() {
+            if (!db) return;
+            const todayKey = getTodayKstDateKey();
+            const uvFlagKey = 'gakjong_uv_recorded_' + todayKey;
+            let isFirstVisitToday = false;
+
+            try {
+                if (!localStorage.getItem(uvFlagKey)) {
+                    isFirstVisitToday = true;
+                    localStorage.setItem(uvFlagKey, '1');
+                }
+            } catch (e) {
+                isFirstVisitToday = true;
+            }
+
+            try {
+                const statRef = doc(db, "visitor_stats", todayKey);
+                const payload = {
+                    date: todayKey,
+                    pageViews: increment(1),
+                    updatedAt: serverTimestamp()
+                };
+                if (isFirstVisitToday) {
+                    payload.uniqueVisitors = increment(1);
+                }
+                await setDoc(statRef, payload, { merge: true });
+            } catch (err) {
+                console.warn("Visitor stats write skipped (check Firestore rules for visitor_stats):", err);
+            }
+        }
+
+        // 서식 선택·PDF 저장·인쇄 시 인기 서식 카운트 실시간 누적
+        window.trackTemplateUsage = async function (templateId) {
+            if (!db || !templateId) return;
+            try {
+                const metaRef = doc(db, "visitor_meta", "templates");
+                await setDoc(metaRef, {
+                    [templateId]: increment(1),
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+            } catch (err) {
+                // 권한 미설정 시 사용자 경험에 영향을 주지 않도록 무음 처리
+            }
+        };
+
+        // 관리자 로그인 시 Firestore 방문자 통계 실시간 구독 시작
+        function startAdminStatsSubscription() {
+            if (!db) return;
+            stopAdminStatsSubscription();
+
+            const statsQuery = query(collection(db, "visitor_stats"), orderBy("date", "desc"), limit(30));
+            unsubscribeStatsListener = onSnapshot(statsQuery, (snapshot) => {
+                const map = {};
+                snapshot.docs.forEach(d => {
+                    const data = d.data();
+                    const key = data.date || d.id;
+                    map[key] = {
+                        pv: typeof data.pageViews === 'number' ? data.pageViews : 0,
+                        uv: typeof data.uniqueVisitors === 'number' ? data.uniqueVisitors : 0
+                    };
+                });
+                firestoreDailyStatsMap = map;
+                window.renderVisitorDashboard();
+            }, (err) => {
+                console.error("visitor_stats subscription error:", err);
+            });
+
+            const tplDocRef = doc(db, "visitor_meta", "templates");
+            unsubscribeTemplatesListener = onSnapshot(tplDocRef, (snap) => {
+                if (snap.exists()) {
+                    const data = snap.data();
+                    firestoreTemplateCounts = {
+                        appointment: data.appointment || 0,
+                        employment: data.employment || 0,
+                        dismissal: data.dismissal || 0,
+                        career: data.career || 0,
+                        legal_notice: data.legal_notice || 0,
+                        iou: data.iou || 0,
+                        power_of_attorney: data.power_of_attorney || 0
+                    };
+                    window.renderVisitorDashboard();
+                }
+            });
+        }
+
+        function stopAdminStatsSubscription() {
+            if (unsubscribeStatsListener) {
+                unsubscribeStatsListener();
+                unsubscribeStatsListener = null;
+            }
+            if (unsubscribeTemplatesListener) {
+                unsubscribeTemplatesListener();
+                unsubscribeTemplatesListener = null;
+            }
+        }
+
+        window.renderVisitorDashboard = function () {
+            if (!window.__isAdminAuthenticated) return;
+
+            const todayKey = getTodayKstDateKey();
+            const past7Keys = getPastKstDateKeys(7);
+            const past14Keys = getPastKstDateKeys(14);
+
+            const todayObj = firestoreDailyStatsMap[todayKey] || { pv: 0, uv: 0 };
+
+            let weekPv = 0;
+            let weekUv = 0;
+            past7Keys.forEach(k => {
+                const item = firestoreDailyStatsMap[k];
+                if (item) {
+                    weekPv += item.pv;
+                    weekUv += item.uv;
+                }
+            });
+
+            let totalPv = 0;
+            let totalUv = 0;
+            Object.keys(firestoreDailyStatsMap).forEach(k => {
+                totalPv += firestoreDailyStatsMap[k].pv || 0;
+                totalUv += firestoreDailyStatsMap[k].uv || 0;
+            });
+
+            const setTxt = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = val;
+            };
+            setTxt('statTodayPv', todayObj.pv.toLocaleString());
+            setTxt('statTodayUv', todayObj.uv.toLocaleString());
+            setTxt('statTodayDateLabel', todayKey);
+            setTxt('statWeekPv', weekPv.toLocaleString());
+            setTxt('statWeekUv', weekUv.toLocaleString() + '명');
+            setTxt('statTotalPv', totalPv.toLocaleString());
+            setTxt('statTotalUv', totalUv.toLocaleString() + '명');
+
+            // 1) 최근 7일 방문 추이 막대 그래프
+            const chartEl = document.getElementById('weeklyVisitorChart');
+            const labelsEl = document.getElementById('weeklyVisitorLabels');
+            if (chartEl && labelsEl) {
+                let maxPv = 1;
+                past7Keys.forEach(k => {
+                    const pv = (firestoreDailyStatsMap[k] && firestoreDailyStatsMap[k].pv) || 0;
+                    if (pv > maxPv) maxPv = pv;
+                });
+
+                const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+                chartEl.innerHTML = past7Keys.map(k => {
+                    const rec = firestoreDailyStatsMap[k] || { pv: 0, uv: 0 };
+                    const pvHeightPct = rec.pv > 0 ? Math.max(8, Math.round((rec.pv / maxPv) * 100)) : 3;
+                    const uvHeightPct = rec.uv > 0 ? Math.max(6, Math.round((rec.uv / maxPv) * 100)) : 2;
+                    return `
+                        <div class="h-full flex flex-col justify-end items-center gap-1 group">
+                            <span class="text-[10px] font-bold text-slate-700">${rec.pv}</span>
+                            <div class="w-full max-w-[40px] flex items-end justify-center gap-1 h-40">
+                                <div style="height: ${pvHeightPct}%" class="w-1/2 bg-blue-600 rounded-t-md transition-all duration-300" title="${k} 조회수(PV): ${rec.pv}회"></div>
+                                <div style="height: ${uvHeightPct}%" class="w-1/2 bg-emerald-500 rounded-t-md transition-all duration-300" title="${k} 순방문(UV): ${rec.uv}명"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                labelsEl.innerHTML = past7Keys.map(k => {
+                    const d = new Date(k + 'T00:00:00');
+                    const md = k.slice(5).replace('-', '/');
+                    const dow = isNaN(d.getTime()) ? '' : dayNames[d.getDay()];
+                    const isToday = k === todayKey;
+                    return `<div class="${isToday ? 'text-blue-700 font-extrabold' : ''}">${md}<span class="block text-[10px] text-slate-400">(${dow})</span></div>`;
+                }).join('');
+            }
+
+            // 2) 서식별 인기 이용 순위 막대 차트
+            const popEl = document.getElementById('popularTemplatesChart');
+            if (popEl) {
+                const labels = {
+                    appointment: '위촉증명서',
+                    employment: '재직증명서',
+                    dismissal: '해촉증명서',
+                    career: '경력증명서',
+                    legal_notice: '내용증명서',
+                    iou: '차용증',
+                    power_of_attorney: '위임장'
+                };
+                const items = Object.keys(labels).map(id => ({
+                    id,
+                    name: labels[id],
+                    count: firestoreTemplateCounts[id] || 0
+                })).sort((a, b) => b.count - a.count);
+
+                const topCount = Math.max(1, items[0].count);
+                popEl.innerHTML = items.map((it, idx) => {
+                    const pct = it.count > 0 ? Math.max(6, Math.round((it.count / topCount) * 100)) : 2;
+                    return `
+                        <div class="space-y-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-semibold text-slate-800"><span class="text-blue-600 font-bold mr-1.5">${idx + 1}.</span>${it.name}</span>
+                                <span class="font-bold text-slate-700">${it.count.toLocaleString()}회</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div style="width: ${pct}%" class="h-full bg-blue-600 rounded-full transition-all duration-300"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // 3) 최근 14일 일자별 상세 테이블
+            const tbody = document.getElementById('dailyStatsTableBody');
+            if (tbody) {
+                const dayNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+                const reversed14 = [...past14Keys].reverse();
+                tbody.innerHTML = reversed14.map(k => {
+                    const rec = firestoreDailyStatsMap[k] || { pv: 0, uv: 0 };
+                    const d = new Date(k + 'T00:00:00');
+                    const dow = isNaN(d.getTime()) ? '-' : dayNames[d.getDay()];
+                    const avg = rec.uv > 0 ? (rec.pv / rec.uv).toFixed(1) + '회' : '0.0회';
+                    const isToday = k === todayKey;
+                    return `
+                        <tr class="${isToday ? 'bg-blue-50/50 font-semibold' : 'hover:bg-slate-50'} transition">
+                            <td class="p-3 text-slate-800">${k} ${isToday ? '<span class="ml-1.5 text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold">오늘</span>' : ''}</td>
+                            <td class="p-3 text-center text-slate-500">${dow}</td>
+                            <td class="p-3 text-center font-bold text-blue-700">${rec.pv.toLocaleString()}회</td>
+                            <td class="p-3 text-center font-bold text-emerald-700">${rec.uv.toLocaleString()}명</td>
+                            <td class="p-3 text-center text-slate-600">${avg}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        };
+
+        // 관리자 오늘 방문자 통계 초기화 모달 제어
+        window.openResetStatsModal = function () {
+            if (!window.__isAdminAuthenticated) return;
+            const m = document.getElementById('resetStatsConfirmModal');
+            if (m) {
+                m.classList.remove('hidden');
+                m.classList.add('flex');
+            }
+        };
+        window.closeResetStatsModal = function () {
+            const m = document.getElementById('resetStatsConfirmModal');
+            if (m) {
+                m.classList.add('hidden');
+                m.classList.remove('flex');
+            }
+        };
+        window.executeResetTodayStats = async function () {
+            if (!window.__isAdminAuthenticated || !db) return;
+            window.closeResetStatsModal();
+            const todayKey = getTodayKstDateKey();
+            try {
+                await setDoc(doc(db, "visitor_stats", todayKey), {
+                    date: todayKey,
+                    pageViews: 0,
+                    uniqueVisitors: 0,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                window.showToast('오늘 방문자 통계가 초기화되었습니다.', 'success');
+            } catch (err) {
+                console.error(err);
+                window.showToast('통계 초기화 중 권한 오류가 발생했습니다.', 'error');
+            }
+        };
+
+        // 브라우저별 '👍 나도!' 공감 중복 방지 로컬 스토리지 키
         const LIKED_STORAGE_KEY = 'gakjong_liked_requests_v1';
         function getLikedSet() {
             try {
@@ -2677,14 +2864,17 @@
             } catch (e) {}
         }
 
-        // 관리자 인증 상태 감시
+        // 관리자 인증 상태 감시 (방문자 현황 탭 표시/숨김 및 실시간 구독 제어)
+        window.__isAdminAuthenticated = false;
         if (auth) {
             onAuthStateChanged(auth, (user) => {
                 currentAdminUser = user;
+                window.__isAdminAuthenticated = !!user;
+
                 const navOut = document.getElementById('adminNavLoggedOut');
                 const navIn = document.getElementById('adminNavLoggedIn');
                 const topBanner = document.getElementById('adminTopBanner');
-                const resetStatsBtn = document.getElementById('resetVisitorStatsBtn');
+                const visitorNavBtn = document.getElementById('adminVisitorNavBtn');
 
                 if (user) {
                     if (navOut) navOut.classList.add('hidden');
@@ -2693,11 +2883,16 @@
                         navIn.classList.add('flex');
                     }
                     if (topBanner) topBanner.classList.remove('hidden');
-                    if (resetStatsBtn) resetStatsBtn.classList.remove('hidden');
+                    if (visitorNavBtn) {
+                        visitorNavBtn.classList.remove('hidden');
+                        visitorNavBtn.classList.add('inline-flex');
+                    }
                     const emailEl = document.getElementById('adminEmailLabel');
                     const uidEl = document.getElementById('adminUidLabel');
                     if (emailEl) emailEl.innerText = user.email || '관리자 계정';
                     if (uidEl) uidEl.innerText = user.uid;
+
+                    startAdminStatsSubscription();
                 } else {
                     if (navOut) navOut.classList.remove('hidden');
                     if (navIn) {
@@ -2705,11 +2900,24 @@
                         navIn.classList.remove('flex');
                     }
                     if (topBanner) topBanner.classList.add('hidden');
-                    if (resetStatsBtn) resetStatsBtn.classList.add('hidden');
+                    if (visitorNavBtn) {
+                        visitorNavBtn.classList.add('hidden');
+                        visitorNavBtn.classList.remove('inline-flex');
+                    }
+                    stopAdminStatsSubscription();
+
+                    // 로그아웃 시 방문자 현황 탭에 머물러 있으면 기본 탭으로 즉시 복귀
+                    const visitorLayout = document.getElementById('visitorStatsLayout');
+                    if (visitorLayout && !visitorLayout.classList.contains('hidden')) {
+                        window.switchMainTab('인사·노무 서식');
+                    }
                 }
                 renderRequestsList();
             });
         }
+
+        // 페이지 로드 시 실시간 방문자 수 집계 실행
+        recordRealtimeSiteVisit();
 
         // Firestore 'requests' 컬렉션 실시간 구독
         if (db) {
